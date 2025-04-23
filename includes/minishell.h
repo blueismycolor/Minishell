@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/04/23 17:25:29 by egatien          ###   ########.fr       */
+/*   Updated: 2025/04/23 22:02:56 by aeudes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,22 @@
 /*********************/
 /* Messages d'erreur */
 /*********************/
-# define ERR_PIPE	"Error: failed to create pipe.\n"
-# define ERR_MALLOC	"Error: memory allocation failed,\n"
-# define ERR_QUOTE	"Error: unmatched or invalid quote.\n"
-# define ERR_CMD	"Error: command execution failed.\n"
-# define ERR_EXECVE	"Error: execve system call failed.\n"
-# define ERR_FORK	"fork failed.\n"
-# define ERR_DUP	"dup failed.\n"
-# define NO_PATH	"no such file or directory.\n"
-# define ERR_EOF	"unexpected EOF.\n"
-# define TOO_LONG	"argument list too long.\n"
-# define ERR_VA_ENV	"unboud variable.\n"						// Erreur avec variable non initialisee (set -u)
-# define ERR_SYN	"syntax error in expression.\n"				// Manque un i++ ou qqch dans le genre
-# define ERR_FD		"bad file descriptor.\n"					// Fermeture accidentelle dun fd
-# define SUCCESS	0
-# define ERROR		1
+# define ERR_PIPE		"Error: failed to create pipe.\n"
+# define ERR_MALLOC		"Error: memory allocation failed,\n"
+# define ERR_QUOTE		"Error: unmatched or invalid quote.\n"
+# define ERR_CMD		"Error: command execution failed.\n"
+# define ERR_QUOTE_OPEN	"Error: unclosed quote.\n"
+# define ERR_EXECVE		"Error: execve system call failed.\n"
+# define ERR_FORK		"fork failed.\n"
+# define ERR_DUP		"dup failed.\n"
+# define NO_PATH		"no such file or directory.\n"
+# define ERR_EOF		"unexpected EOF.\n"
+# define TOO_LONG		"argument list too long.\n"
+# define ERR_VA_ENV		"unboud variable.\n"						// Erreur avec variable non initialisee (set -u)
+# define ERR_SYN		"syntax error in expression.\n"				// Manque un i++ ou qqch dans le genre
+# define ERR_FD			"bad file descriptor.\n"					// Fermeture accidentelle dun fd
+# define SUCCESS		0
+# define ERROR			1
 
 # include "./libft-complete/libft/libft.h"
 # include "./libft-complete/ft_printf/ft_printf.h"
@@ -60,8 +61,18 @@ typedef enum e_type
 	TRUNC,		// ">"  : redirection de la sortie (écrasement)
 	APPEND,		// ">>" : redirection de la sortie (ajout à la fin)
 	PIPE,		// "|"  : pipe
-	CMD			// commande principale et argument(ex: ls -al, cat)
+	CMD,		// commande principale et argument(ex: ls -al, cat)
 }	e_type;
+
+ /*******************************************************************/
+ /*Chaque lignes de commandes transformee en liste chainee de tokens*/
+ /*******************************************************************/
+typedef struct t_token
+{
+	char	*str;	// "cat", "|", "input.txt"
+	e_type	type;	// CMD. PIPE,TRUNC etc.
+	e_quote	quote;
+}	t_token;
 
 typedef struct t_command
 {
@@ -71,6 +82,13 @@ typedef struct t_command
 	t_command	*next;
 	t_command	*prev;
 }	t_command;
+
+typedef enum e_quote
+{
+	NONE,
+	SINGLE,
+	DOUBLE
+}	e_quote;
 
 /********************/
 /* Variable globale */
