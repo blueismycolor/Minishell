@@ -12,6 +12,11 @@
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+
+/**************/
+/* Librairies */
+/**************/
 # include <stdbool.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -23,7 +28,9 @@
 # include "./libft-complete/libft/libft.h"
 # include "./libft-complete/ft_printf/ft_printf.h"
 
-//error messages
+/*********************/
+/* Messages d'erreur */
+/*********************/
 # define ERR_PIPE	"Error: failed to create pipe.\n"
 # define ERR_MALLOC	"Error: memory allocation failed,\n"
 # define ERR_QUOTE	"Error: unmatched or invalid quote.\n"
@@ -40,7 +47,12 @@
 # define SUCCESS	0
 # define ERROR		1
 
-//tokens
+# include "./libft-complete/libft/libft.h"
+# include "./libft-complete/ft_printf/ft_printf.h"
+
+/********************/
+/* Structures token */
+/********************/
 typedef enum e_type
 {
 	INPUT = 1,	// "<"  : redirection de l'entrée
@@ -59,11 +71,19 @@ typedef struct t_command
 
 }	t_command;
 
-// variable globale
-int	signalvar;
+/********************/
+/* Variable globale */
+/********************/
+int	signal;			// 127 = command not found || 126 = permission failed || 1 = general error
 
-//fonctions parsing
+/*********************/
+/* Fonctions parsing */
+/*********************/
 
-//fonctions exec
+/***********************/
+/* Fonctions executing */
+/***********************/
+void	msg_error(char *msg);
 
 #endif
+
