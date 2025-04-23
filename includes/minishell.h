@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/04/23 15:13:10 by aeudes           ###   ########.fr       */
+/*   Updated: 2025/04/23 16:39:36 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef enum e_type
 	APPEND,		// ">>" : redirection de la sortie (ajout à la fin)
 	PIPE,		// "|"  : pipe
 	CMD			// commande principale et argument(ex: ls -al, cat)
-};
+}	e_type;
 
 typedef struct t_command
 {
