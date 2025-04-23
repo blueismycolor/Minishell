@@ -1,67 +1,93 @@
-Ce projet consiste à créer un interpréteur de commande basique, similaire à Bash.
-Le but est de comprendre le fonctionnement interne d'un shell Unix, notamment l'analyse de commande,
-la gestion des processus, des redirections et des signaux.
+# 🐚 MiniShell — Un interpréteur de commandes Unix simplifié
 
-OBJECTIFS PRINCIPAUX :
+Ce projet consiste à créer un interpréteur de commande basique, **similaire à Bash**.  
+Le but est de **comprendre le fonctionnement interne d’un shell Unix**, notamment :
+- L’analyse de commande
+- La gestion des processus
+- Les redirections
+- Les signaux
+- Les variables d'environnement
 
-Afficher un prompt et lire les commandes de l'utilisateur.
+---
 
---> Gérer l'historique des commandes.
+## 🎯 Objectifs principaux
 
---> Analyser et exécuter des commandes simples et composées (avec pipes).
+✅ Afficher un **prompt** et lire les commandes de l’utilisateur  
+✅ Gérer **l’historique des commandes**  
+✅ Analyser et exécuter des **commandes simples et composées** (avec `|`)  
+✅ Gérer les **variables d’environnement** et l’expansion de `$`, y compris `$?`  
+✅ Implémenter les **redirections** : `<`, `>`, `>>`, `<<`  
+✅ Gérer les **signaux** : `Ctrl-C`, `Ctrl-D`, `Ctrl-\`  
+✅ Implémenter les **builtins** suivants :
+- `echo`
+- `cd`
+- `pwd`
+- `export`
+- `unset`
+- `env`
+- `exit`
 
---> Gérer les variables d'environnement et l'expansion de $, y compris $?.
+---
 
---> Implémenter les redirections : <, >, >>, <<.
+## 🔧 Exemples d'utilisation
 
---> Gérer les signaux : Ctrl-C, Ctrl-D, Ctrl-\ comme dans Bash.
+### 1️⃣ Commande simple
+```bash
+$ ls -l
+```
+➡️ Le shell exécute la commande `ls` avec l’option `-l`.
 
---> Implémenter les commandes internes suivantes :
-    echo, cd, pwd, export, unset, env, exit.
+---
 
-EXEMPLES : 
-1) Commande simple :
-$ ls -l --------> Le shell exécute la commande ls avec l’option -l.
-/-------------------------------------------------------------------------------/
+### 2️⃣ Pipes
+```bash
+$ cat file.txt | grep "hello" | wc -l
+```
+➡️ Les commandes sont chaînées :
+- `cat file.txt` → lit le fichier
+- `grep "hello"` → filtre les lignes contenant "hello"
+- `wc -l` → compte les lignes
 
-3) Pipes :
-$ cat file.txt | grep "hello" | wc -l ------> ici les commandes sont chaînées.
-  - cat file.txt -> lit le fichier
-  - grep "hello" -> filtre les lignes contenant "hello"
-  - wc -l -> compte les lignes.
-chaque commande est un maillon de la chaîne, séparé par |
+---
 
-/-----------------------------------------------------------------------------/
+### 3️⃣ Redirections
+```bash
+$ echo "bonjour" > salut.txt      # Écrit "bonjour" dans le fichier (écrase)
+$ cat < salut.txt                 # Lit depuis le fichier
+$ echo "ligne" >> log.txt         # Ajoute "ligne" à la fin du fichier
+```
 
-3) Redirections :
-$ echo "bonjour" > salut.txt ------> Crée (ou écrase) un fichier salut.txt avec le contenu "bonjour".
-$ cat < salut.txt ----------------->  Redirige l’entrée standard depuis un fichier.
-$ echo "ligne" >> log.txt ---------> Ajoute "ligne" à la fin du fichier log.txt.
+---
 
-/-----------------------------------------------------------------------------/
-
-5) Here-doc (<<)
+### 4️⃣ Here-Document (`<<`)
+```bash
 $ cat << FIN
 Bonjour
 Au revoir
 FIN
--------> prend tout ce qui est écrit jusqu'à FIN et le passe en entrée à cat.
+```
+➡️ Transmet le bloc multi-lignes à `cat` jusqu’au mot-clé `FIN`
 
-/-----------------------------------------------------------------------------/
+---
 
-7) Expansion des variables
-$ echo $HOME -------------> affiche le chemin du répertoire personnel.
-$ echo $?-----------------> affiche le code de sortie de la dernière commande exécutée.
+### 5️⃣ Expansion des variables
+```bash
+$ echo $HOME       # Affiche le chemin vers le répertoire personnel
+$ echo $?          # Affiche le code de retour de la dernière commande
+```
 
-/------------------------------------------------------------------------------/
+---
 
-9) Citations et métacaractères
-$ echo "Salut $USER" ------> Expande $USER dans la chaîne.
-$ echo '$USER' ------------> Affiche littéralement $USER (pas d’expansion à cause des simples quotes).
+### 6️⃣ ' et "
+```bash
+$ echo "Salut $USER"   # Affiche le contenu de la variable $USER
+$ echo '$USER'         # Affiche littéralement $USER
+```
 
-/------------------------------------------------------------------------------/
+---
 
-7) Commandes internes (builtins)
+### 7️⃣ Builtins
+```bash
 $ cd /tmp
 $ pwd
 /tmp
@@ -70,5 +96,27 @@ $ echo $VAR
 42
 $ unset VAR
 $ env
+```
 
-/--------------------------------------------------------------------------------/
+---
+
+## 📦 Compilation
+
+Utiliser un Makefile pour compiler :
+```bash
+make
+```
+
+---
+
+## 📚 Ressources utiles
+
+- `man bash`, `readline`, `fork`, `execve`, `dup2`, `pipe`, `waitpid`
+- [Learn Git Branching (visualiser Git en ligne)](https://learngitbranching.js.org/)
+- [Correction PDF](https://github.com/rizky/42-corrections/blob/master/minishell.pdf)
+
+---
+
+## 🚀 Auteurs
+[aeudes](https://profile.intra.42.fr/users/aeudes), [egatien](https://profile.intra.42.fr/users/egatien), [mgodefro](https://profile.intra.42.fr/users/mgodefro) & [tlair](https://profile.intra.42.fr/users/tlair)
+Projet réalisé dans le cadre de l’apprentissage du fonctionnement d’un shell Unix minimal.
