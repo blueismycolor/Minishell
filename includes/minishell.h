@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/04/23 16:50:54 by tlair            ###   ########.fr       */
+/*   Updated: 2025/04/23 17:25:29 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ typedef struct t_command
 	char	*str;
 	char	**command;
 	e_type	type;
-
+	t_command	*next;
+	t_command	*prev;
 }	t_command;
 
 /********************/
