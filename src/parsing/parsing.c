@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 /*
 
@@ -21,7 +21,9 @@ le parsing va se proceder ainsi :
 	- definir le type de chaque token present dans t_command.str
 	- rediviser t_command.str pour recuperer commande et argument et le mettre dans t_command.command
 
-/!\ gerer les quotes
+/!\ gerer les quotes :
+	- les quotes si elles s'echainent il faut les concatener pour creer un seul token -> ex : "ls"" -al" == "ls -al"
+	- donc dans le cas des quotes, t_command.command a donc une seule chaine dans le tableau. 
 */
 
 
