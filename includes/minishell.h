@@ -24,11 +24,19 @@
 # include "./libft-complete/ft_printf/ft_printf.h"
 
 //error messages
-# define ERR_PIPE	"Error: failed to create pipe"
-# define ERR_MALLOC	"Error: memory allocation failed (malloc)"
-# define ERR_QUOTE	"Error: unmatched or invalid quote"
-# define ERR_CMD	"Error: command execution failed"
-# define ERR_EXECVE	"Error: execve system call failed"
+# define ERR_PIPE	"Error: failed to create pipe.\n"
+# define ERR_MALLOC	"Error: memory allocation failed,\n"
+# define ERR_QUOTE	"Error: unmatched or invalid quote.\n"
+# define ERR_CMD	"Error: command execution failed.\n"
+# define ERR_EXECVE	"Error: execve system call failed.\n"
+# define ERR_FORK	"fork failed.\n"
+# define ERR_DUP	"dup failed.\n"
+# define NO_PATH	"no such file or directory.\n"
+# define ERR_EOF	"unexpected EOF.\n"
+# define TOO_LONG	"argument list too long.\n"
+# define ERR_VA_ENV	"unboud variable.\n"						// Erreur avec variable non initialisee (set -u)
+# define ERR_SYN	"syntax error in expression.\n"				// Manque un i++ ou qqch dans le genre
+# define ERR_FD		"bad file descriptor.\n"					// Fermeture accidentelle dun fd
 # define SUCCESS	0
 # define ERROR		1
 
