@@ -3,21 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/04/23 14:58:40 by egatien          ###   ########.fr       */
+/*   Updated: 2025/04/23 15:13:10 by aeudes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-// message d'erreur
+# define ERR_PIPE	"Error: failed to create pipe"
+# define ERR_MALLOC	"Error: memory allocation failed (malloc)"
+# define ERR_QUOTE	"Error: unmatched or invalid quote"
+# define ERR_CMD	"Error: command execution failed"
+# define ERR_EXECVE	"Error: execve system call failed"
+# define SUCCESS	0
+# define ERROR		1
 
+# include "./libft-complete/libft/libft.h"
+# include "./libft-complete/ft_printf/ft_printf.h"
 
-
-// tokens
+//tokens
 typedef enum e_type
 {
 	INPUT = 1,	// "<"  : redirection de l'entrée
