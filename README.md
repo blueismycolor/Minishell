@@ -119,4 +119,5 @@ make
 
 ## 🚀 Auteurs
 [aeudes](https://profile.intra.42.fr/users/aeudes), [egatien](https://profile.intra.42.fr/users/egatien), [mgodefro](https://profile.intra.42.fr/users/mgodefro) & [tlair](https://profile.intra.42.fr/users/tlair)
-Projet réalisé dans le cadre de l’apprentissage du fonctionnement d’un shell Unix minimal.
+
+Réalisé dans le cadre du projet Minishell de 42, destiné à l’apprentissage du fonctionnement d’un shell Unix minimal.

@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/04/24 10:36:00 by egatien          ###   ########.fr       */
+/*   Updated: 2025/04/24 16:47:51 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
 
 /**************/
 /* Librairies */
@@ -25,8 +24,6 @@
 # include <sys/stat.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "./libft-complete/libft/libft.h"
-# include "./libft-complete/ft_printf/ft_printf.h"
 
 /*********************/
 /* Messages d'erreur */
@@ -48,8 +45,8 @@
 # define SUCCESS		0
 # define ERROR			1
 
-# include "./libft-complete/libft/libft.h"
-# include "./libft-complete/ft_printf/ft_printf.h"
+# include "../libft-complete/libft/libft.h"
+# include "../libft-complete/ft_printf/ft_printf.h"
 
 /********************/
 /* Structures token */
@@ -65,22 +62,21 @@ typedef enum e_type
 }	e_type;
 
  /*******************************************************************/
- /*Chaque lignes de commandes transformee en liste chainee de tokens*/
+ /* Chaque ligne de commande transformee en liste chainee de tokens */
  /*******************************************************************/
 typedef struct t_token
 {
 	char	*str;	// "cat", "|", "input.txt"
 	e_type	type;	// CMD. PIPE,TRUNC etc.
 	e_quote	quote;
+	struct t_token	*next;
+	struct t_token	*prev;
 }	t_token;
 
 typedef struct t_command
 {
 	char	*str;
 	char	**command;
-	e_type	type;
-	t_command	*next;
-	t_command	*prev;
 }	t_command;
 
 typedef enum e_quote
