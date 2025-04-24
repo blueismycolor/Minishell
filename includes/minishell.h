@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/04/23 22:02:56 by aeudes           ###   ########.fr       */
+/*   Updated: 2025/04/24 10:36:00 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ int	signal;			// 127 = command not found || 126 = permission failed || 1 = gener
 /*********************/
 /* Fonctions parsing */
 /*********************/
+int	get_nbr_tokens(char *out);
 
 /***********************/
 /* Fonctions executing */
