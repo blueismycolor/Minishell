@@ -3,7 +3,7 @@ NAME		= minishell
 
 RM 		= rm -f
 SRCS_MAIN	= main.c
-SRCS 		= 
+SRCS 		= $(wildcard *.c) // temp wildcard
 
 LIBFT_DIR	= libft-complete
 LIBFT		= $(LIBFT_DIR)/libft-complete.a
@@ -15,7 +15,7 @@ OBJS_MAIN	= $(SRCS_MAIN:.c=.o) $(SRCS:.c=.o)
 
 $(NAME): $(LIBFT) $(OBJS_MAIN)
 	@$(CC) $(CFLAGS) $(OBJS_MAIN) -L$(LIBFT_DIR) -lft-complete -o $(NAME)
-	
+
 $(LIBFT):
 	make -s -C $(LIBFT_DIR)
 

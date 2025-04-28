@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/04/24 17:56:17 by aeudes           ###   ########.fr       */
+/*   Updated: 2025/04/28 16:10:18 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,14 @@ typedef enum s_type
  /*******************/
  /*Structure token */
  /******************/
+
+typedef enum s_quote
+{
+	NONE,
+	SINGLE,
+	DOUBLE
+}	t_quote;
+
 typedef struct s_token
 {
 	char	*str;	// "cat", "|", "input.txt"
@@ -79,17 +87,11 @@ typedef struct t_command
 	char	**command;
 }	t_command;
 
-typedef enum s_quote
-{
-	NONE,
-	SINGLE,
-	DOUBLE
-}	t_quote;
-
 /********************/
 /* Variable globale */
 /********************/
-int	signal;			// 127 = command not found || 126 = permission failed || 1 = general error
+int	signalvar;		// 127 = command not found || 126 = permission failed || 1 = general error
+// merci de ne pas remettre "signal" car ce nom est reserve au systeme
 
 /*********************/
 /* Fonctions parsing */
