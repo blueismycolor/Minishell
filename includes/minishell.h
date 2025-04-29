@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/04/28 16:10:18 by tlair            ###   ########.fr       */
+/*   Updated: 2025/04/29 17:11:03 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ typedef struct t_command
 /********************/
 /* Variable globale */
 /********************/
-int	signalvar;		// 127 = command not found || 126 = permission failed || 1 = general error
+extern int	g_signal;		// 127 = command not found || 126 = permission failed || 1 = general error
 // merci de ne pas remettre "signal" car ce nom est reserve au systeme
 
 /*********************/
@@ -102,6 +102,7 @@ int	get_nbr_tokens(char *out);
 /* Fonctions executing */
 /***********************/
 void	msg_error(char *msg);
+int		main(void);
 
 #endif
 

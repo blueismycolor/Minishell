@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   handle_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:10:41 by aeudes            #+#    #+#             */
-/*   Updated: 2025/04/25 16:28:49 by aeudes           ###   ########.fr       */
+/*   Updated: 2025/04/29 15:33:08 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 /* simple quotes ? ou double quotes ?* sinon il n'y a pas de quote*/
 t_quote	get_quote_type(char *str)

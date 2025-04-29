@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 11:47:34 by aeudes            #+#    #+#             */
-/*   Updated: 2025/02/09 11:47:35 by aeudes           ###   ########.fr       */
+/*   Updated: 2025/04/29 16:41:08 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,10 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
+
+int		ft_strcmp(const char *s1, const char *s2);
+char	*ft_strstr(const char *haystack, const char *needle);
+char	*ft_strpbrk(const char *s, const char *charset);
+char	*ft_strtok(char *str, const char *delim);
 
 #endif

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+         #
+#    By: tlair <tlair@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/09 11:58:32 by aeudes            #+#    #+#              #
-#    Updated: 2025/02/09 14:31:22 by aeudes           ###   ########.fr        #
+#    Updated: 2025/04/29 17:03:11 by tlair            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,10 @@ SRCS = ft_atoi.c \
 	ft_strncmp.c \
 	ft_strmapi.c \
 	ft_striteri.c \
+	ft_strstr.c \
+	ft_strcmp.c \
+	ft_strbprk.c \
+	ft_strtok.c \
 
 BONUS_SRCS = ft_lstnew_bonus.c \
 	ft_lstadd_front_bonus.c \
