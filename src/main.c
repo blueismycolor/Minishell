@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:31:27 by egatien           #+#    #+#             */
-/*   Updated: 2025/04/30 14:24:57 by tlair            ###   ########.fr       */
+/*   Updated: 2025/04/30 16:10:23 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 int	g_signal;
 
-static char	**create_arguments(t_token *token)
+static char	**create_arguments(t_cmd *token)
 { //FONCTION TEMPORAIRE (SERA REMPLACE PAR LA PARTIE PARSING)
 	char	**args;
 	char	*temp;
 	char	*token_str;
 	int		count;
 
-	temp = ft_strdup(token->str);
+	temp = ft_strdup(token->cmd);
 	count = 0;
 	token_str = ft_strtok(temp, " ");
 	while (token_str && ++count)
@@ -30,7 +30,7 @@ static char	**create_arguments(t_token *token)
 	args = malloc(sizeof(char *) * (count + 1));
 	if (!args)
 		return (NULL);
-	temp = ft_strdup(token->str);
+	temp = ft_strdup(token->cmd);
 	token_str = ft_strtok(temp, " ");
 	count = 0;
 	while (token_str)
@@ -43,7 +43,7 @@ static char	**create_arguments(t_token *token)
 	return (args);
 } //FONCTION TEMPORAIRE (SERA REMPLACE PAR LA PARTIE PARSING)
 
-static void	execute_command(t_token *tokens)
+static void	execute_command(t_cmd *tokens)
 {
 	pid_t		pid;
 	char		**args;
@@ -118,7 +118,7 @@ int	main(void)
 {
 	char	*input;
 	char 	*prompt;
-	t_token	*tokens;
+	t_cmd	*tokens;
 
 	while (1)
 	{
@@ -142,8 +142,8 @@ int	main(void)
 			free(input);
 			continue ;
 		}
-		tokens = malloc(sizeof(t_token));
-		tokens->str = ft_strdup(input);
+		tokens = malloc(sizeof(t_cmd));
+		tokens->cmd = ft_strdup(input);
 		tokens->type = CMD;
 		tokens->quote = NONE;
 		tokens->next = NULL;

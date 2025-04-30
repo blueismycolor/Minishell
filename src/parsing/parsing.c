@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 17:28:11 by egatien           #+#    #+#             */
-/*   Updated: 2025/04/29 15:34:41 by tlair            ###   ########.fr       */
+/*   Updated: 2025/04/30 16:10:43 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ le parsing va se proceder ainsi :
 */
 
 
-t_command	*ft_parse(char *str) 	/* le but de cette fonction est de renvoyer une liste chaine de token (c'est la fonction principale en gros)*/
+t_cmd	*ft_parse(char *str) 	/* le but de cette fonction est de renvoyer une liste chaine de token (c'est la fonction principale en gros)*/
 {
 	(void)str;
 	return (NULL); //temp
