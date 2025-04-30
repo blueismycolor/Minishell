@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/04/30 16:10:09 by tlair            ###   ########.fr       */
+/*   Updated: 2025/04/30 16:39:08 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ typedef struct s_cmd
 	char			**args;
 	int				nb_params;
 	bool			has_redir;
-	struct s_redir	*redir;
+	t_redir			*redir;
 	t_quote			quote;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
@@ -97,7 +97,7 @@ typedef struct s_cmd
 
 typedef struct s_data
 {
-	struct s_cmd	*cmd;
+	t_cmd			*cmd;
 	char			**env;
 	char			*pwd;
 	char			*old_pwd;
@@ -177,6 +177,7 @@ t_redir	*init_redir(t_redir *redir);
 
 void	msg_error(char *msg);
 char	*find_command_path(const char *cmd);
+char	**create_arguments(t_cmd *token);
 int		main(void);
 
 /*******************/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:31:27 by egatien           #+#    #+#             */
-/*   Updated: 2025/04/30 16:10:23 by tlair            ###   ########.fr       */
+/*   Updated: 2025/04/30 16:44:27 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	g_signal;
 
-static char	**create_arguments(t_cmd *token)
+char	**create_arguments(t_cmd *token)
 { //FONCTION TEMPORAIRE (SERA REMPLACE PAR LA PARTIE PARSING)
 	char	**args;
 	char	*temp;
@@ -116,10 +116,12 @@ static char	*get_prompt(void)
 
 int	main(void)
 {
-	char	*input;
-	char 	*prompt;
-	t_cmd	*tokens;
+	char		*input;
+	char 		*prompt;
+	extern char	**environ;
+	t_data		*data;
 
+	data = init_data(environ);
 	while (1)
 	{
 		prompt = get_prompt();
@@ -131,25 +133,26 @@ int	main(void)
 			printf("\033[1;31m(╯°□°)╯︵ ┻━┻\033[0m\n");
 			break ;
 		}
-		if (ft_strcmp(input, "exit") == 0)
+		if (ft_strncmp(input, "cd", 2) == 0)
 		{
-			free(input);
-			printf("\033[1;31m(╯°□°)╯︵ ┻━┻\033[0m\n");
-			break ;
+			printf("Test function cd\n");
+			handle_cd(data);
+			continue ;
 		}
 		if (ft_strlen(input) == 0)
 		{
 			free(input);
 			continue ;
 		}
-		tokens = malloc(sizeof(t_cmd));
-		tokens->cmd = ft_strdup(input);
-		tokens->type = CMD;
-		tokens->quote = NONE;
-		tokens->next = NULL;
-		tokens->prev = NULL;
-		execute_command(tokens);
-		free_tokens(tokens);
+		data->cmd = malloc(sizeof(t_cmd));
+		data->cmd->cmd = ft_strdup(input);
+		data->cmd->type = CMD;
+		data->cmd->quote = NONE;
+		data->cmd->next = NULL;
+		data->cmd->prev = NULL;
+		init_cmd(data->cmd, input);
+		execute_command(data->cmd);
+		free_tokens(data->cmd);
 		free(input);
 	}
 	return (0);
