@@ -14,7 +14,11 @@
 
 void	msg_error(char *msg)
 {
-	ft_putstr_fd("\033[1;31mError: \033[0m", 2);
 	if (msg && *msg)
+	{
+		ft_putstr_fd("\033[1;31mError: \033[0m", 2);
 		ft_putstr_fd(msg, 2);
+	}
+	else
+		ft_putstr_fd("\033[1;31mUnknown error (ಥ﹏ಥ)\033[0m", 2);
 }

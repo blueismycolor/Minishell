@@ -1,6 +1,6 @@
 NAME		= minishell
 RM			= rm -f
-SRCS		= $(wildcard src/*.c) $(wildcard src/exec/*.c) $(wildcard src/parsing/*.c)
+SRCS		= $(wildcard src/*.c) $(wildcard src/exec/*.c) $(wildcard src/exec/builtins/*.c) $(wildcard src/parsing/*.c)
 LIBFT_DIR	= libft-complete
 LIBFT		= $(LIBFT_DIR)/libft-complete.a
 CC			= cc

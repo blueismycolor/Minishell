@@ -59,7 +59,7 @@ $ echo "ligne" >> log.txt         # Ajoute "ligne" à la fin du fichier
 
 ---
 
-### 4️⃣ Here-Document (`<<`)
+### 4️⃣ Here-Doc (`<<`)
 ```bash
 $ cat << FIN
 Bonjour
