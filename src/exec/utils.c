@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:45:43 by tlair             #+#    #+#             */
-/*   Updated: 2025/04/30 11:46:30 by tlair            ###   ########.fr       */
+/*   Updated: 2025/04/30 13:48:17 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	free_tokens(t_token *tokens)
+void	free_tokens(t_cmd *cmd)
 {
-	t_token	*current;
-	t_token	*next;
+	t_cmd	*current;
+	t_cmd	*next;
 
-	current = tokens;
+	current = cmd;
 	while (current != NULL)
 	{
 		next = current->next;

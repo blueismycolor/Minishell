@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:10:35 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/04/26 17:33:17 by maximegdfr       ###   ########.fr       */
+/*   Updated: 2025/04/30 15:43:52 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,42 +14,6 @@
 ** Verifier et ajouter la mise à jour du code d'erreur à renvoyer
 ** lors de l'execution de cette fonction.
 */
-
-typedef enum e_type
-{
-	INPUT = 1,
-	HEREDOC,
-	TRUNC,
-	APPEND,
-	PIPE,
-	CMD
-}	e_type;
-
-typedef struct s_redir
-{
-	char	*filename;
-	e_type	type;
-	struct s_redir	*next;
-}	t_redir;
-
-typedef struct s_cmd
-{
-	char			*cmd;
-	bool			is_builtin;
-	char			**args;
-	int				nb_params;
-	bool			has_redir;
-	struct s_redir	*redir;
-}	t_cmd;
-
-typedef struct s_data
-{
-	struct s_cmd	*cmd;
-	char			**env;
-	char			*pwd;
-	char			*old_pwd;
-	int				return_value;
-}	t_data;
 
 #include "../includes/minishell.h"
 
@@ -67,7 +31,7 @@ int	is_n_option(char *arg)
 	return (arg[i] == '\0'); // Si *arg fini par NULL = 1 (true) / Sinon, 0 (false)
 }
 
-void	handle_echo(char **args)
+void	handle_echo(t_data *data)
 {
 	int	i;
 	int	has_n;
@@ -75,17 +39,17 @@ void	handle_echo(char **args)
 
 	i = 1;
 	has_n = 0;
-	while (args[i] && is_n_option(args[i]))
+	while (data->cmd->args[i] && is_n_option(data->cmd->args[i]))
 	{
 		has_n = 1;
 		i++;
 	}
 	first = 1;
-	while (args[i])
+	while (data->cmd->args[i])
 	{
 		if (!first)
 			printf(" ");
-		printf("%s", args[i]);
+		printf("%s", data->cmd->args[i]);
 		i++;
 		first = 0;
 	}

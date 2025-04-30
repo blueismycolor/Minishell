@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:57:05 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/04/26 17:32:58 by maximegdfr       ###   ########.fr       */
+/*   Updated: 2025/04/30 15:49:37 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,42 +16,6 @@
 ** Verifier et ajouter la mise à jour du code d'erreur à renvoyer
 ** lors de l'execution de cette fonction.
 */
-
-typedef enum e_type
-{
-	INPUT = 1,
-	HEREDOC,
-	TRUNC,
-	APPEND,
-	PIPE,
-	CMD
-}	e_type;
-
-typedef struct s_redir
-{
-	char	*filename;
-	e_type	type;
-	struct s_redir	*next;
-}	t_redir;
-
-typedef struct s_cmd
-{
-	char			*cmd;
-	bool			is_builtin;
-	char			**args;
-	int				nb_params;
-	bool			has_redir;
-	struct s_redir	*redir;
-}	t_cmd;
-
-typedef struct s_data
-{
-	struct s_cmd	*cmd;
-	char			**env;
-	char			*pwd;
-	char			*old_pwd;
-	int				return_value;
-}	t_data;
 
 /* Cherche l'index en comparant le nom de celle recherchée avec celles dans env. */
 int	get_index(char *var_name, char **env)
@@ -89,15 +53,15 @@ void	remove_var(int var_index, char **env)
 	}
 }
 
-void	handle_unset(char **args, char **env)
+void	handle_unset(t_data *data)
 {
 	int		index;
 
-	if (!args[1])
+	if (!data->cmd->args[1])
 		return ;
-	if (args[2])
+	if (data->cmd->args[2])
 		msg_error("unset: too many arguments.\n");
-	index = get_index(args[1], env);
+	index = get_index(data->cmd->args[1], data->env);
 	if (index != -1)
-		remove_var(index, env);
+		remove_var(index, data->env);
 }

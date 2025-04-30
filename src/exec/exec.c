@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:06:01 by tlair             #+#    #+#             */
-/*   Updated: 2025/04/30 11:58:17 by tlair            ###   ########.fr       */
+/*   Updated: 2025/04/30 14:25:43 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 static char	*ft_strjoin3(const char *s1, const char *s2, const char *s3)
-{ //FONCTION TEMPORAIRE (SERA REMPLACE PAR LA PARTIE PARSING)
+{
 	char	*tmp;
 	char	*result;
 
@@ -25,7 +25,7 @@ static char	*ft_strjoin3(const char *s1, const char *s2, const char *s3)
 	result = ft_strjoin(tmp, s3);
 	free(tmp);
 	return (result);
-} //FONCTION TEMPORAIRE (SERA REMPLACE PAR LA PARTIE PARSING)
+}
 
 char	*find_command_path(const char *cmd)
 {
@@ -55,4 +55,3 @@ char	*find_command_path(const char *cmd)
 	free(path_copy);
 	return (NULL);
 }
-// tester tous les path jusqu'a trouver le bon

@@ -62,7 +62,7 @@ BONUS_SRCS = ft_lstnew_bonus.c \
 	ft_lstmap_bonus.c \
 
 CFLAGS = -Wall -Wextra -Werror
-CC = gcc
+CC = cc
 
 OBJS = $(SRCS:.c=.o)
 BONUS_OBJS = $(BONUS_SRCS:.c=.o)
