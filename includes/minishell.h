@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/04/29 17:11:03 by tlair            ###   ########.fr       */
+/*   Updated: 2025/04/30 11:52:20 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,13 @@ int	get_nbr_tokens(char *out);
 /* Fonctions executing */
 /***********************/
 void	msg_error(char *msg);
+char	*find_command_path(const char *cmd);
 int		main(void);
 
-#endif
+/*******************/
+/* Fonctions utils */
+/*******************/
+void	free_tokens(t_token *tokens);
+void	ft_free_array(char **array);
 
+#endif

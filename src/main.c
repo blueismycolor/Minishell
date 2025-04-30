@@ -6,37 +6,13 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:31:27 by egatien           #+#    #+#             */
-/*   Updated: 2025/04/29 17:46:13 by tlair            ###   ########.fr       */
+/*   Updated: 2025/04/30 12:15:46 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 int	g_signal;
-
-void	free_tokens(t_token *tokens)
-{
-	t_token	*current;
-	t_token	*next;
-
-	current = tokens;
-	while (current != NULL)
-	{
-		next = current->next;
-		free(current);
-		current = next;
-	}
-}
-
-void	ft_free_array(char **array)
-{
-	int	i;
-
-	i = 0;
-	while (array[i])
-		free(array[i++]);
-	free(array);
-}
 
 static void	display_prompt(void)
 {
@@ -50,19 +26,19 @@ static void	display_prompt(void)
 	{
 		relative_path = ft_strstr(cwd, home);
 		if (relative_path)
-			printf("\033[1;33m╭─[\033[1;35m~%s\033[1;33m]\n╰─➤ \033[0m",
+			printf("\033[1;92m╭─[\033[1;35m~%s\033[1;92m]\n╰─➤ \033[0m",
 				relative_path + ft_strlen(home));
 		else
-			printf("\033[1;33m╭─[\033[1;35m%s\033[1;33m]\n╰─➤ \033[0m", cwd);
+			printf("\033[1;92m╭─[\033[1;35m%s\033[1;92m]\n╰─➤ \033[0m", cwd);
 	}
 	else
-		printf("\033[1;33m╭─[\033[1;35munknown\033[1;33m]\n╰─➤ \033[0m");
+		printf("\033[1;92m╭─[\033[1;35munknown\033[1;92m]\n╰─➤ \033[0m");
 	free(cwd);
 }
 // ft_strstr finds the first occurrence of home in cwd
 
 static char	*get_user_input(void)
-{
+{ //FONCTION TEMPORAIRE (SERA REMPLACE PAR LA PARTIE PARSING)
 	char	*input;
 	ssize_t	read;
 
@@ -78,9 +54,8 @@ static char	*get_user_input(void)
 	return (input);
 } //FONCTION TEMPORAIRE (SERA REMPLACE PAR LA PARTIE PARSING)
 
-
 static char	**create_arguments(t_token *token)
-{
+{ //FONCTION TEMPORAIRE (SERA REMPLACE PAR LA PARTIE PARSING)
 	char	**args;
 	char	*temp;
 	char	*token_str;
@@ -108,51 +83,6 @@ static char	**create_arguments(t_token *token)
 	return (args);
 } //FONCTION TEMPORAIRE (SERA REMPLACE PAR LA PARTIE PARSING)
 
-char	*ft_strjoin3(const char *s1, const char *s2, const char *s3)
-{
-	char	*tmp;
-	char	*result;
-
-	if (!s1 || !s2 || !s3)
-		return (NULL);
-	tmp = ft_strjoin(s1, s2);
-	if (!tmp)
-		return (NULL);
-	result = ft_strjoin(tmp, s3);
-	free(tmp);
-	return (result);
-} //FONCTION TEMPORAIRE (SERA REMPLACE PAR LA PARTIE PARSING)
-
-static char	*find_command_path(const char *cmd)
-{
-	char	*path;
-	char	*dir;
-	char	*full_path;
-	char	*path_copy;
-
-	if (!cmd || !*cmd || ft_strchr(cmd, '/'))
-		return (ft_strdup(cmd));
-	path = getenv("PATH");
-	if (!path)
-		return (NULL);
-	path_copy = ft_strdup(path);
-	dir = ft_strtok(path_copy, ":");
-	while (dir)
-	{
-		full_path = ft_strjoin3(dir, "/", cmd);
-		if (access(full_path, X_OK) == 0)
-		{
-			free(path_copy);
-			return (full_path);
-		}
-		free(full_path);
-		dir = ft_strtok(NULL, ":");
-	}
-	free(path_copy);
-	return (NULL);
-}
-// tester tous les path jusqu'a trouver le bon
-
 static void	execute_command(t_token *tokens)
 {
 	pid_t		pid;
@@ -169,7 +99,7 @@ static void	execute_command(t_token *tokens)
 		cmd_path = find_command_path(args[0]);
 		if (!cmd_path)
 		{
-			ft_putstr_fd("\033[1;31mError: command not found: \033[0m", 2);
+			msg_error("\033[1;31mcommand not found: \033[0m");
 			ft_putendl_fd(args[0], 2);
 			ft_free_array(args);
 			exit(127);
@@ -196,11 +126,13 @@ int	main(void)
 		if (!input)
 		{
 			ft_putendl_fd("exit", STDOUT_FILENO);
+			printf("\033[1;31m(╯°□°)╯︵ ┻━┻\033[0m\n");
 			break ;
 		}
 		if (ft_strcmp(input, "exit") == 0)
 		{
 			free(input);
+			printf("\033[1;31m(╯°□°)╯︵ ┻━┻\033[0m\n");
 			break ;
 		}
 		if (ft_strlen(input) == 0)

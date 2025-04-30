@@ -1,20 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/23 17:03:26 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/04/30 12:00:28 by tlair            ###   ########.fr       */
+/*   Created: 2025/04/30 11:45:43 by tlair             #+#    #+#             */
+/*   Updated: 2025/04/30 11:46:30 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-void	msg_error(char *msg)
+void	free_tokens(t_token *tokens)
 {
-	ft_putstr_fd("\033[1;31mError: \033[0m", 2);
-	if (msg && *msg)
-		ft_putstr_fd(msg, 2);
+	t_token	*current;
+	t_token	*next;
+
+	current = tokens;
+	while (current != NULL)
+	{
+		next = current->next;
+		free(current);
+		current = next;
+	}
+}
+
+void	ft_free_array(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+		free(array[i++]);
+	free(array);
 }
