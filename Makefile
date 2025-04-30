@@ -11,7 +11,7 @@ OBJS		= $(SRCS:.c=.o)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(LIBFT) $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft-complete -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) -L$(LIBFT_DIR) -lft-complete -o $(NAME) -lreadline
 
 $(LIBFT):
 	make -s -C $(LIBFT_DIR)

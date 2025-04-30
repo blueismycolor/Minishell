@@ -6,53 +6,13 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:31:27 by egatien           #+#    #+#             */
-/*   Updated: 2025/04/30 12:15:46 by tlair            ###   ########.fr       */
+/*   Updated: 2025/04/30 14:24:57 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
 int	g_signal;
-
-static void	display_prompt(void)
-{
-	char	*home;
-	char	*cwd;
-	char	*relative_path;
-
-	home = getenv("HOME");
-	cwd = getcwd(NULL, 0);
-	if (home && cwd)
-	{
-		relative_path = ft_strstr(cwd, home);
-		if (relative_path)
-			printf("\033[1;92m╭─[\033[1;35m~%s\033[1;92m]\n╰─➤ \033[0m",
-				relative_path + ft_strlen(home));
-		else
-			printf("\033[1;92m╭─[\033[1;35m%s\033[1;92m]\n╰─➤ \033[0m", cwd);
-	}
-	else
-		printf("\033[1;92m╭─[\033[1;35munknown\033[1;92m]\n╰─➤ \033[0m");
-	free(cwd);
-}
-// ft_strstr finds the first occurrence of home in cwd
-
-static char	*get_user_input(void)
-{ //FONCTION TEMPORAIRE (SERA REMPLACE PAR LA PARTIE PARSING)
-	char	*input;
-	ssize_t	read;
-
-	input = NULL;
-	read = getline(&input, &(size_t){0}, stdin);
-	if (read == -1)
-	{
-		free(input);
-		return (NULL);
-	}
-	if (input[read - 1] == '\n')
-		input[read - 1] = '\0';
-	return (input);
-} //FONCTION TEMPORAIRE (SERA REMPLACE PAR LA PARTIE PARSING)
 
 static char	**create_arguments(t_token *token)
 { //FONCTION TEMPORAIRE (SERA REMPLACE PAR LA PARTIE PARSING)
@@ -114,15 +74,57 @@ static void	execute_command(t_token *tokens)
 		wait(NULL);
 }
 
+static char	*get_prompt(void)
+{
+	char	*cwd;
+	char	*home;
+	char	*prompt;
+	char	*relative;
+	int		len;
+
+	cwd = getcwd(NULL, 0);
+	home = getenv("HOME");
+	len = ft_strlen("\033[1;92m╭─[\033[1;35m") + ft_strlen("\033[1;92m]\n╰─➤ \033[0m");
+	if (cwd)
+	{
+		if (home && (relative = ft_strnstr(cwd, home, ft_strlen(cwd))))
+		{
+			relative += ft_strlen(home);
+			len += ft_strlen(relative) + 1; // +1 pour le ~
+		}
+		else
+			len += ft_strlen(cwd);
+	}
+	else
+		len += ft_strlen("unknown");
+	prompt = malloc(len + 1);
+	if (!prompt)
+		return (NULL);
+	ft_strlcpy(prompt, "\033[1;92m╭─[\033[1;35m", len + 1);
+	if (cwd)
+	{
+		if (home && relative)
+			ft_strlcat(prompt, "~", len + 1);
+		ft_strlcat(prompt, (relative ? relative : cwd), len + 1);
+	}
+	else
+		ft_strlcat(prompt, "unknown", len + 1);
+	ft_strlcat(prompt, "\033[1;92m]\n╰─➤ \033[0m", len + 1);
+	free(cwd);
+	return (prompt);
+}
+
 int	main(void)
 {
 	char	*input;
+	char 	*prompt;
 	t_token	*tokens;
 
 	while (1)
 	{
-		display_prompt();
-		input = get_user_input();
+		prompt = get_prompt();
+		input = readline(prompt);
+		free(prompt);
 		if (!input)
 		{
 			ft_putendl_fd("exit", STDOUT_FILENO);
