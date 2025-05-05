@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:31:27 by egatien           #+#    #+#             */
-/*   Updated: 2025/04/30 16:44:27 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:52:36 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,28 +46,26 @@ char	**create_arguments(t_cmd *token)
 static void	execute_command(t_cmd *tokens)
 {
 	pid_t		pid;
-	char		**args;
 	char		*cmd_path;
 	extern char	**environ;
 
 	pid = fork();
 	if (pid == 0)
 	{
-		args = create_arguments(tokens);
-		if (!args || !args[0])
+		if (!tokens->args || !tokens->args[0])
 			exit(1);
-		cmd_path = find_command_path(args[0]);
+		cmd_path = find_command_path(tokens->args[0]);
 		if (!cmd_path)
 		{
 			msg_error("\033[1;31mcommand not found: \033[0m");
-			ft_putendl_fd(args[0], 2);
-			ft_free_array(args);
+			ft_putendl_fd(tokens->args[0], 2);
+			ft_free_array(tokens->args);
 			exit(127);
 		}
-		execve(cmd_path, args, environ);
+		execve(cmd_path, tokens->args, environ);
 		perror("\033[1;31mError\033[0m");
 		free(cmd_path);
-		ft_free_array(args);
+		ft_free_array(tokens->args);
 		exit(EXIT_FAILURE);
 	}
 	else if (pid > 0)
@@ -133,24 +131,18 @@ int	main(void)
 			printf("\033[1;31m(╯°□°)╯︵ ┻━┻\033[0m\n");
 			break ;
 		}
-		if (ft_strncmp(input, "cd", 2) == 0)
-		{
-			printf("Test function cd\n");
-			handle_cd(data);
-			continue ;
-		}
 		if (ft_strlen(input) == 0)
 		{
 			free(input);
 			continue ;
 		}
-		data->cmd = malloc(sizeof(t_cmd));
-		data->cmd->cmd = ft_strdup(input);
-		data->cmd->type = CMD;
-		data->cmd->quote = NONE;
-		data->cmd->next = NULL;
-		data->cmd->prev = NULL;
-		init_cmd(data->cmd, input);
+		data->cmd = init_cmd(data->cmd, input);
+		if (ft_strncmp(data->cmd->cmd, "cd", 2) == 0)
+		{
+			printf("Test function cd\n");
+			handle_cd(data);
+			continue ;
+		}
 		execute_command(data->cmd);
 		free_tokens(data->cmd);
 		free(input);

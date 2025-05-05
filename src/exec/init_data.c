@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:26:16 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/04/30 15:09:07 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:47:38 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_data	*init_data(char **environ)
 	data = malloc(sizeof(t_data));
 	if (!data)
 		msg_error(ERR_MALLOC);
-	data->cmd = NULL;
+	// data->cmd = NULL;
 	data->env = copy_env(data, environ);
 	data->historic = NULL;
 	data->old_pwd = getenv("PWD");
@@ -52,8 +52,9 @@ t_cmd	*init_cmd(t_cmd *cmd, char *input)
 	cmd = malloc(sizeof(t_cmd));
 	if (!cmd)
 		msg_error(ERR_MALLOC);
-	cmd->cmd = input;
-	cmd->args = NULL;
+	cmd->cmd = ft_strdup(input);
+	cmd->args = create_arguments(cmd);
+	cmd->type = CMD;
 	cmd->is_builtin = false;
 	cmd->has_redir = false;
 	cmd->redir = NULL;
