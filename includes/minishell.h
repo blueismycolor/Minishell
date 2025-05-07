@@ -130,6 +130,14 @@ t_type	get_operator_type(char *str, int i);
 /* parsing.c */
 t_cmd	*ft_parse(char *str);
 
+/* expansion part */
+int	last_exit_status(int exit_status);
+char	*put_env(char *str, char **envp);
+char	*set_env(char *str, char **envp);
+char	*get_env_name(char *str, int index, char **envp);
+char	*get_env_name(char *str, int index, char **envp);
+char	*ft_tabstrnstr(const char *str, const char *to_find);
+
 /***********************/
 /* Fonctions executing */
 /***********************/
