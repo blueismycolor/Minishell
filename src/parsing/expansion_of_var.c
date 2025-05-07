@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion_of_var.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:01:32 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/07 13:16:21 by egatien          ###   ########.fr       */
+/*   Updated: 2025/05/07 15:25:41 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,12 +132,12 @@ char	*put_env(char *str, char **envp)
 	return (result);
 }
 
-int	main(int argc, char **argv, char **env)
-{
-	char	*result = "$USER fdvdfv $PATH #jghg$HOME\0";
+// int	main(int argc, char **argv, char **env)
+// {
+// 	char	*result = "$USER fdvdfv $PATH #jghg$HOME\0";
 
-	if (argc && argv)
-		result = set_env(argv[1], env);
-	printf("result : |%s|\n", result);
-	free(result);
-}
+// 	if (argc && argv)
+// 		result = set_env(argv[1], env);
+// 	printf("result : |%s|\n", result);
+// 	free(result);
+// }
