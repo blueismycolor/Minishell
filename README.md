@@ -1,3 +1,8 @@
+### 🧪 Télécharger le tester.sh pour faire ses propres tests
+```bash
+$ wget https://teamgeek.fr/tester.sh && chmod +x tester.sh
+```
+
 # 🐚 MiniShell — Un interpréteur de commandes Unix simplifié
 
 Ce projet consiste à créer un interpréteur de commande basique, **similaire à Bash**.  
