@@ -6,16 +6,64 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:31:27 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/05 16:52:36 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/08 15:36:17 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	g_signal;
+volatile sig_atomic_t	g_signal;
+
+void	disable_echoctl(void)
+{
+	struct termios	term;
+
+	tcgetattr(STDIN_FILENO, &term);
+	term.c_lflag &= ~ECHOCTL;
+	tcsetattr(STDIN_FILENO, TCSANOW, &term);
+}
+
+void	print_prompt_header(void)
+{
+	char	*cwd;
+	char	*home;
+	char	*relative;
+
+	cwd = getcwd(NULL, 0);
+	home = getenv("HOME");
+	relative = NULL;
+	if (cwd && home)
+	{
+		relative = cwd;
+		if (!ft_strncmp(cwd, home, ft_strlen(home)))
+			relative += ft_strlen(home);
+		else
+			relative = NULL;
+	}
+	printf("\033[1;92m╭─[\033[1;35m");
+	if (cwd && home && relative)
+		printf("~%s", relative);
+	else if (cwd)
+		printf("%s", cwd);
+	else
+		printf("unknown");
+	printf("\033[1;92m]\033[0m\n");
+	free(cwd);
+}
+
+void	sigint_handler(int sig)
+{
+	(void)sig;
+	g_signal = 1;
+	rl_replace_line("", 0);
+	write(1, "\n", 1);
+	rl_on_new_line();
+	print_prompt_header();
+	rl_redisplay();
+}
 
 char	**create_arguments(t_cmd *token)
-{ //FONCTION TEMPORAIRE (SERA REMPLACE PAR LA PARTIE PARSING)
+{ //FONCTION TEMPORAIRE (SERA REMPLACEE PAR LA PARTIE PARSING)
 	char	**args;
 	char	*temp;
 	char	*token_str;
@@ -41,96 +89,63 @@ char	**create_arguments(t_cmd *token)
 	args[count] = NULL;
 	free(temp);
 	return (args);
-} //FONCTION TEMPORAIRE (SERA REMPLACE PAR LA PARTIE PARSING)
+} //FONCTION TEMPORAIRE (SERA REMPLACEE PAR LA PARTIE PARSING)
 
-static void	execute_command(t_cmd *tokens)
+static void	execute_command(t_cmd *cmd)
 {
 	pid_t		pid;
 	char		*cmd_path;
 	extern char	**environ;
+	int			status;
 
 	pid = fork();
 	if (pid == 0)
 	{
-		if (!tokens->args || !tokens->args[0])
+		signal(SIGINT, SIG_DFL);
+		if (!cmd->args || !cmd->args[0])
 			exit(1);
-		cmd_path = find_command_path(tokens->args[0]);
+		cmd_path = find_command_path(cmd->args[0]);
 		if (!cmd_path)
 		{
 			msg_error("\033[1;31mcommand not found: \033[0m");
-			ft_putendl_fd(tokens->args[0], 2);
-			ft_free_array(tokens->args);
+			ft_putendl_fd(cmd->args[0], 2);
+			ft_free_array(cmd->args);
 			exit(127);
 		}
-		execve(cmd_path, tokens->args, environ);
+		execve(cmd_path, cmd->args, environ);
 		perror("\033[1;31mError\033[0m");
 		free(cmd_path);
-		ft_free_array(tokens->args);
+		ft_free_array(cmd->args);
 		exit(EXIT_FAILURE);
 	}
 	else if (pid > 0)
-		wait(NULL);
-}
-
-static char	*get_prompt(void)
-{
-	char	*cwd;
-	char	*home;
-	char	*prompt;
-	char	*relative;
-	int		len;
-
-	cwd = getcwd(NULL, 0);
-	home = getenv("HOME");
-	len = ft_strlen("\033[1;92m╭─[\033[1;35m") + ft_strlen("\033[1;92m]\n╰─➤ \033[0m");
-	if (cwd)
 	{
-		if (home && (relative = ft_strnstr(cwd, home, ft_strlen(cwd))))
-		{
-			relative += ft_strlen(home);
-			len += ft_strlen(relative) + 1; // +1 pour le ~
-		}
-		else
-			len += ft_strlen(cwd);
+		signal(SIGINT, sigint_handler);
+		waitpid(pid, &status, 0);
 	}
-	else
-		len += ft_strlen("unknown");
-	prompt = malloc(len + 1);
-	if (!prompt)
-		return (NULL);
-	ft_strlcpy(prompt, "\033[1;92m╭─[\033[1;35m", len + 1);
-	if (cwd)
-	{
-		if (home && relative)
-			ft_strlcat(prompt, "~", len + 1);
-		ft_strlcat(prompt, (relative ? relative : cwd), len + 1);
-	}
-	else
-		ft_strlcat(prompt, "unknown", len + 1);
-	ft_strlcat(prompt, "\033[1;92m]\n╰─➤ \033[0m", len + 1);
-	free(cwd);
-	return (prompt);
 }
 
 int	main(void)
 {
 	char		*input;
-	char 		*prompt;
 	extern char	**environ;
 	t_data		*data;
 
+	g_signal = 0;
+	disable_echoctl();
 	data = init_data(environ);
 	while (1)
 	{
-		prompt = get_prompt();
-		input = readline(prompt);
-		free(prompt);
-		if (!input)
+		signal(SIGINT, sigint_handler);
+		input = NULL;
+		if (!g_signal)
 		{
-			ft_putendl_fd("exit", STDOUT_FILENO);
-			printf("\033[1;31m(╯°□°)╯︵ ┻━┻\033[0m\n");
-			break ;
+			print_prompt_header();
+			input = readline("\033[1;92m╰─➤ \033[0m");
 		}
+		g_signal = 0;
+		if (handle_exit(data, input))
+			break ;
 		if (ft_strlen(input) == 0)
 		{
 			free(input);
@@ -141,6 +156,8 @@ int	main(void)
 		{
 			printf("Test function cd\n");
 			handle_cd(data);
+			free_tokens(data->cmd);
+			free(input);
 			continue ;
 		}
 		execute_command(data->cmd);

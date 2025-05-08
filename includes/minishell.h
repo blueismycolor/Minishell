@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/04/30 16:39:08 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/05/08 12:02:15 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,21 @@
 # include <limits.h>
 # include <fcntl.h>
 # include <sys/stat.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <signal.h>
+# include <termios.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
 # include "../libft-complete/libft/libft.h"
 # include "../libft-complete/ft_printf/ft_printf.h"
+
+#ifndef ECHOCTL
+# define ECHOCTL 0001000
+#endif
 
 /*********************/
 /* Messages d'erreur */
@@ -108,7 +118,7 @@ typedef struct s_data
 /********************/
 /* Variable globale */
 /********************/
-extern int	g_signal;		// 127 = command not found || 126 = permission failed || 1 = general error
+extern volatile sig_atomic_t	g_signal;		// 127 = command not found || 126 = permission failed || 1 = general error
 // merci de ne pas remettre "signal" car ce nom est reserve au systeme
 
 /*********************/
@@ -153,7 +163,7 @@ void	handle_echo(t_data *data);
 void	handle_env(t_data *data);
 
 /* exit.c */
-void	handle_exit(t_data *data, char *input);
+int	handle_exit(t_data *data, char *input);
 
 /* export_utils.c */
 int	get_env_len(char **env);
