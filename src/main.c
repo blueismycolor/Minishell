@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:31:27 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/08 15:36:17 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/12 15:31:10 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ int	main(void)
 	g_signal = 0;
 	disable_echoctl();
 	data = init_data(environ);
+	init_history(data);
 	while (1)
 	{
 		signal(SIGINT, sigint_handler);
@@ -146,6 +147,8 @@ int	main(void)
 		g_signal = 0;
 		if (handle_exit(data, input))
 			break ;
+		if (ft_strlen(input) > 0)
+			add_to_history(data, input);
 		if (ft_strlen(input) == 0)
 		{
 			free(input);
@@ -164,5 +167,6 @@ int	main(void)
 		free_tokens(data->cmd);
 		free(input);
 	}
+	free_history(data);
 	return (0);
 }

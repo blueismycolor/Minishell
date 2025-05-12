@@ -6,7 +6,7 @@
 #    By: tlair <tlair@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/09 11:58:32 by aeudes            #+#    #+#              #
-#    Updated: 2025/04/29 17:03:11 by tlair            ###   ########.fr        #
+#    Updated: 2025/05/12 15:34:41 by tlair            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ SRCS = ft_atoi.c \
 	ft_strcmp.c \
 	ft_strbprk.c \
 	ft_strtok.c \
+	ft_extend_array.c \
 
 BONUS_SRCS = ft_lstnew_bonus.c \
 	ft_lstadd_front_bonus.c \

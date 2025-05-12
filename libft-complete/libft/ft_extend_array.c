@@ -1,42 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_extend_array.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/30 11:45:43 by tlair             #+#    #+#             */
-/*   Updated: 2025/05/12 15:41:54 by tlair            ###   ########.fr       */
+/*   Created: 2025/05/12 15:33:48 by tlair             #+#    #+#             */
+/*   Updated: 2025/05/12 15:34:05 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "libft.h"
 
-void	free_tokens(t_cmd *cmd)
+char	**ft_extend_array(char **array, const char *new_str)
 {
-	t_cmd	*current;
-	t_cmd	*next;
+	int		i;
+	int		j;
+	char	**new_array;
 
-	current = cmd;
-	while (current != NULL)
-	{
-		next = current->next;
-		free(current);
-		current = next;
-	}
-}
-
-void	ft_free_array(char **array)
-{
-	int	i;
-
-	if (!array)
-		return ;
 	i = 0;
-	while (array[i])
-	{
-		free(array[i]);
+	j = -1;
+	while (array && array[i])
 		i++;
+	new_array = malloc(sizeof(char *) * (i + 2));
+	if (!new_array)
+		return (NULL);
+	while (++j < i)
+		new_array[j] = array[j];
+	new_array[j] = ft_strdup(new_str);
+	if (!new_array[j])
+	{
+		free(new_array);
+		return (NULL);
 	}
+	new_array[j + 1] = NULL;
 	free(array);
+	return (new_array);
 }

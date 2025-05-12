@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:31:03 by tlair             #+#    #+#             */
-/*   Updated: 2025/04/29 16:37:11 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/12 15:48:42 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ char	*ft_strtok(char *str, const char *delim)
  *
  * @param str The string to be tokenized.
  * @param delim The delimiter used to split the string.
- * @return A pointer to the first token found in the string, or NULL if no token is found.
+ * @return A pointer to the first token found in the string,
+ * or NULL if no token is found.
  */

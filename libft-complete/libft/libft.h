@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/09 11:47:34 by aeudes            #+#    #+#             */
-/*   Updated: 2025/04/29 16:41:08 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/12 15:34:20 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,6 @@ int		ft_strcmp(const char *s1, const char *s2);
 char	*ft_strstr(const char *haystack, const char *needle);
 char	*ft_strpbrk(const char *s, const char *charset);
 char	*ft_strtok(char *str, const char *delim);
+char	**ft_extend_array(char **array, const char *new_str);
 
 #endif

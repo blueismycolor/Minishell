@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:26:16 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/05/05 16:47:38 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/12 15:50:30 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**copy_env(t_data *data, char **environ)
 	count = 0;
 	while (environ[count])
 		count++;
-    data->env = malloc((count + 1) * sizeof(char *));
+	data->env = malloc((count + 1) * sizeof(char *));
 	i = 0;
 	while (i < count)
 	{
@@ -38,9 +38,8 @@ t_data	*init_data(char **environ)
 	data = malloc(sizeof(t_data));
 	if (!data)
 		msg_error(ERR_MALLOC);
-	// data->cmd = NULL;
 	data->env = copy_env(data, environ);
-	data->historic = NULL;
+	data->history = NULL;
 	data->old_pwd = getenv("PWD");
 	data->pwd = getenv("PWD");
 	data->return_value = 0;

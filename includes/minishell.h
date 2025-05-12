@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/08 12:02:15 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/12 15:28:27 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ typedef struct s_data
 	char			*pwd;
 	char			*old_pwd;
 	int				return_value;
-	char			**historic;
+	char			**history;
 }	t_data;
 
 /********************/
@@ -199,9 +199,13 @@ char	**create_arguments(t_cmd *token);
 int		main(void);
 
 /*******************/
-/* Fonctions utils */
+/* Utils & history */
 /*******************/
 void	free_tokens(t_cmd *cmd);
 void	ft_free_array(char **array);
+
+void	add_to_history(t_data *data, const char *input);
+void	init_history(t_data *data);
+void	free_history(t_data *data);
 
 #endif
