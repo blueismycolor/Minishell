@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/14 12:41:04 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/05/14 17:49:55 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ char	*ft_tabstrnstr(const char *str, const char *to_find);
 /* Fonctions executing */
 /***********************/
 /* cd.c */
-void	update_pwd(t_data *data, char *buffer);
+void	update_pwd(t_data *data);
 void	handle_cd(t_data *data);
 
 /* echo.c */
@@ -197,7 +197,7 @@ t_redir	*init_redir(t_redir *redir);
 void	msg_error(char *msg);
 char	*find_command_path(const char *cmd);
 char	**create_arguments(t_cmd *token);
-void	select_builtin(t_data *data, char *input);
+void	select_builtin(t_data *data);
 int		main(void);
 
 /*******************/
@@ -210,3 +210,5 @@ void	print_data(t_data *data);
 void	add_to_history(t_data *data, const char *input);
 void	init_history(t_data *data);
 void	free_history(t_data *data);
+
+#endif

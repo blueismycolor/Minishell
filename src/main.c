@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:31:27 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/14 12:40:52 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/05/14 17:49:37 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ static void	execute_command(t_cmd *cmd)
 	}
 }
 
-void	select_builtin(t_data *data, char *input)
+void	select_builtin(t_data *data)
 {
 	if (!data->cmd || !data->cmd->cmd)
 		msg_error("Invalid command.\n");
@@ -136,8 +136,6 @@ void	select_builtin(t_data *data, char *input)
 		handle_echo(data);
 	if (ft_strncmp(data->cmd->cmd, "env", 3) == 0)
 		handle_env(data);
-	if (ft_strncmp(data->cmd->cmd, "exit", 4) == 0)
-		handle_exit(data, input);
 	if (ft_strncmp(data->cmd->cmd, "export", 6) == 0)
 		handle_export_var(data);
 	if (ft_strncmp(data->cmd->cmd, "pwd", 3) == 0)
@@ -166,11 +164,13 @@ int	main(void)
 			input = readline("\033[1;92m╰─➤ \033[0m");
 		}
 		g_signal = 0;
+		if (handle_exit(data, input))
+			break ;
 		data->cmd = init_cmd(data->cmd, input);
 //		print_data(data);
 
 		if (data->cmd->is_builtin)
-			select_builtin(data, input);
+			select_builtin(data);
 		else
 			execute_command(data->cmd);
 //		select_builtin(data, input);
