@@ -6,7 +6,7 @@
 /*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:10:35 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/04/30 15:43:52 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/05/14 12:38:36 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	is_n_option(char *arg)
 
 void	handle_echo(t_data *data)
 {
+//	printf("ENTRY HANDLE_ECHO\n");
 	int	i;
 	int	has_n;
 	int	first;

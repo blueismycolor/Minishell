@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:33:56 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/05/08 10:19:57 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/14 12:38:58 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	handle_exit(t_data *data, char *input)
 {
+//	printf("ENTRY HANDLE_EXIT\n");
 	if (!input || ft_strcmp(input, "exit") == 0)
 	{
 		if (data)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/12 15:28:27 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/14 12:41:04 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,15 +166,16 @@ void	handle_env(t_data *data);
 int	handle_exit(t_data *data, char *input);
 
 /* export_utils.c */
-int	get_env_len(char **env);
+int		get_env_len(t_data *data);
 void	print_export(char **env);
 void	free_tab(char **tab);
+char	*get_var_name(char *arg);
 
 /* export.c */
-int		var_index(char *var_name, char **env);
-void	replace_var(char *new_var, int var_index, char **env);
-void	export_sorted_var(char **env);
-char	**add_var_env(char **env, char *new_var);
+int		var_index(t_data *data, char *var_name);
+void	replace_var(t_data *data, char *new_var, int var_index);
+void	export_sorted_var(t_data *data);
+char	**add_var_env(t_data *data, char *new_var);
 void	handle_export_var(t_data *data);
 
 /* pwd.c */
@@ -196,6 +197,7 @@ t_redir	*init_redir(t_redir *redir);
 void	msg_error(char *msg);
 char	*find_command_path(const char *cmd);
 char	**create_arguments(t_cmd *token);
+void	select_builtin(t_data *data, char *input);
 int		main(void);
 
 /*******************/
@@ -203,9 +205,8 @@ int		main(void);
 /*******************/
 void	free_tokens(t_cmd *cmd);
 void	ft_free_array(char **array);
+void	print_data(t_data *data);
 
 void	add_to_history(t_data *data, const char *input);
 void	init_history(t_data *data);
 void	free_history(t_data *data);
-
-#endif

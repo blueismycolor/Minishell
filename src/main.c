@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:31:27 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/12 15:31:10 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/14 12:40:52 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ char	**create_arguments(t_cmd *token)
 
 static void	execute_command(t_cmd *cmd)
 {
+//	printf("ENTRY EXECUTE_COMMAND\n");
 	pid_t		pid;
 	char		*cmd_path;
 	extern char	**environ;
@@ -125,6 +126,26 @@ static void	execute_command(t_cmd *cmd)
 	}
 }
 
+void	select_builtin(t_data *data, char *input)
+{
+	if (!data->cmd || !data->cmd->cmd)
+		msg_error("Invalid command.\n");
+	if (ft_strncmp(data->cmd->cmd, "cd", 2) == 0)
+		handle_cd(data);
+	if (ft_strncmp(data->cmd->cmd, "echo", 4) == 0)
+		handle_echo(data);
+	if (ft_strncmp(data->cmd->cmd, "env", 3) == 0)
+		handle_env(data);
+	if (ft_strncmp(data->cmd->cmd, "exit", 4) == 0)
+		handle_exit(data, input);
+	if (ft_strncmp(data->cmd->cmd, "export", 6) == 0)
+		handle_export_var(data);
+	if (ft_strncmp(data->cmd->cmd, "pwd", 3) == 0)
+		handle_pwd(data);
+	if (ft_strncmp(data->cmd->cmd, "unset", 5) == 0)
+		handle_unset(data);
+}
+
 int	main(void)
 {
 	char		*input;
@@ -145,8 +166,14 @@ int	main(void)
 			input = readline("\033[1;92m╰─➤ \033[0m");
 		}
 		g_signal = 0;
-		if (handle_exit(data, input))
-			break ;
+		data->cmd = init_cmd(data->cmd, input);
+//		print_data(data);
+
+		if (data->cmd->is_builtin)
+			select_builtin(data, input);
+		else
+			execute_command(data->cmd);
+//		select_builtin(data, input);
 		if (ft_strlen(input) > 0)
 			add_to_history(data, input);
 		if (ft_strlen(input) == 0)
@@ -154,16 +181,8 @@ int	main(void)
 			free(input);
 			continue ;
 		}
-		data->cmd = init_cmd(data->cmd, input);
-		if (ft_strncmp(data->cmd->cmd, "cd", 2) == 0)
-		{
-			printf("Test function cd\n");
-			handle_cd(data);
-			free_tokens(data->cmd);
-			free(input);
-			continue ;
-		}
-		execute_command(data->cmd);
+
+//		execute_command(data->cmd);
 		free_tokens(data->cmd);
 		free(input);
 	}

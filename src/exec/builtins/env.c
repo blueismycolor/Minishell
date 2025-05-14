@@ -6,7 +6,7 @@
 /*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:44:54 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/04/30 15:45:19 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/05/14 12:38:45 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,14 @@
 
 void	handle_env(t_data *data)
 {
+//	printf("ENTRY HANDLE_ENV\n");
 	int	i;
 
-	if (data->cmd->args[1])
+	if (data->cmd->args[1] != NULL)
+	{
 		msg_error("env: too many arguments.\n");
+		return ;
+	}
 	else
 	{
 		i = 0;
@@ -33,3 +37,4 @@ void	handle_env(t_data *data)
 		}
 	}
 }
+

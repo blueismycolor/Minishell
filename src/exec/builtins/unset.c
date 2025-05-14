@@ -6,7 +6,7 @@
 /*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:57:05 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/04/30 15:49:37 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/05/14 12:39:54 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	remove_var(int var_index, char **env)
 
 void	handle_unset(t_data *data)
 {
+//	printf("ENTRY HANDLE_UNSET\n");
 	int		index;
 
 	if (!data->cmd->args[1])
