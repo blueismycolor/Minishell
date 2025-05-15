@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:31:27 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/15 16:45:12 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/15 17:25:54 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char	**create_arguments(t_cmd *token)
 	return (args);
 } //FONCTION TEMPORAIRE (SERA REMPLACEE PAR LA PARTIE PARSING)
 
-static void	execute_command(t_cmd *cmd)
+static void	execute_command(t_data *data)
 {
 //	printf("ENTRY EXECUTE_COMMAND\n");
 	pid_t		pid;
@@ -104,21 +104,32 @@ static void	execute_command(t_cmd *cmd)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		if (!cmd->args || !cmd->args[0])
-			exit(1);
-		cmd_path = find_command_path(cmd->args[0]);
+		if (!data->cmd->args || !data->cmd->args[0])
+		{
+			data->return_value = 1;
+			exit(data->return_value);
+		}
+		cmd_path = find_command_path(data->cmd->args[0]);
 		if (!cmd_path)
 		{
 			msg_error("\033[1;31mcommand not found: \033[0m");
-			ft_putendl_fd(cmd->args[0], 2);
-			ft_free_array(cmd->args);
-			exit(127);
+			ft_putendl_fd(data->cmd->args[0], 2);
+			ft_free_array(data->cmd->args);
+			data->return_value = 127;
+			exit(data->return_value);
 		}
-		execve(cmd_path, cmd->args, environ);
-		perror("\033[1;31mError\033[0m");
+		execve(cmd_path, data->cmd->args, environ);
 		free(cmd_path);
-		ft_free_array(cmd->args);
-		exit(EXIT_FAILURE);
+		if (errno == EACCES)
+			data->return_value = 126;
+		else if (errno == ENOENT)
+			data->return_value = 127;
+		else
+			data->return_value = 1;
+		perror("\033[1;31mError\033[0m");
+		ft_free_array(data->cmd->args);
+		data->return_value = 1;
+		exit(data->return_value);
 	}
 	else if (pid > 0)
 	{
@@ -126,7 +137,12 @@ static void	execute_command(t_cmd *cmd)
 		waitpid(pid, &status, 0);
 		signal(SIGINT, sigint_handler);
 		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+		{
 			write(1, "\n", 1);
+			data->return_value = 130;
+		}
+		else if (WIFEXITED(status))
+			data->return_value = WEXITSTATUS(status);
 	}
 }
 
@@ -146,6 +162,8 @@ void	select_builtin(t_data *data)
 		handle_pwd(data);
 	if (ft_strncmp(data->cmd->cmd, "unset", 5) == 0)
 		handle_unset(data);
+	if (ft_strncmp(data->cmd->cmd, "exit_code", 4) == 0) // TEMP FOR DEBUG
+		printf("Exit code: %d\n", data->return_value);   // TEMP FOR DEBUG
 }
 
 int	main(void)
@@ -182,7 +200,7 @@ int	main(void)
 		if (data->cmd->is_builtin)
 			select_builtin(data);
 		else
-			execute_command(data->cmd);
+			execute_command(data);
 //		select_builtin(data, input);
 		if (ft_strlen(input) > 0)
 			add_to_history(data, input);

@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/15 16:32:23 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/15 17:21:52 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <string.h>
 # include <signal.h>
 # include <termios.h>
+# include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -110,7 +111,7 @@ typedef struct s_data
 	char			**env;			// variables d'environnement
 	char			*pwd;
 	char			*old_pwd;
-	int				return_value;
+	int				return_value;	// valeur de retour de la derniere commande
 	char			**history;
 }	t_data;
 
