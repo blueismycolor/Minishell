@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:45:43 by tlair             #+#    #+#             */
-/*   Updated: 2025/05/14 12:40:28 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/05/15 16:41:15 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void print_data(t_data *data)
 			printf("\t\tARGS[%d] : %s\n", i, cmd->args[i]);
 		}
 		printf("\t\tNB PARAMS : %d\n", cmd->nb_params);
-		printf("\t\tTYPE : %d\n", cmd->type);
+		// printf("\t\tTYPE : %d\n", cmd->type);
 		printf("\t\tREDIR : %s\n", cmd->has_redir ? "true" : "false");
 		if (cmd->has_redir && cmd->redir)
 		{

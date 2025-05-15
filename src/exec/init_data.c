@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:26:16 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/05/14 12:40:14 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/05/15 16:40:27 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ t_cmd	*init_cmd(t_cmd *cmd, char *input)
 		msg_error(ERR_MALLOC);
 	cmd->cmd = ft_strdup(input);
 	cmd->args = create_arguments(cmd);
-	cmd->type = CMD;
 
 	// Temporaire (doit etre gerer par le parsing)
 	if (ft_strncmp(cmd->cmd, "cd", 2) == 0

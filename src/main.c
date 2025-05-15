@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:31:27 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/14 17:49:37 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/15 16:45:12 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ static void	execute_command(t_cmd *cmd)
 	if (pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		if (!cmd->args || !cmd->args[0])
 			exit(1);
 		cmd_path = find_command_path(cmd->args[0]);
@@ -121,8 +122,11 @@ static void	execute_command(t_cmd *cmd)
 	}
 	else if (pid > 0)
 	{
-		signal(SIGINT, sigint_handler);
+		signal(SIGINT, SIG_IGN);
 		waitpid(pid, &status, 0);
+		signal(SIGINT, sigint_handler);
+		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+			write(1, "\n", 1);
 	}
 }
 
@@ -162,8 +166,14 @@ int	main(void)
 		{
 			print_prompt_header();
 			input = readline("\033[1;92m╰─➤ \033[0m");
+			if (handle_exit(data, input))
+				break ;
 		}
-		g_signal = 0;
+		else
+		{
+			g_signal = 0;
+			continue ;
+		}
 		if (handle_exit(data, input))
 			break ;
 		data->cmd = init_cmd(data->cmd, input);
