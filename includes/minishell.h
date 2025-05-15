@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/15 16:24:56 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/15 16:32:23 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,26 +88,26 @@ typedef struct s_redir
 {
 	char			*filename;
 	t_type			type;
-	struct s_redir	*next;
+	struct s_redir	*next; // est-ce qu'on en a besoin ?
 }	t_redir;
 
 typedef struct s_cmd
 {
-	char			*cmd;
-	bool			is_builtin;
-	char			**args;
-	int				nb_params;
-	bool			has_redir;
-	t_redir			*redir;
-	t_quote			quote;
+	char			*cmd;		// commande principale
+	bool			is_builtin;	// true si builtin
+	char			**args;		// arguments & options de la commande
+	int				nb_params;	// nombre d'arguments
+	bool			has_redir;	// true si redirection
+	t_redir			*redir;		// redirection (fichier, type)
+	t_quote			quote;		// type de quote
 	struct s_cmd	*next;
-	struct s_cmd	*prev;
+	struct s_cmd	*prev;	// est-ce qu'on en a besoin ?
 }	t_cmd;
 
 typedef struct s_data
 {
-	t_cmd			*cmd;
-	char			**env;
+	t_cmd			*cmd;			// commande, arguments, redirections, etc.
+	char			**env;			// variables d'environnement
 	char			*pwd;
 	char			*old_pwd;
 	int				return_value;
@@ -118,7 +118,6 @@ typedef struct s_data
 /* Variable globale */
 /********************/
 extern volatile sig_atomic_t	g_signal;		// 127 = command not found || 126 = permission failed || 1 = general error
-// merci de ne pas remettre "signal" car ce nom est reserve au systeme
 
 /*********************/
 /* Fonctions parsing */
