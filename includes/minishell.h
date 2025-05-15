@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/14 17:49:55 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/15 13:58:09 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,13 @@ char	*set_env(char *str, char **envp);
 char	*get_env_name(char *str, int index, char **envp);
 char	*get_env_name(char *str, int index, char **envp);
 char	*ft_tabstrnstr(const char *str, const char *to_find);
+
+/* search token */
+char	**put_token_in_tabstr(char *str); //fonction principale qui cherche les tokens et les mets dans un tableau de chaine
+char	*get_str_token(char *str, int i, int end);
+char	*put_second_tokens(char *str, int end);
+int		get_end_of_token(int i, char *str, bool *command);
+int		pass_quotes(int i, char *str);
 
 /***********************/
 /* Fonctions executing */
