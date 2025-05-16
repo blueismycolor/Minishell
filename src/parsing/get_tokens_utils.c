@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   get_tokens_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:42:36 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/15 15:43:54 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/16 10:36:24 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "test.h"
 #include "../includes/minishell.h"
 
 int	pass_quotes(int i, char *str)
@@ -34,14 +33,22 @@ int	pass_quotes(int i, char *str)
 
 int	get_end_of_token(int i, char *str, bool *command)
 {
+	bool	check;
+	
+	check = false;
 	while (str[i] != '\0' && str[i] != '|'
 		&& str[i] != '>' && str[i] != '<')
 	{
 		i = pass_quotes(i, str);
 		if (str[i] != ' ')
+		{
+			check = true;
 			*command = true;
+		}
 		i++;
 	}
+	if (check == false)
+		*command = false;
 	return (i);
 }
 
