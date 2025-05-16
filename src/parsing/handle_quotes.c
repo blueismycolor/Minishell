@@ -3,64 +3,59 @@
 /*                                                        :::      ::::::::   */
 /*   handle_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:10:41 by aeudes            #+#    #+#             */
-/*   Updated: 2025/04/29 15:33:08 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/16 17:56:22 by aeudes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-/* simple quotes ? ou double quotes ?* sinon il n'y a pas de quote*/
-t_quote	get_quote_type(char *str)
+t_quote	get_quote_type(char *input)
 {
-	int	i;
+	int		i;
+	t_quote	quote;
 
 	i = 0;
-	while (str[i])
+	quote = NONE;
+	while (input[i])
 	{
-		if (str[i] == '\'')
+		if (input[i] == '\'' && quote == NONE)
 			return (SINGLE);
-		if (str[i] == '\"')
+		if (input[i] == '"' && quote == NONE)
 			return (DOUBLE);
 		i++;
 	}
 	return (NONE);
+	
 }
 
-/*
-Si les simples quotes ne sont pas encore ouverts (quote_state == NONE),
-des qu'on tombe dessus, ça met quote_state à SINGLE.
-Si les simples quotes sont ouverts (quote_state == SINGLE) des qu'on tombe dessus,
-ca met quote_state a NONE donc ca ferme les quotes.
-
-Si les doubles quotes ne sont pas encore ouverts (quote_state == NONE),
-des qu'on tombe dessus, ça met quote_state à DOUBLE.
-Si les doubles quotes sont ouverts (quote_state == DOUBLE) des qu'on tombe dessus,
-ca met quote_state a NONE donc ca ferme les quotes.
-*/
-t_quote get_quote_state(char *str)
+int	check_quote_state(char *input)
 {
 	int i;
 	t_quote quote_state;
 	
 	i = 0;
 	quote_state = NONE;
-	
-	while (str[i] != '\0') 
+	while (input[i] != '\0') 
 	{
-		if (str[i] == '\'' && quote_state == NONE)
+		if (input[i] == '\'' && quote_state == NONE)
 			quote_state = SINGLE;
-		else if (str[i] == '\'' && quote_state == SINGLE)
+		else if (input[i] == '\'' && quote_state == SINGLE)
 			quote_state = NONE;
-		else if (str[i] == '\"' && quote_state == NONE)
+		else if (input[i] == '\"' && quote_state == NONE)
 			quote_state = DOUBLE;
-		else if (str[i] == '\"' && quote_state == DOUBLE)
+		else if (input[i] == '\"' && quote_state == DOUBLE)
 			quote_state = NONE;
+		i++;
 	}
-	i++;
-	return (quote_state);
+	if (quote_state != NONE)
+	{
+		ft_putstr_fd(ERR_QUOTE, STDERR_FILENO);
+		return(ERROR);
+	}
+	return (SUCCESS);
 }
 
 

@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   parsing0_0.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/23 17:28:11 by egatien           #+#    #+#             */
-/*   Updated: 2025/04/30 16:10:43 by tlair            ###   ########.fr       */
+/*   Created: 2025/05/16 17:50:38 by aeudes            #+#    #+#             */
+/*   Updated: 2025/05/16 17:51:36 by aeudes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 /*
-
 le parsing va se proceder ainsi :
 	- compter le nombre de token
 	- mettre tous les token dans un tableau de str
@@ -26,9 +25,44 @@ le parsing va se proceder ainsi :
 	- donc dans le cas des quotes, t_command.command a donc une seule chaine dans le tableau. 
 */
 
-
-t_cmd	*ft_parse(char *str) 	/* le but de cette fonction est de renvoyer une liste chaine de token (c'est la fonction principale en gros)*/
+t_cmd	*ft_parse(char *str)/* le but de cette fonction est de renvoyer une liste chaine de token (c'est la fonction principale en gros)*/
 {
 	(void)str;
 	return (NULL); //temp
+}
+
+bool		is_in_quotes(char *input, int i)
+{
+	int index;
+	int	quote_count;
+	
+	index = 0;
+	quote_count = 0;
+	while (index < i)
+	{
+		if (input[index] == '\'')
+			quote_count++;
+		index++;
+	}
+	if (quote_count % 2 != 0)
+		return (true);
+	return (false);
+}
+
+bool		is_in_double_quotes(char *input, int i)
+{
+	int	index;
+	int	quote_count;
+
+	index = 0;
+	quote_count = 0;
+	while (index < i)
+	{
+		if (input[index] == '"')
+			quote_count++;
+		index++;
+	}
+	if (quote_count % 2 != 0)
+		return (true);
+	return (false);
 }
