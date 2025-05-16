@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:26:16 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/05/15 17:03:50 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/16 16:32:07 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ t_cmd	*init_cmd(t_cmd *cmd, char *input)
 	if (ft_strncmp(cmd->cmd, "cd", 2) == 0
 		|| ft_strncmp(cmd->cmd, "echo", 4) == 0
 		|| ft_strncmp(cmd->cmd, "env", 3) == 0
-		|| ft_strncmp(cmd->cmd, "exit", 4) == 0
 		|| ft_strncmp(cmd->cmd, "export", 6) == 0
 		|| ft_strncmp(cmd->cmd, "pwd", 3) == 0
 		|| ft_strncmp(cmd->cmd, "unset", 5) == 0)
@@ -74,7 +73,9 @@ t_cmd	*init_cmd(t_cmd *cmd, char *input)
 		cmd->is_builtin = false;
 
 	cmd->has_redir = false;
-	cmd->redir = NULL;
+	cmd->redir = malloc(sizeof(t_redir));
+	if (!cmd->redir)
+		msg_error(ERR_MALLOC);
 	cmd->nb_params = 0;
 	cmd->quote = NONE;
 	cmd->next = NULL;

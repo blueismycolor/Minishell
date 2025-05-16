@@ -6,11 +6,17 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 17:03:26 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/04/30 12:00:28 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/16 16:49:02 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	error(t_data *data, char *msg, int error_code)
+{
+	msg_error(msg);
+	data->return_value = error_code;
+}
 
 void	msg_error(char *msg)
 {

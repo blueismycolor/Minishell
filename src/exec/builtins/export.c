@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:38:12 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/05/14 12:39:30 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/05/16 16:57:35 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,26 +122,24 @@ void	handle_export_var(t_data *data)
 	int		i;
 	char	*var_name;
 
+	data->return_value = 0;
 	i = 0;
 	/*if (data->cmd->args[2])
 	{
 		msg_error("export: too many arguments.\n");
 		return ;
 	}*/
-
 	if (!data->cmd->args[1])
 	{
 		export_sorted_var(data);
 		return ;
 	}
-
 	var_name = get_var_name(data->cmd->args[1]);
 	if (!var_name)
 	{
-		msg_error("export: invalid variable name.\n");
+		error(data, "export: invalid variable name.\n", 1);
 		return ;
 	}
-
 	i = var_index(data, var_name);
 	if (i != -1)
 		replace_var(data, data->cmd->args[1], i);

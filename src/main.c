@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:31:27 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/15 17:25:54 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/16 16:30:50 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,8 +162,6 @@ void	select_builtin(t_data *data)
 		handle_pwd(data);
 	if (ft_strncmp(data->cmd->cmd, "unset", 5) == 0)
 		handle_unset(data);
-	if (ft_strncmp(data->cmd->cmd, "exit_code", 4) == 0) // TEMP FOR DEBUG
-		printf("Exit code: %d\n", data->return_value);   // TEMP FOR DEBUG
 }
 
 int	main(void)
@@ -196,8 +194,31 @@ int	main(void)
 			break ;
 		data->cmd = init_cmd(data->cmd, input);
 //		print_data(data);
-
-		if (data->cmd->is_builtin)
+		if (ft_strncmp(data->cmd->cmd, "exit_code", 9) == 0) // TEMP FOR DEBUG
+				printf("Exit code: %d\n", data->return_value);   // TEMP FOR DEBUG
+		else if (ft_strncmp(data->cmd->cmd, "testinput", 9) == 0) // TEMP FOR DEBUG
+		{
+			data->cmd->has_redir = true;
+			data->cmd->redir->type = INPUT;
+			data->cmd->redir->filename = ft_strdup("input.txt");
+			printf("File name: %s\n", data->cmd->redir->filename);
+			int fd = open(data->cmd->redir->filename, O_RDONLY);
+			if (fd != -1)
+			{
+				char buffer[1024];
+				ssize_t bytes_read;
+				
+				while ((bytes_read = read(fd, buffer, sizeof(buffer) - 1)) > 0)
+				{
+					buffer[bytes_read] = '\0';
+					printf("%s", buffer);
+				}
+				close(fd);
+			}
+			else
+				perror("Error opening file");
+		}
+		else if (data->cmd->is_builtin)
 			select_builtin(data);
 		else
 			execute_command(data);

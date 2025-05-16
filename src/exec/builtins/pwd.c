@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:11:12 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/05/14 12:39:38 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/05/16 16:58:07 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,14 @@
 void	handle_pwd(t_data *data)
 {
 //	printf("ENTRY HANDLE_PWD\n");
+	data->return_value = 0;
 	if (data->cmd->args[1])
-		msg_error("pwd: too many arguments.\n");
+		error(data, "pwd: too many arguments.\n", 1);
 	else
 	{
 		data->pwd = getcwd(NULL, 0);
 		if (!data->pwd)
-			msg_error("pwd: error: getcwd can't access parent directories.\n");
+			error(data, "pwd: error: getcwd can't access parent directories.\n", 1);
 		printf("%s\n", data->pwd);
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:10:35 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/05/14 12:38:36 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/05/16 16:54:45 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	handle_echo(t_data *data)
 	int	has_n;
 	int	first;
 
+	data->return_value = 0;
 	i = 1;
 	has_n = 0;
 	while (data->cmd->args[i] && is_n_option(data->cmd->args[i]))

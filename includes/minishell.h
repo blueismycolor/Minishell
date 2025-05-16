@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/15 17:21:52 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/16 16:50:03 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@ t_cmd	*init_cmd(t_cmd *cmd, char *input);
 t_redir	*init_redir(t_redir *redir);
 
 
-
+void	error(t_data *data, char *msg, int error_code);
 void	msg_error(char *msg);
 char	*find_command_path(const char *cmd);
 char	**create_arguments(t_cmd *token);
