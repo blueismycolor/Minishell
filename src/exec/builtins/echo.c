@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:10:35 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/05/16 16:54:45 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/16 17:09:36 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,20 @@ int	is_n_option(char *arg)
 
 void	handle_echo(t_data *data)
 {
-//	printf("ENTRY HANDLE_ECHO\n");
 	int	i;
 	int	has_n;
 	int	first;
 
-	data->return_value = 0;
 	i = 1;
 	has_n = 0;
+	if (data->cmd->args[1] && ft_strcmp(data->cmd->args[1], "$?") == 0 
+		&& !data->cmd->args[2]) //Temp support for echo $? to print the exit code
+	{
+		printf("%d\n", data->return_value);
+		data->return_value = 0;
+		return;
+	}
+	data->return_value = 0;
 	while (data->cmd->args[i] && is_n_option(data->cmd->args[i]))
 	{
 		has_n = 1;

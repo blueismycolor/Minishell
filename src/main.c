@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:31:27 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/16 16:30:50 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/16 17:09:55 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,9 +194,7 @@ int	main(void)
 			break ;
 		data->cmd = init_cmd(data->cmd, input);
 //		print_data(data);
-		if (ft_strncmp(data->cmd->cmd, "exit_code", 9) == 0) // TEMP FOR DEBUG
-				printf("Exit code: %d\n", data->return_value);   // TEMP FOR DEBUG
-		else if (ft_strncmp(data->cmd->cmd, "testinput", 9) == 0) // TEMP FOR DEBUG
+		if (ft_strncmp(data->cmd->cmd, "testinput", 9) == 0) // TEMP FOR DEBUG
 		{
 			data->cmd->has_redir = true;
 			data->cmd->redir->type = INPUT;
