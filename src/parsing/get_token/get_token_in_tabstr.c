@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   get_token_in_tabstr.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 15:40:26 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/15 15:43:36 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/20 12:41:43 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include "test.h"
-#include "../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 int	check_redirections(char *str, int end)
 {

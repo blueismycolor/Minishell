@@ -3,38 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   handle_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:10:41 by aeudes            #+#    #+#             */
-/*   Updated: 2025/05/16 17:56:22 by aeudes           ###   ########.fr       */
+/*   Updated: 2025/05/20 13:04:55 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_quote	get_quote_type(char *input)
-{
-	int		i;
-	t_quote	quote;
-
-	i = 0;
-	quote = NONE;
-	while (input[i])
-	{
-		if (input[i] == '\'' && quote == NONE)
-			return (SINGLE);
-		if (input[i] == '"' && quote == NONE)
-			return (DOUBLE);
-		i++;
-	}
-	return (NONE);
-	
-}
-
 int	check_quote_state(char *input)
 {
-	int i;
-	t_quote quote_state;
+	t_quote	quote_state;
+	int		i;
 	
 	i = 0;
 	quote_state = NONE;

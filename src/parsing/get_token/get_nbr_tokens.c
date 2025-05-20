@@ -6,11 +6,11 @@
 /*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 13:41:13 by egatien           #+#    #+#             */
-/*   Updated: 2025/04/09 13:54:34 by egatien          ###   ########.fr       */
+/*   Updated: 2025/05/20 12:41:49 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 int	check_for_quotes(char *out, int i) // fonction qui check les quotes
 {

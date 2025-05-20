@@ -6,11 +6,11 @@
 /*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 12:42:36 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/16 10:36:24 by egatien          ###   ########.fr       */
+/*   Updated: 2025/05/20 12:41:35 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 int	pass_quotes(int i, char *str)
 {
