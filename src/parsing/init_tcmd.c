@@ -6,7 +6,7 @@
 /*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:50:36 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/19 14:01:18 by egatien          ###   ########.fr       */
+/*   Updated: 2025/05/20 13:18:53 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,5 @@ t_cmd	*tcmd_init(char *input)
 	if (process_input(input) == -1)
 		return (NULL);
 	arg_tokens = get_token(input);
-	give_expansion(arg_tokens); // partie qui va changer les variables d'env
 	result = create_list_tcmd(arg_tokens);
 }
