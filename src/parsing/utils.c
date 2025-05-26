@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 13:08:16 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/07 13:16:37 by egatien          ###   ########.fr       */
+/*   Updated: 2025/05/26 18:03:51 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*ft_tabstrnstr(const char *str, const char *to_find)
 		return ((char *)str);
 	return (NULL);
 }
-
+/*
 char	*set_env(char *str, char **envp)
 {
 	int		i;
@@ -58,3 +58,4 @@ char	*set_env(char *str, char **envp)
 	str = ft_strdup(str);
 	return (put_env(str, envp));
 }
+*/

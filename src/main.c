@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:31:27 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/16 17:09:55 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/26 18:00:26 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,8 @@ int	main(void)
 	char		*input;
 	extern char	**environ;
 	t_data		*data;
+	int saved_stdin = dup(STDIN_FILENO);
+	int saved_stdout = dup(STDOUT_FILENO);
 
 	g_signal = 0;
 	disable_echoctl();
@@ -182,56 +184,39 @@ int	main(void)
 		{
 			print_prompt_header();
 			input = readline("\033[1;92m╰─➤ \033[0m");
-			if (handle_exit(data, input))
-				break ;
 		}
-		else
+		g_signal = 0;
+		if (ft_strcmp(input, "testredir") == 0)
 		{
-			g_signal = 0;
-			continue ;
-		}
-		if (handle_exit(data, input))
-			break ;
-		data->cmd = init_cmd(data->cmd, input);
-//		print_data(data);
-		if (ft_strncmp(data->cmd->cmd, "testinput", 9) == 0) // TEMP FOR DEBUG
-		{
+			data->cmd = init_cmd(data->cmd, "echo coucou");
 			data->cmd->has_redir = true;
-			data->cmd->redir->type = INPUT;
-			data->cmd->redir->filename = ft_strdup("input.txt");
-			printf("File name: %s\n", data->cmd->redir->filename);
-			int fd = open(data->cmd->redir->filename, O_RDONLY);
-			if (fd != -1)
-			{
-				char buffer[1024];
-				ssize_t bytes_read;
-				
-				while ((bytes_read = read(fd, buffer, sizeof(buffer) - 1)) > 0)
-				{
-					buffer[bytes_read] = '\0';
-					printf("%s", buffer);
-				}
-				close(fd);
-			}
-			else
-				perror("Error opening file");
+			data->cmd->redir = malloc(sizeof(t_redir));
+			data->cmd->redir->filename = "infile.txt";
+			data->cmd->redir->type = TRUNC;
+			data->cmd->redir->next = NULL;
+			handle_redir(data->cmd);
 		}
-		else if (data->cmd->is_builtin)
-			select_builtin(data);
 		else
-			execute_command(data);
-//		select_builtin(data, input);
-		if (ft_strlen(input) > 0)
-			add_to_history(data, input);
+			data->cmd = init_cmd(data->cmd, input);
 		if (ft_strlen(input) == 0)
 		{
 			free(input);
 			continue ;
 		}
+		handle_exit(data, input);
+		if (data->cmd->is_builtin)
+			select_builtin(data);
+		else
+			execute_command(data);
 
-//		execute_command(data->cmd);
+		if (ft_strlen(input) > 0)
+			add_to_history(data, input);
 		free_tokens(data->cmd);
 		free(input);
+		dup2(saved_stdin, STDIN_FILENO);
+		dup2(saved_stdout, STDOUT_FILENO);
+		close(saved_stdin);
+		close(saved_stdout);
 	}
 	free_history(data);
 	return (0);

@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   init_tcmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:50:36 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/20 13:18:53 by egatien          ###   ########.fr       */
+/*   Updated: 2025/05/26 18:02:59 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
+/*
 bool	check_for_expansion(char *str)
 {
 	int	i;
@@ -63,3 +63,4 @@ t_cmd	*tcmd_init(char *input)
 	arg_tokens = get_token(input);
 	result = create_list_tcmd(arg_tokens);
 }
+*/

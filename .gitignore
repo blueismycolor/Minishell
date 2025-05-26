@@ -2,5 +2,7 @@
 *.a
 *.out
 *test*
+*infile*
+*outfile*
 .vscode
 minishell

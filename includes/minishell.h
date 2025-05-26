@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/16 18:02:29 by aeudes           ###   ########.fr       */
+/*   Updated: 2025/05/26 17:58:35 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ typedef struct s_cmd
 	int				nb_params;	// nombre d'arguments
 	bool			has_redir;	// true si redirection
 	t_redir			*redir;		// redirection (fichier, type)
+	int				fd_out;		// fichier
 	t_quote			quote;		// type de quote
 	struct s_cmd	*next;
 	struct s_cmd	*prev;	// est-ce qu'on en a besoin ?
@@ -225,6 +226,15 @@ char		*find_command_path(const char *cmd);
 char		**create_arguments(t_cmd *token);
 void		select_builtin(t_data *data);
 int			main(void);
+
+/* Redirection handling */
+void		handle_redir(t_cmd *cmd);
+void		handle_input(t_cmd *cmd);
+void		handle_trunc(t_cmd *cmd);
+void		handle_append(t_cmd *cmd);
+void		handle_pipe(t_cmd *cmd);
+int			create_heredoc(char *del);
+int			is_delimiter(char *line, char *del);
 
 /*******************/
 /* Utils & history */

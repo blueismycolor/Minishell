@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   handle_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:10:41 by aeudes            #+#    #+#             */
-/*   Updated: 2025/05/20 13:04:55 by egatien          ###   ########.fr       */
+/*   Updated: 2025/05/26 18:01:33 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
+/*
 int	check_quote_state(char *input)
 {
 	t_quote	quote_state;
@@ -39,7 +39,7 @@ int	check_quote_state(char *input)
 	return (SUCCESS);
 }
 
-
+*/
 
 
 
