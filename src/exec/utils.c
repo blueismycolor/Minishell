@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:45:43 by tlair             #+#    #+#             */
-/*   Updated: 2025/05/15 16:41:15 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/27 15:21:47 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void print_data(t_data *data)
     printf("\tPWD : %s\n", data->pwd ? data->pwd : "(null)");
     printf("\tOLD_PWD : %s\n", data->old_pwd ? data->old_pwd : "(null)");
     printf("\tRETURN_VALUE : %d\n", data->return_value);
+	printf("\tSAVED_STDIN : %d\n", data->saved_stdin);
+	printf("\tSAVED_STDOUT : %d\n", data->saved_stdout);
 	t_cmd *cmd = data->cmd;
 	while (cmd)
 	{
@@ -61,6 +63,7 @@ void print_data(t_data *data)
 		}
 		printf("\t\tNB PARAMS : %d\n", cmd->nb_params);
 		// printf("\t\tTYPE : %d\n", cmd->type);
+		printf("\t\tFD : %d\n", cmd->fd);
 		printf("\t\tREDIR : %s\n", cmd->has_redir ? "true" : "false");
 		if (cmd->has_redir && cmd->redir)
 		{

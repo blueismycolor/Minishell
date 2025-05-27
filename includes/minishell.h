@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/26 17:58:35 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/27 15:12:01 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ typedef struct s_cmd
 	int				nb_params;	// nombre d'arguments
 	bool			has_redir;	// true si redirection
 	t_redir			*redir;		// redirection (fichier, type)
-	int				fd_out;		// fichier
+	int				fd;			// fichier
 	t_quote			quote;		// type de quote
 	struct s_cmd	*next;
 	struct s_cmd	*prev;	// est-ce qu'on en a besoin ?
@@ -121,6 +121,8 @@ typedef struct s_data
 	char			*old_pwd;
 	int				return_value;	// valeur de retour de la derniere commande
 	char			**history;
+	int				saved_stdin;
+	int				saved_stdout;
 }	t_data;
 
 /********************/
@@ -235,6 +237,7 @@ void		handle_append(t_cmd *cmd);
 void		handle_pipe(t_cmd *cmd);
 int			create_heredoc(char *del);
 int			is_delimiter(char *line, char *del);
+void		reset_fd(t_data *data);
 
 /*******************/
 /* Utils & history */

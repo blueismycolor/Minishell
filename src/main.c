@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:31:27 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/26 18:00:26 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/27 15:39:08 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,8 +169,10 @@ int	main(void)
 	char		*input;
 	extern char	**environ;
 	t_data		*data;
-	int saved_stdin = dup(STDIN_FILENO);
-	int saved_stdout = dup(STDOUT_FILENO);
+
+//	Deplacer dans init_data()
+//	int saved_stdin = dup(STDIN_FILENO);
+//	int saved_stdout = dup(STDOUT_FILENO);
 
 	g_signal = 0;
 	disable_echoctl();
@@ -186,38 +188,40 @@ int	main(void)
 			input = readline("\033[1;92m╰─➤ \033[0m");
 		}
 		g_signal = 0;
-		if (ft_strcmp(input, "testredir") == 0)
+		if (ft_strcmp(input, "test") == 0)
 		{
 			data->cmd = init_cmd(data->cmd, "echo coucou");
 			data->cmd->has_redir = true;
 			data->cmd->redir = malloc(sizeof(t_redir));
 			data->cmd->redir->filename = "infile.txt";
-			data->cmd->redir->type = TRUNC;
+			data->cmd->redir->type = INPUT;
 			data->cmd->redir->next = NULL;
+//			print_data(data);
 			handle_redir(data->cmd);
 		}
 		else
 			data->cmd = init_cmd(data->cmd, input);
-		if (ft_strlen(input) == 0)
+		if (input && ft_strlen(input) == 0)
 		{
 			free(input);
 			continue ;
 		}
 		handle_exit(data, input);
+//		print_data(data);
 		if (data->cmd->is_builtin)
 			select_builtin(data);
 		else
 			execute_command(data);
-
 		if (ft_strlen(input) > 0)
 			add_to_history(data, input);
+		reset_fd(data);
 		free_tokens(data->cmd);
 		free(input);
-		dup2(saved_stdin, STDIN_FILENO);
-		dup2(saved_stdout, STDOUT_FILENO);
-		close(saved_stdin);
-		close(saved_stdout);
+//		dup2(saved_stdin, STDIN_FILENO);
+//		dup2(saved_stdout, STDOUT_FILENO);
+//		close(saved_stdin);
+//		close(saved_stdout);
 	}
-	free_history(data);
+	free_history(data);		// !!!!! DATA EST FREE DANS LE EXIT ICI !!!!!
 	return (0);
 }

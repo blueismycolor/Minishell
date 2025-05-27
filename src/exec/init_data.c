@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:26:16 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/05/16 16:32:07 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/27 14:41:08 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ t_data	*init_data(char **environ)
 	if (!data->old_pwd)
 		msg_error(ERR_MALLOC);
 	data->return_value = 0;
+	data->saved_stdin = dup(STDIN_FILENO);
+	data->saved_stdout = dup(STDOUT_FILENO);
 	return (data);
 }
 

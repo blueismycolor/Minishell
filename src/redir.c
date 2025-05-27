@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 16:21:36 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/05/26 17:53:48 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/27 15:29:58 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ void	handle_redir(t_cmd *cmd)
 			handle_append(cmd);
 		else if (redir->type == HEREDOC)
 		{
-			cmd->fd_out = create_heredoc(redir->filename);
-			if (dup2(cmd->fd_out, STDIN_FILENO) == -1)
+			cmd->fd = create_heredoc(redir->filename);
+			if (dup2(cmd->fd, STDIN_FILENO) == -1)
 				perror("dup2");
-			close(cmd->fd_out);
+			close(cmd->fd);
 		}
 		redir = redir->next;
 	}
@@ -38,52 +38,53 @@ void	handle_redir(t_cmd *cmd)
 
 void	handle_input(t_cmd *cmd)
 {
-	cmd->fd_out = open(cmd->redir->filename, O_RDONLY);
-	if (cmd->fd_out == -1)
+	cmd->fd = open(cmd->redir->filename, O_RDONLY);
+	if (cmd->fd == -1)
 	{
 		perror(cmd->redir->filename);
 		return ;
 	}
-	if (dup2(cmd->fd_out, STDIN_FILENO) == -1)
+	if (dup2(cmd->fd, STDIN_FILENO) == -1)
 	{
 		perror("dup2");
-		close(cmd->fd_out);
+		close(cmd->fd);
 		return ;
 	}
 }
 
 void	handle_trunc(t_cmd *cmd)
 {
-	cmd->fd_out = open(cmd->redir->filename,
+	cmd->fd = open(cmd->redir->filename,
 			O_WRONLY | O_TRUNC | O_CREAT, 0644);
-	if (cmd->fd_out == -1)
+	if (cmd->fd == -1)
 	{
 		perror(cmd->redir->filename);
 		return ;
 	}
-	if (dup2(cmd->fd_out, STDOUT_FILENO) == -1)
+	if (dup2(cmd->fd, STDOUT_FILENO) == -1)
 	{
 		perror("dup2");
-		close(cmd->fd_out);
+		close(cmd->fd);
 		return ;
 	}
 }
 
 void	handle_append(t_cmd *cmd)
 {
-	cmd->fd_out = open(cmd->redir->filename,
+	cmd->fd = open(cmd->redir->filename,
 			O_WRONLY | O_APPEND | O_CREAT, 0644);
-	if (cmd->fd_out == -1)
+	if (cmd->fd == -1)
 	{
 		perror(cmd->redir->filename);
 		return ;
 	}
-	if (dup2(cmd->fd_out, STDOUT_FILENO) == -1)
+	if (dup2(cmd->fd, STDOUT_FILENO) == -1)
 	{
 		perror("dup2");
-		close(cmd->fd_out);
+		close(cmd->fd);
 		return ;
 	}
+	close(cmd->fd);
 }
 
 
@@ -122,4 +123,14 @@ int	is_delimiter(char *line, char *del)
 
 	len = ft_strlen(del);
 	return (ft_strncmp(line, del, len) == 0 && line[len] == '\n');
+}
+
+void	reset_fd(t_data *data)
+{
+//	if (data->cmd->fd)
+//		close(data->cmd->fd);
+	dup2(data->saved_stdin, STDIN_FILENO);
+	dup2(data->saved_stdout, STDOUT_FILENO);
+	close(data->saved_stdin);
+	close(data->saved_stdout);
 }

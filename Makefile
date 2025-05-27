@@ -5,6 +5,7 @@ LIBFT_DIR	= libft-complete
 LIBFT		= $(LIBFT_DIR)/libft-complete.a
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -I$(LIBFT_DIR) -g
+CFLAGS		+= -fsanitize=address
 OBJS		= $(SRCS:.c=.o)
 
 %.o: %.c
