@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:31:27 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/27 17:13:52 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/27 17:37:18 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,8 @@ int	main(int argc, char **argv, char **envp)
 			print_prompt_header();
 			input = readline("\033[1;92m╰─➤ \033[0m");
 		}
+		data->saved_stdin = dup(STDIN_FILENO);
+		data->saved_stdout = dup(STDOUT_FILENO);
 		g_signal = 0;
 		if (ft_strcmp(input, "test") == 0)
 		{
@@ -195,14 +197,14 @@ int	main(int argc, char **argv, char **envp)
 			data->cmd->has_redir = true;
 			data->cmd->redir = malloc(sizeof(t_redir));
 			data->cmd->redir->filename = "infile.txt";
-			data->cmd->redir->type = INPUT;
+			data->cmd->redir->type = TRUNC;
 			data->cmd->redir->next = NULL;
-//			print_data(data);
 			handle_redir(data->cmd);
+			// print_data(data);
 		}
 		else
 			data->cmd = init_cmd(data->cmd, input);
-		print_data(data);
+		// print_data(data);
 		if (input && ft_strlen(input) == 0)
 		{
 			free(input);
@@ -215,9 +217,11 @@ int	main(int argc, char **argv, char **envp)
 			select_builtin(data);
 		else
 			execute_command(data);
+		reset_fd(data);
 		if (ft_strlen(input) > 0)
 			add_to_history(data, input);
-		reset_fd(data);
+		print_data(data);
+		print_data(data);
 		free_tokens(data->cmd);
 		free(input);
 //		dup2(saved_stdin, STDIN_FILENO);

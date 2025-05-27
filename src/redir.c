@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 16:21:36 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/05/27 15:29:58 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:38:52 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	handle_input(t_cmd *cmd)
 		close(cmd->fd);
 		return ;
 	}
+	close(cmd->fd);
 }
 
 void	handle_trunc(t_cmd *cmd)
@@ -67,6 +68,7 @@ void	handle_trunc(t_cmd *cmd)
 		close(cmd->fd);
 		return ;
 	}
+	close(cmd->fd);
 }
 
 void	handle_append(t_cmd *cmd)
@@ -86,7 +88,6 @@ void	handle_append(t_cmd *cmd)
 	}
 	close(cmd->fd);
 }
-
 
 int	create_heredoc(char	*del)
 {

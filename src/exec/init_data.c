@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:26:16 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/05/27 17:12:50 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/27 17:36:49 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ t_data	*init_data(char **environ)
 	if (!data->old_pwd)
 		msg_error(ERR_MALLOC);
 	data->return_value = 0;
-	data->saved_stdin = dup(STDIN_FILENO);
-	data->saved_stdout = dup(STDOUT_FILENO);
+	data->saved_stdin = 0;
+	data->saved_stdout = 0;
 	return (data);
 }
 
