@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/27 15:12:01 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/05/27 16:32:04 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,7 +227,6 @@ void		msg_error(char *msg);
 char		*find_command_path(const char *cmd);
 char		**create_arguments(t_cmd *token);
 void		select_builtin(t_data *data);
-int			main(void);
 
 /* Redirection handling */
 void		handle_redir(t_cmd *cmd);

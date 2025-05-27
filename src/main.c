@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:31:27 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/27 15:39:08 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:13:52 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,10 +164,11 @@ void	select_builtin(t_data *data)
 		handle_unset(data);
 }
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
+	(void)argc;
+	(void)argv;
 	char		*input;
-	extern char	**environ;
 	t_data		*data;
 
 //	Deplacer dans init_data()
@@ -176,7 +177,7 @@ int	main(void)
 
 	g_signal = 0;
 	disable_echoctl();
-	data = init_data(environ);
+	data = init_data(envp);
 	init_history(data);
 	while (1)
 	{
@@ -201,14 +202,16 @@ int	main(void)
 		}
 		else
 			data->cmd = init_cmd(data->cmd, input);
+		print_data(data);
 		if (input && ft_strlen(input) == 0)
 		{
 			free(input);
 			continue ;
 		}
+		// print_data(data);
 		handle_exit(data, input);
-//		print_data(data);
-		if (data->cmd->is_builtin)
+		if (data->cmd->is_builtin
+			&& ft_strncmp(data->cmd->cmd, "exit", 4) != 0)
 			select_builtin(data);
 		else
 			execute_command(data);

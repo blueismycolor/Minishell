@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:26:16 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/05/27 14:41:08 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/05/27 17:12:50 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ t_cmd	*init_cmd(t_cmd *cmd, char *input)
 		|| ft_strncmp(cmd->cmd, "env", 3) == 0
 		|| ft_strncmp(cmd->cmd, "export", 6) == 0
 		|| ft_strncmp(cmd->cmd, "pwd", 3) == 0
-		|| ft_strncmp(cmd->cmd, "unset", 5) == 0)
+		|| ft_strncmp(cmd->cmd, "unset", 5) == 0
+		|| ft_strncmp(cmd->cmd, "exit", 4) == 0)
 		cmd->is_builtin = true;
 	else
 		cmd->is_builtin = false;
