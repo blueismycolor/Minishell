@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/27 16:32:04 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/28 14:47:41 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@
 #ifndef ECHOCTL
 # define ECHOCTL 0001000
 #endif
+
+# define SIZE_MAX 20
+# define SPACE ' '
 
 /*********************/
 /* Messages d'erreur */
@@ -133,49 +136,81 @@ extern volatile sig_atomic_t	g_signal;		// 127 = command not found || 126 = perm
 /*********************/
 /* Fonctions parsing */
 /*********************/
-/* get_nbr_tokens.c */
-int			check_for_quotes(char *out, int i);
-int			get_nbr_tokens(char *out);
+// parsing0_0.c
+t_cmd	*ft_parse(char *str);
+bool	is_in_quotes(char *input, int i);
+bool	is_in_double_quotes(char *input, int i);
 
-/* handle_quotes.c */
-t_quote		get_quote_type(char *input);
-t_quote 	check_quote_state(char *input);
+// parsing0_1.c
+bool	check_pipe_syntax(char *input, int i);
+int		check_quote_syntax(char *input, int i);
+bool	check_redirection_syntax(char *input, int i, int j);
+bool	validate_input(char *input);
+int		process_input(char *input);
 
-/* handle_tokens.c */
-int			is_whitespace(char c);
-int			is_operator(char c);
-t_type		get_token_type(char *input);
-t_token 	*create_token(t_token **head, char *str, t_type type, t_quote quote);
-t_type 		get_token_type(char *input);
+// parsing0_2.c
+int		is_space(char c);
+int		skip_space(char *input, int i);
 
-/* parsing.c */
-t_cmd		*ft_parse(char *str);
+// tokens_in_tabstr_part
 
-/*parsing0_0.c */
-bool		is_in_quotes(char *input, int i);
-bool		is_in_double_quotes(char *input, int i);
+// get_nbr_token.c
+int		check_for_quotes(char *out, int i);
+int		get_nbr_tokens(char *out);
 
-/*parsing0_1.c*/
-int			process_input(char *input);
-bool		validate_input(char *input);
-bool		check_pipe_syntax(char *input, int i);
-int			check_quote_syntax(char *input, int i);
-bool		check_redirection_syntax(char *input, int i);
+// get_token_in_tabstr.c
+int		check_redirections(char *str, int end);
+char	**setup_variables(bool *command, int *j, int *i, char *str);
+int		get_second_tokens(char *str, char **result, int *j, int end);
+char	**put_token_in_tabstr(char *str);
 
-/* expansion part */
-int			last_exit_status(int exit_status);
-char		*put_env(char *str, char **envp);
-char		*set_env(char *str, char **envp);
-char		*get_env_name(char *str, int index, char **envp);
-char		*get_env_name(char *str, int index, char **envp);
-char		*ft_tabstrnstr(const char *str, const char *to_find);
+// get_token_utils.c
+char	*get_str_token(char *str, int i, int end);
+char	*put_second_tokens(char *str, int end);
+int		get_end_of_token(int i, char *str, bool *command);
+int		pass_quotes(int i, char *str);
 
-/* search token */
-char		**put_token_in_tabstr(char *str); //fonction principale qui cherche les tokens et les mets dans un tableau de chaine
-char		*get_str_token(char *str, int i, int end);
-char		*put_second_tokens(char *str, int end);
-int			get_end_of_token(int i, char *str, bool *command);
-int			pass_quotes(int i, char *str);
+// t_token_utils.c
+t_token		*create_token(t_token **head, char *str, t_type type, t_quote quote);
+t_type		get_token_type(char *str);
+t_quote		get_quote_type(char *str);
+void		free_list(t_token *head);
+
+// get_args.c
+int		count_args(char *str);
+char	*get_word(int i, int end, char *str);
+char	**ft_getargs(char *str, char **result);
+char	**set_args(char *str);
+char	*ft_remove_quotes(char *str);
+
+// expansion
+char	*ft_tabstrnstr(const char *str, const char *to_find);
+int		last_exit_status(int exit_status);
+char	*search_env(char *env_name, char **envp);
+char	*get_env_value(char *str, int index, char **envp);
+int		ft_isspecial(char c);
+int		parsing_env_var(char *str, char *result, int tmp);
+char	*get_special_env_value(char *str, int index, char **envp);
+char	*get_env_name(char *str, int index, char **envp);
+char	*set_env(char *str, char **envp);
+int		pass_single_quotes(char *str, int i);
+char	*put_env(char *str, char **envp);
+
+// create_list_tcmd.c
+t_cmd	*tcmd_init(char *input);
+t_cmd	*init_cmd_node(t_cmd **cmd_list, t_cmd **current);
+char	**realloc_args(char **args, int size);
+void	add_arg(t_cmd *cmd, char *str);
+void	add_redir(t_cmd *cmd, char *filename, t_type type);
+void	fill_cmd_from_tokens(t_cmd *cmd, t_token **token);
+t_cmd	*create_list_tcmd(t_token *token);
+void	free_tcmd(t_cmd *list);
+
+// main.c
+bool	check_quotes_state(char c, bool singlequotes);
+bool	check_for_expansion(char *str);
+t_token	*get_token(char *str);
+void	print_tab(char	**tab);
 
 /***********************/
 /* Fonctions executing */

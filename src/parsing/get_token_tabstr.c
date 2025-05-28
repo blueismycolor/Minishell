@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_token_in_tabstr.c                              :+:      :+:    :+:   */
+/*   get_token_tabstr.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/08 15:40:26 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/20 12:41:43 by egatien          ###   ########.fr       */
+/*   Created: 2025/05/28 14:42:08 by tlair             #+#    #+#             */
+/*   Updated: 2025/05/28 14:42:13 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "test.h"
-#include "../../../includes/minishell.h"
+#include "../includes/minishell.h"
 
 int	check_redirections(char *str, int end)
 {
@@ -82,7 +81,6 @@ char	**put_token_in_tabstr(char *str)
 		if (!get_second_tokens(str, result, &j, end)) // get_second_tokens va recuperer le token qui est soit un pipe ou une redirection. Si tout les tokens ont ete places on renvoie 0 donc on sort de la boucle
 			break ;
 		i = check_redirections(str, end); // change la valeur de 'i' par rapport a 'end'.
-		command = true; // on a passe le premier token donc on peut mettre command = true. 'command' sert uniquement lors du premier passage de la boucle
 	}
 	return (result);
 }

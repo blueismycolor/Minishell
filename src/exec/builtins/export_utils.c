@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 18:24:50 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/05/14 12:39:12 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/05/28 14:53:10 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,6 @@ void	print_export(char **env)
 			printf("export %s\n", env[i]);
 		i++;
 	}
-}
-
-/* Free un tableau deux dimensions. */
-void	free_tab(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		tab[i] = NULL;
-		i++;
-	}
-	free(tab);
 }
 
 char	*get_var_name(char *arg)

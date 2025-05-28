@@ -3,27 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing0_0.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/16 17:50:38 by aeudes            #+#    #+#             */
-/*   Updated: 2025/05/16 17:51:36 by aeudes           ###   ########.fr       */
+/*   Created: 2025/04/30 11:56:31 by aeudes            #+#    #+#             */
+/*   Updated: 2025/05/28 14:42:29 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
-
-/*
-le parsing va se proceder ainsi :
-	- compter le nombre de token
-	- mettre tous les token dans un tableau de str
-	- chaque element du tableau le mettre dans t_command.str
-	- definir le type de chaque token present dans t_command.str
-	- rediviser t_command.str pour recuperer commande et argument et le mettre dans t_command.command
-
-/!\ gerer les quotes :
-	- les quotes si elles s'echainent il faut les concatener pour creer un seul token -> ex : "ls"" -al" == "ls -al"
-	- donc dans le cas des quotes, t_command.command a donc une seule chaine dans le tableau. 
-*/
+#include "../includes/minishell.h"
 
 t_cmd	*ft_parse(char *str)/* le but de cette fonction est de renvoyer une liste chaine de token (c'est la fonction principale en gros)*/
 {
@@ -66,3 +53,27 @@ bool		is_in_double_quotes(char *input, int i)
 		return (true);
 	return (false);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

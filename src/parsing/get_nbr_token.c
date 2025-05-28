@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_nbr_tokens.c                                   :+:      :+:    :+:   */
+/*   get_nbr_token.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/09 13:41:13 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/20 12:41:49 by egatien          ###   ########.fr       */
+/*   Created: 2025/05/28 14:42:00 by tlair             #+#    #+#             */
+/*   Updated: 2025/05/28 14:42:04 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "../includes/minishell.h"
 
 int	check_for_quotes(char *out, int i) // fonction qui check les quotes
 {
@@ -37,7 +37,6 @@ int	check_for_quotes(char *out, int i) // fonction qui check les quotes
 	return (i);
 }
 
-
 /* 
 
 	fonction dont le but est de compter le nombre de token
@@ -53,10 +52,10 @@ int	get_nbr_tokens(char *out)
 	i = 0;
 	while (out[i] != '\0')
 	{
-		while (out[i] == SPACE && out[i] != '\0')
+		while (out[i] == ' ' && out[i] != '\0')
 			i++;
 		if (out[i] != '|' && out[i] != '>'
-			&& out[i] != '<' && out[i] != SPACE && out[i] != '\0')
+			&& out[i] != '<' && out[i] != ' ' && out[i] != '\0')
 			count ++;
 		i = check_for_quotes(out, i);
 		if (i == -1)
@@ -72,3 +71,4 @@ int	get_nbr_tokens(char *out)
 	}
 	return (count - 1);
 }
+

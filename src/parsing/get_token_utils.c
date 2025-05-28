@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_tokens_utils.c                                 :+:      :+:    :+:   */
+/*   get_token_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 12:42:36 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/20 12:41:35 by egatien          ###   ########.fr       */
+/*   Created: 2025/05/28 14:42:17 by tlair             #+#    #+#             */
+/*   Updated: 2025/05/28 14:42:22 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "../includes/minishell.h"
 
 int	pass_quotes(int i, char *str)
 {
 	if (str[i] == '"')
 	{
+		// printf("character avant le quotes : %c\n", str[i - 1]);
 		i++;
+		if (str[i] == '\0')
+			return (i);
 		while (str[i] != '"')
 			i++;
 		return (i);
@@ -34,7 +37,7 @@ int	pass_quotes(int i, char *str)
 int	get_end_of_token(int i, char *str, bool *command)
 {
 	bool	check;
-	
+
 	check = false;
 	while (str[i] != '\0' && str[i] != '|'
 		&& str[i] != '>' && str[i] != '<')

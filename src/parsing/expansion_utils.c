@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expansion_of_var.c                                 :+:      :+:    :+:   */
+/*   expansion_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 13:01:32 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/20 12:40:07 by egatien          ###   ########.fr       */
+/*   Created: 2025/05/23 13:12:17 by egatien           #+#    #+#             */
+/*   Updated: 2025/05/28 14:41:09 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "../includes/minishell.h"
 
 int	get_end_of_second_part(char *str, int index)
 {
@@ -25,12 +25,11 @@ int	get_end_of_second_part(char *str, int index)
 		return (index + 1);
 	}
 	index++;
-	while (ft_isalpha(str[index]) || str[index] == '_'
-		|| ft_isdigit(str[index]))
+	while (ft_isalpha(str[index]) || str[index] == '_' || ft_isdigit(str[index]))
 	{
 		index++;
 	}
-	return (index);
+	return (index); 
 }
 
 char	*put_third_part(int i, char *str)
@@ -38,10 +37,9 @@ char	*put_third_part(int i, char *str)
 	int		count;
 	int		tmp;
 	char	*result;
-
 	tmp = i;
 	count = 0;
-	while (str[tmp] != '\0')
+	while(str[tmp] != '\0')
 	{
 		tmp++;
 		count++;
@@ -59,27 +57,28 @@ char	*put_third_part(int i, char *str)
 	return (result);
 }
 
-char	*get_result(char *name_of_env, char *first_part, char *second_part)
+char	*get_result(char * name_of_env, char * first_part, char *second_part)
 {
 	char	*tmp;
 	char	*result;
 
 	if (name_of_env)
 	{
-		result = ft_strjoin(first_part, name_of_env);
-		tmp = result;
-		result = ft_strjoin(result, second_part);
-		free(tmp);
-		free(first_part);
-		free(name_of_env);
-		free(second_part);
-		return (result);
+	result = ft_strjoin(first_part, name_of_env);
+	tmp = result;
+	result = ft_strjoin(result, second_part);
+	free(tmp);
+	free(first_part);
+	free(name_of_env);
+	free(second_part);
+	return (result);
 	}
 	else
 	{
 		result = ft_strjoin(first_part, second_part);
 		free(first_part);
 		free(second_part);
+		free(name_of_env);
 		return (result);
 	}
 }
@@ -102,6 +101,7 @@ char	*place_env_in_str(char *str, int index, char *name_of_env)
 	}
 	first_part[i] = '\0';
 	i = get_end_of_second_part(str, index);
+
 	second_part = put_third_part(i, str);
 	result = get_result(name_of_env, first_part, second_part);
 	return (result);
@@ -116,7 +116,7 @@ char	*put_env(char *str, char **envp)
 
 	i = 0;
 	result = str;
-	while (result[i] != '\0')
+	while (result && result[i] != '\0')
 	{
 		if (result[i] == '$' && result[i + 1])
 		{
@@ -124,20 +124,37 @@ char	*put_env(char *str, char **envp)
 			name_of_env = get_env_name(result, i, envp);
 			result = place_env_in_str(result, i, name_of_env);
 			free(tmp);
+			// tmp = result;
 			result = put_env(result, envp);
 			i = 0;
 		}
+		if (result[i] == '\0')
+			break;
 		i++;
 	}
+	// free(tmp);
 	return (result);
 }
 
-// int	main(int argc, char **argv, char **env)
-// {
-// 	char	*result = "$USER fdvdfv $PATH #jghg$HOME\0";
+char	*set_env(char *str, char **envp)
+{
+	int		i;
+	char	*result;
+	bool	quotes;
 
-// 	if (argc && argv)
-// 		result = set_env(argv[1], env);
-// 	printf("result : |%s|\n", result);
-// 	free(result);
-// }
+	i = 0;
+	quotes = false;
+	result = ft_strdup(str);
+	free(str);
+	while (result[i] != '\0' && result[i] != '$')
+	{
+		quotes = check_quotes_state(result[i], quotes);
+		if (quotes == true)
+			i = pass_single_quotes(result, i);
+		i++;
+	}
+	if (result[i] == '\0')
+		return (result);
+	return (put_env(result, envp));
+}
+

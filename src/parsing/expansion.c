@@ -1,16 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_env_value.c                                    :+:      :+:    :+:   */
+/*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/30 13:58:39 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/20 12:39:58 by egatien          ###   ########.fr       */
+/*   Created: 2025/05/28 14:41:24 by tlair             #+#    #+#             */
+/*   Updated: 2025/05/28 14:41:30 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/minishell.h"
+#include "../includes/minishell.h"
+
+char	*ft_tabstrnstr(const char *str, const char *to_find)
+{
+	size_t		name_len;
+	size_t		to_find_len;
+	const char	*equal_ptr;
+
+	if (!str || !to_find)
+		return (NULL);
+	equal_ptr = ft_strchr(str, '=');
+	if (!equal_ptr)
+		return (NULL);
+	name_len = equal_ptr - str;
+	to_find_len = ft_strlen(to_find);
+	if (name_len != to_find_len)
+		return (NULL);
+	if (ft_strncmp(str, to_find, name_len) == 0)
+		return ((char *)str);
+	return (NULL);
+}
+
+/* 
+	fonction ou le but est de recuperer la valeur de sortie de la
+	derniere commande (utile pour $?)
+	en gros a chaque appel on peut recuperer la valeur de sortie de la commande
+*/
+int	last_exit_status(int exit_status)
+{
+	static int	status_to_return;
+
+	if (exit_status != -1)
+		status_to_return = exit_status;
+	return (status_to_return);
+}
+
 
 char	*search_env(char *env_name, char **envp)
 {
@@ -38,6 +73,7 @@ char	*search_env(char *env_name, char **envp)
 		return (NULL);
 	return (str);
 }
+
 
 char	*get_env_value(char *str, int index, char **envp)
 {
@@ -68,6 +104,14 @@ char	*get_env_value(char *str, int index, char **envp)
 	return (search_env(result, envp));
 }
 
+
+int	ft_isspecial(char c)
+{
+	if (!ft_isdigit(c) && !ft_isalpha(c) && c != '_')
+		return (1);
+	return (0);
+}
+
 int	parsing_env_var(char *str, char *result, int tmp)
 {
 	int	i;
@@ -75,7 +119,7 @@ int	parsing_env_var(char *str, char *result, int tmp)
 	i = 0;
 	while (str[tmp] != '}')
 	{
-		if (!ft_isdigit(str[tmp]) && !ft_isalpha(str[tmp]) && str[tmp] != '_')
+		if (ft_isspecial(str[tmp]))
 		{
 			free(result);
 			return (0);
@@ -90,12 +134,10 @@ int	parsing_env_var(char *str, char *result, int tmp)
 
 char	*get_special_env_value(char *str, int index, char **envp)
 {
-	int		i;
 	int		count;
 	int		tmp;
 	char	*result;
 
-	i = 0;
 	count = 0;
 	tmp = index;
 	if (ft_isdigit(str[tmp + 1]))
@@ -117,11 +159,9 @@ char	*get_special_env_value(char *str, int index, char **envp)
 
 char	*get_env_name(char *str, int index, char **envp)
 {
-	int		nbr;
 	char	*result;
 
 	index++;
-	nbr = 0;
 	if (ft_isdigit(str[index]))
 	{
 		return (NULL);

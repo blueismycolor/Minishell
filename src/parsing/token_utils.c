@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   t_tokens_utils.c                                   :+:      :+:    :+:   */
+/*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/15 17:10:47 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/20 12:46:11 by egatien          ###   ########.fr       */
+/*   Created: 2025/04/30 11:57:55 by aeudes            #+#    #+#             */
+/*   Updated: 2025/05/28 14:42:46 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../includes/minishell.h"
 
 t_token	*create_token(t_token **head, char *str, t_type type, t_quote quote)
 {
@@ -72,15 +72,16 @@ t_quote	get_quote_type(char *str)
 	return (NONE);
 }
 
-void	free_list(t_token *head)
+bool	check_for_expansion(char *str)
 {
-	t_token	*temp;
+	int	i;
 
-	while (head)
+	i = 0;
+	while(str[i] != '\0')
 	{
-		temp = head;
-		head = head->next;
-		free(temp->str);
-		free(temp);
+		if (str[i] == '$')
+			return (true);
+		i++;
 	}
+	return (false);
 }
