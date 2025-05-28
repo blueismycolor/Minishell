@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 16:21:36 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/05/27 17:38:52 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/28 15:44:37 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,8 +130,11 @@ void	reset_fd(t_data *data)
 {
 //	if (data->cmd->fd)
 //		close(data->cmd->fd);
-	dup2(data->saved_stdin, STDIN_FILENO);
-	dup2(data->saved_stdout, STDOUT_FILENO);
-	close(data->saved_stdin);
-	close(data->saved_stdout);
+	if (!data->is_exit)
+	{
+		dup2(data->saved_stdin, STDIN_FILENO);
+		dup2(data->saved_stdout, STDOUT_FILENO);
+		close(data->saved_stdin);
+		close(data->saved_stdout);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:26:16 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/05/27 17:36:49 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/28 15:43:41 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ t_data	*init_data(char **environ)
 	data->return_value = 0;
 	data->saved_stdin = 0;
 	data->saved_stdout = 0;
+	data->is_exit = false;
 	return (data);
 }
 

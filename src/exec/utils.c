@@ -6,23 +6,26 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:45:43 by tlair             #+#    #+#             */
-/*   Updated: 2025/05/27 16:56:40 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/28 15:43:34 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	free_tokens(t_cmd *cmd)
+void	free_tokens(t_data *data)
 {
 	t_cmd	*current;
 	t_cmd	*next;
 
-	current = cmd;
-	while (current != NULL)
+	if (!data->is_exit)
 	{
-		next = current->next;
-		free(current);
-		current = next;
+		current = data->cmd;
+		while (current != NULL)
+		{
+			next = current->next;
+			free(current);
+			current = next;
+		}
 	}
 }
 

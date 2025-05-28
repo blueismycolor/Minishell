@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/28 14:47:41 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/28 15:43:07 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ typedef struct s_data
 	char			**history;
 	int				saved_stdin;
 	int				saved_stdout;
+	bool			is_exit;		// true si on doit quitter le shell (temporaire ou pas)
 }	t_data;
 
 /********************/
@@ -276,7 +277,7 @@ void		reset_fd(t_data *data);
 /*******************/
 /* Utils & history */
 /*******************/
-void		free_tokens(t_cmd *cmd);
+void		free_tokens(t_data *data);
 void		ft_free_array(char **array);
 void		print_data(t_data *data);
 

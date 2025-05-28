@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:31:27 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/28 14:54:13 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/28 15:48:48 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,10 +238,6 @@ int	main(int argc, char **argv, char **envp)
 	char		*input;
 	t_data		*data;
 
-//	Deplacer dans init_data()
-//	int saved_stdin = dup(STDIN_FILENO);
-//	int saved_stdout = dup(STDOUT_FILENO);
-
 	g_signal = 0;
 	disable_echoctl();
 	data = init_data(envp);
@@ -264,7 +260,7 @@ int	main(int argc, char **argv, char **envp)
 			data->cmd = init_cmd(data->cmd, "echo");
 			data->cmd->has_redir = true;
 			data->cmd->redir = malloc(sizeof(t_redir));
-			data->cmd->redir->filename = strdup("EOF"); // Le délimiteur
+			data->cmd->redir->filename = ft_strdup("EOF"); // Le délimiteur
 			data->cmd->redir->type = HEREDOC;
 			data->cmd->redir->next = NULL;
 			handle_redir(data->cmd);
@@ -280,16 +276,18 @@ int	main(int argc, char **argv, char **envp)
 		// print_data(data);
 		handle_exit(data, input);
 		if (data->cmd->is_builtin
-			&& ft_strncmp(data->cmd->cmd, "exit", 4) != 0)
+			&& ft_strncmp(data->cmd->cmd, "exit", 4) != 0 && !data->is_exit)
 			select_builtin(data);
-		else
+		else if (!data->is_exit)
 			execute_command(data);
 		reset_fd(data);
-		if (ft_strlen(input) > 0)
+		if (ft_strlen(input) > 0 && !data->is_exit)
 			add_to_history(data, input);
 		// print_data(data);
-		free_tokens(data->cmd);
+		free_tokens(data);
 		free(input);
+		if (data->is_exit)
+			break ;
 //		dup2(saved_stdin, STDIN_FILENO);
 //		dup2(saved_stdout, STDOUT_FILENO);
 //		close(saved_stdin);
