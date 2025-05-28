@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:31:27 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/27 17:37:18 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/27 17:44:23 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,14 +193,14 @@ int	main(int argc, char **argv, char **envp)
 		g_signal = 0;
 		if (ft_strcmp(input, "test") == 0)
 		{
-			data->cmd = init_cmd(data->cmd, "echo coucou");
+			// Exemple : cat << EOF
+			data->cmd = init_cmd(data->cmd, "echo");
 			data->cmd->has_redir = true;
 			data->cmd->redir = malloc(sizeof(t_redir));
-			data->cmd->redir->filename = "infile.txt";
-			data->cmd->redir->type = TRUNC;
+			data->cmd->redir->filename = strdup("EOF"); // Le délimiteur
+			data->cmd->redir->type = HEREDOC;
 			data->cmd->redir->next = NULL;
 			handle_redir(data->cmd);
-			// print_data(data);
 		}
 		else
 			data->cmd = init_cmd(data->cmd, input);
