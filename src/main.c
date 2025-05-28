@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:31:27 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/28 15:48:48 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/28 15:52:04 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,11 +288,7 @@ int	main(int argc, char **argv, char **envp)
 		free(input);
 		if (data->is_exit)
 			break ;
-//		dup2(saved_stdin, STDIN_FILENO);
-//		dup2(saved_stdout, STDOUT_FILENO);
-//		close(saved_stdin);
-//		close(saved_stdout);
 	}
-	free_history(data);		// !!!!! DATA EST FREE DANS LE EXIT ICI !!!!!
+	free_history(data);
 	return (0);
 }
