@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:31:27 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/28 15:59:04 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/30 13:37:05 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,44 +23,44 @@ void	disable_echoctl(void)
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 
-t_token	*get_token(char *str)
-{
-	t_token	*head; // tete de la liste au'on va renvoyer
-	t_token	*node; // t_token temporaire qui sert a initialiser les noeuds de la liste
-	char	**cut_str; // tableau de chaine de caracteres qui sert a recuperer les tokens dans str
-	int		i; // variable pour defiler dans cut_str
+// t_token	*get_token(char *str)
+// {
+// 	t_token	*head; // tete de la liste au'on va renvoyer
+// 	t_token	*node; // t_token temporaire qui sert a initialiser les noeuds de la liste
+// 	char	**cut_str; // tableau de chaine de caracteres qui sert a recuperer les tokens dans str
+// 	int		i; // variable pour defiler dans cut_str
 
-	i = 0;
-	head = NULL;
-	cut_str = put_token_in_tabstr(str); // on recupere les tokens et on les place dans le tableau
-	head = create_token(&head, cut_str[i], get_token_type(cut_str[i]), get_quote_type(cut_str[i])); // on cree le premier noeud de la liste
-	head->has_expansion = check_for_expansion(head->str); // on regarde si le token contient une expansion
-	node = head->next;
-	free(cut_str[i]);
-	i++;
-	while (cut_str[i]) //boucle qui va creer la liste chainee
-	{
-		node = create_token(&head, cut_str[i], get_token_type(cut_str[i]), get_quote_type(cut_str[i]));
-		node->has_expansion = check_for_expansion(node->str);
-		node = node->next;
-		free(cut_str[i]);
-		i++;
-	}
-	free(cut_str);
-	return (head);
-}
+// 	i = 0;
+// 	head = NULL;
+// 	cut_str = put_token_in_tabstr(str); // on recupere les tokens et on les place dans le tableau
+// 	head = create_token(&head, cut_str[i], get_token_type(cut_str[i]), get_quote_type(cut_str[i])); // on cree le premier noeud de la liste
+// 	head->has_expansion = check_for_expansion(head->str); // on regarde si le token contient une expansion
+// 	node = head->next;
+// 	free(cut_str[i]);
+// 	i++;
+// 	while (cut_str[i]) //boucle qui va creer la liste chainee
+// 	{
+// 		node = create_token(&head, cut_str[i], get_token_type(cut_str[i]), get_quote_type(cut_str[i]));
+// 		node->has_expansion = check_for_expansion(node->str);
+// 		node = node->next;
+// 		free(cut_str[i]);
+// 		i++;
+// 	}
+// 	free(cut_str);
+// 	return (head);
+// }
 
-void	print_tab(char	**tab)
-{
-	int	i;
+// void	print_tab(char	**tab)
+// {
+// 	int	i;
 
-	i = 0;
-	while (tab[i])
-	{
-		printf("tab :%s\n", tab[i]);
-		i++;
-	}
-}
+// 	i = 0;
+// 	while (tab[i])
+// 	{
+// 		printf("tab :%s\n", tab[i]);
+// 		i++;
+// 	}
+// }
 /*
 static void print_redirections(t_redir *redir)
 {
@@ -257,23 +257,31 @@ int	main(int argc, char **argv, char **envp)
 		if (ft_strcmp(input, "test") == 0)
 		{
 			// Exemple : cat << EOF
-			data->cmd = init_cmd(data->cmd, "echo");
+			data->cmd = init_cmd(data->cmd, "echo coucou");
 			data->cmd->has_redir = true;
 			data->cmd->redir = malloc(sizeof(t_redir));
-			data->cmd->redir->filename = ft_strdup("EOF"); // Le délimiteur
-			data->cmd->redir->type = HEREDOC;
+			data->cmd->redir->filename = ft_strdup("outfile.txt"); // Le délimiteur
+			data->cmd->redir->type = APPEND;
 			data->cmd->redir->next = NULL;
 			handle_redir(data->cmd);
 		}
 		else
-			data->cmd = init_cmd(data->cmd, input);
+		{
+			data->cmd = tcmd_init(input, data);
+		}
 		// print_data(data);
+		if (data->cmd == NULL)
+		{
+			free(input);
+			continue ;
+		}
 		if (input && ft_strlen(input) == 0)
 		{
 			free(input);
 			continue ;
 		}
 		// print_data(data);
+		handle_redir(data->cmd);
 		handle_exit(data, input);
 		if (data->cmd->is_builtin && !data->is_exit)
 			select_builtin(data);
@@ -283,7 +291,8 @@ int	main(int argc, char **argv, char **envp)
 		if (ft_strlen(input) > 0 && !data->is_exit)
 			add_to_history(data, input);
 		// print_data(data);
-		free_tokens(data);
+		free_tcmd(data->cmd);
+		// free_tokens(data);
 		free(input);
 		if (data->is_exit)
 			break ;
