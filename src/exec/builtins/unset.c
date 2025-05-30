@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:57:05 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/05/16 16:58:52 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/30 14:31:18 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 ** lors de l'execution de cette fonction.
 */
 
-/* Cherche l'index en comparant le nom de celle recherchée avec celles dans env. */
+/* Cherche l'index en comparant le nom de celle
+recherchée avec celles dans env. */
 int	get_index(char *var_name, char **env)
 {
 	int	i;
@@ -55,7 +56,6 @@ void	remove_var(int var_index, char **env)
 
 void	handle_unset(t_data *data)
 {
-//	printf("ENTRY HANDLE_UNSET\n");
 	int		index;
 
 	data->return_value = 0;

@@ -3,23 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:44:54 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/05/30 13:42:09 by egatien          ###   ########.fr       */
+/*   Updated: 2025/05/30 14:29:31 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-** Verifier et ajouter la mise à jour du code d'erreur à renvoyer
-** lors de l'execution de cette fonction.
-*/
 
 #include "../includes/minishell.h"
 
 void	handle_env(t_data *data)
 {
-//	printf("ENTRY HANDLE_ENV\n");
 	int	i;
 
 	data->return_value = 0;

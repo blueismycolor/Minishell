@@ -6,27 +6,16 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:38:12 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/05/16 16:57:35 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/30 14:32:23 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-** Verifier et ajouter la mise à jour du code d'erreur à renvoyer
-** lors de l'execution de cette fonction.
-*/
-
-/*
-** Doit permettre d'ajouter une variable d'environnement UNIQUEMENT si celle-ci
-** a une valeur attribuee.
-*/
-
 #include "../includes/minishell.h"
 
-//* Cherche l'index en comparant le nom de celle recherchée avec celles dans env. */
+/* Cherche l'index en comparant le nom de celle
+recherchée avec celles dans env. */
 int	var_index(t_data *data, char *var_name)
 {
-//	printf("ENTRY IN VAR_INDEX\n");
-
 	int	i;
 	int	j;
 
@@ -50,8 +39,6 @@ int	var_index(t_data *data, char *var_name)
 /* Remplace les paramètres de la variable par les nouveaux. */
 void	replace_var(t_data *data, char *new_var, int var_index)
 {
-//	printf("ENTRY IN REPLACE_VAR\n");
-
 	if (ft_strchr(new_var, '='))
 	{
 		free(data->env[var_index]);
@@ -59,12 +46,10 @@ void	replace_var(t_data *data, char *new_var, int var_index)
 	}
 }
 
-
-/* Tri les variables d'environnement pour les print dans l'ordre alphabetique comme bash. */
+/* Tri les variables d'environnement pour les
+print dans l'ordre alphabetique comme bash. */
 void	export_sorted_var(t_data *data)
 {
-//	printf("ENTRY IN HANDLE_EXPORT_SORTED_VAR\n");
-
 	int		i;
 	int		env_len;
 	char	*to_swap;
@@ -95,8 +80,6 @@ void	export_sorted_var(t_data *data)
 /* Exporte toutes les variables d'environnement (ex : "export"). */
 char	**add_var_env(t_data *data, char *new_var)
 {
-//	printf("ENTRY IN ADD_VAR_ENV\n");
-
 	int		i;
 	char	**new_env;
 
@@ -118,17 +101,11 @@ char	**add_var_env(t_data *data, char *new_var)
 /* Permet de gérer l'export des variables d'environnement. */
 void	handle_export_var(t_data *data)
 {
-//	printf("ENTRY IN HANDLE_EXPORT_VAR\n");
 	int		i;
 	char	*var_name;
 
 	data->return_value = 0;
 	i = 0;
-	/*if (data->cmd->args[2])
-	{
-		msg_error("export: too many arguments.\n");
-		return ;
-	}*/
 	if (!data->cmd->args[1])
 	{
 		export_sorted_var(data);

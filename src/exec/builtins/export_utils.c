@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 18:24:50 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/05/28 14:53:10 by tlair            ###   ########.fr       */
+/*   Updated: 2025/05/30 14:29:48 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ int	get_env_len(t_data *data)
 /* Print les variables d'environnement correctement. */
 void	print_export(char **env)
 {
-//	printf("ENTRY IN PRINT_EXPORT\n");
-
 	int		i;
 	char	*equal;
 
@@ -46,8 +44,6 @@ void	print_export(char **env)
 
 char	*get_var_name(char *arg)
 {
-//	printf("ENTRY IN GET_VAR_NAME\n");
-
 	int	i;
 
 	i = 0;
