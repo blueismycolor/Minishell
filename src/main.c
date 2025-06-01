@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:31:27 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/30 13:37:05 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/01 16:08:23 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-volatile sig_atomic_t	g_signal;
+int	g_signal;
 
 void	disable_echoctl(void)
 {
@@ -120,8 +120,7 @@ void	print_prompt_header(void)
 
 void	sigint_handler(int sig)
 {
-	(void)sig;
-	g_signal = 1;
+	g_signal = sig;
 	rl_replace_line("", 0);
 	write(1, "\n", 1);
 	rl_on_new_line();
@@ -158,59 +157,19 @@ char	**create_arguments(t_cmd *token)
 	return (args);
 } //FONCTION TEMPORAIRE (SERA REMPLACEE PAR LA PARTIE PARSING)
 
-static void	execute_command(t_data *data)
+void	execute_command(t_data *data)
 {
 //	printf("ENTRY EXECUTE_COMMAND\n");
 	pid_t		pid;
-	char		*cmd_path;
 	extern char	**environ;
 	int			status;
 
+	status = 0;
 	pid = fork();
 	if (pid == 0)
-	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
-		if (!data->cmd->args || !data->cmd->args[0])
-		{
-			data->return_value = 1;
-			exit(data->return_value);
-		}
-		cmd_path = find_command_path(data->cmd->args[0]);
-		if (!cmd_path)
-		{
-			msg_error("\033[1;31mcommand not found: \033[0m");
-			ft_putendl_fd(data->cmd->args[0], 2);
-			ft_free_array(data->cmd->args);
-			data->return_value = 127;
-			exit(data->return_value);
-		}
-		execve(cmd_path, data->cmd->args, environ);
-		free(cmd_path);
-		if (errno == EACCES)
-			data->return_value = 126;
-		else if (errno == ENOENT)
-			data->return_value = 127;
-		else
-			data->return_value = 1;
-		perror("\033[1;31mError\033[0m");
-		ft_free_array(data->cmd->args);
-		data->return_value = 1;
-		exit(data->return_value);
-	}
+		process(data, environ);
 	else if (pid > 0)
-	{
-		signal(SIGINT, SIG_IGN);
-		waitpid(pid, &status, 0);
-		signal(SIGINT, sigint_handler);
-		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
-		{
-			write(1, "\n", 1);
-			data->return_value = 130;
-		}
-		else if (WIFEXITED(status))
-			data->return_value = WEXITSTATUS(status);
-	}
+		exit_process(data, pid, status);
 }
 
 void	select_builtin(t_data *data)
@@ -241,6 +200,11 @@ int	main(int argc, char **argv, char **envp)
 	g_signal = 0;
 	disable_echoctl();
 	data = init_data(envp);
+	struct sigaction sa_quit;
+	sa_quit.sa_handler = SIG_IGN;
+	sigemptyset(&sa_quit.sa_mask);
+	sa_quit.sa_flags = 0;
+	sigaction(SIGQUIT, &sa_quit, NULL);
 	init_history(data);
 	while (1)
 	{
@@ -254,6 +218,7 @@ int	main(int argc, char **argv, char **envp)
 		data->saved_stdin = dup(STDIN_FILENO);
 		data->saved_stdout = dup(STDOUT_FILENO);
 		g_signal = 0;
+		handle_exit(data, input);
 		if (ft_strcmp(input, "test") == 0)
 		{
 			// Exemple : cat << EOF
@@ -270,29 +235,26 @@ int	main(int argc, char **argv, char **envp)
 			data->cmd = tcmd_init(input, data);
 		}
 		// print_data(data);
-		if (data->cmd == NULL)
+		if (data->cmd == NULL && !data->is_exit)
 		{
 			free(input);
 			continue ;
 		}
-		if (input && ft_strlen(input) == 0)
+		if (!data->is_exit)
 		{
-			free(input);
-			continue ;
+			// printf("Signal avant: %d\n", g_signal);
+			handle_redir(data->cmd);
+			// printf("Signal apres: %d\n", g_signal);
+			if (data->cmd->is_builtin)
+				select_builtin(data);
+			else
+				execute_command(data);
 		}
-		// print_data(data);
-		handle_redir(data->cmd);
-		handle_exit(data, input);
-		if (data->cmd->is_builtin && !data->is_exit)
-			select_builtin(data);
-		else if (!data->is_exit)
-			execute_command(data);
 		reset_fd(data);
 		if (ft_strlen(input) > 0 && !data->is_exit)
 			add_to_history(data, input);
 		// print_data(data);
 		free_tcmd(data->cmd);
-		// free_tokens(data);
 		free(input);
 		if (data->is_exit)
 			break ;

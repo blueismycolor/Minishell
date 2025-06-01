@@ -6,11 +6,17 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:45:43 by tlair             #+#    #+#             */
-/*   Updated: 2025/05/28 15:43:34 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/01 16:05:03 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+void	exit_with_code(t_data *data, int exit_code)
+{
+	data->return_value = exit_code;
+	exit(data->return_value);
+}
 
 void	free_tokens(t_data *data)
 {
@@ -44,6 +50,7 @@ void	ft_free_array(char **array)
 	free(array);
 }
 
+//DEBUG FUNCTION
 void print_data(t_data *data)
 {
 	if (!data)

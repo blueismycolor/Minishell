@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:06:01 by tlair             #+#    #+#             */
-/*   Updated: 2025/04/30 14:25:43 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/01 16:01:44 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,61 @@ char	*find_command_path(const char *cmd)
 	}
 	free(path_copy);
 	return (NULL);
+}
+
+void	process(t_data *data, char	**environ)
+{
+	char		*cmd_path;
+
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+	if (!data->cmd->args || !data->cmd->args[0])
+		exit_with_code(data, 1);
+	cmd_path = find_command_path(data->cmd->args[0]);
+	if (!cmd_path)
+	{
+		msg_error("\033[1;31mcommand not found: \033[0m");
+		ft_putendl_fd(data->cmd->args[0], 2);
+		ft_free_array(data->cmd->args);
+		exit_with_code(data, 127);
+	}
+	execve(cmd_path, data->cmd->args, environ);
+	free(cmd_path);
+	if (errno == EACCES)
+		data->return_value = 126;
+	else if (errno == ENOENT)
+		data->return_value = 127;
+	else
+		data->return_value = 1;
+	perror("\033[1;31mError\033[0m");
+	ft_free_array(data->cmd->args);
+	exit_with_code(data, 1);
+}
+
+void	exit_process(t_data *data, pid_t pid, int status)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	waitpid(pid, &status, 0);
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
+	if (WIFSIGNALED(status))
+	{
+		int sig = WTERMSIG(status);
+		if (sig == SIGINT)
+		{
+			write(1, "\n", 1);
+			data->return_value = 130;
+		}
+		else if (sig == SIGQUIT)
+		{
+			if (WCOREDUMP(status))
+				write(1, "Quit (core dumped)\n", 19);
+			else
+				write(1, "Quit\n", 5);
+			data->return_value = 131;
+		}
+	}
+	else if (WIFEXITED(status))
+		data->return_value = WEXITSTATUS(status);
 }

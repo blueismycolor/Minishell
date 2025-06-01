@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/30 12:09:45 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/01 16:03:24 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ typedef struct s_data
 /********************/
 /* Variable globale */
 /********************/
-extern volatile sig_atomic_t	g_signal;		// 127 = command not found || 126 = permission failed || 1 = general error
+extern int	g_signal;		// 127 = command not found || 126 = permission failed || 1 = general error
 
 /*********************/
 /* Fonctions parsing */
@@ -236,6 +236,12 @@ void	print_tokens(t_cmd *input);
 /***********************/
 /* Fonctions executing */
 /***********************/
+
+void	sigint_handler(int sig);
+void	execute_command(t_data *data);
+void	process(t_data *data, char	**environ);
+void	exit_process(t_data *data, pid_t pid, int status);
+
 /* cd.c */
 void		update_pwd(t_data *data);
 void		handle_cd(t_data *data);
@@ -297,6 +303,7 @@ void		reset_fd(t_data *data);
 /*******************/
 /* Utils & history */
 /*******************/
+void		exit_with_code(t_data *data, int exit_code);
 void		free_tokens(t_data *data);
 void		ft_free_array(char **array);
 void		print_data(t_data *data);
