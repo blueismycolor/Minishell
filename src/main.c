@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:31:27 by egatien           #+#    #+#             */
-/*   Updated: 2025/06/01 16:08:23 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/01 16:29:20 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,22 +190,10 @@ void	select_builtin(t_data *data)
 		handle_unset(data);
 }
 
-int	main(int argc, char **argv, char **envp)
+static void	main_loop(t_data *data)
 {
-	(void)argc;
-	(void)argv;
 	char		*input;
-	t_data		*data;
 
-	g_signal = 0;
-	disable_echoctl();
-	data = init_data(envp);
-	struct sigaction sa_quit;
-	sa_quit.sa_handler = SIG_IGN;
-	sigemptyset(&sa_quit.sa_mask);
-	sa_quit.sa_flags = 0;
-	sigaction(SIGQUIT, &sa_quit, NULL);
-	init_history(data);
 	while (1)
 	{
 		signal(SIGINT, sigint_handler);
@@ -259,6 +247,24 @@ int	main(int argc, char **argv, char **envp)
 		if (data->is_exit)
 			break ;
 	}
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	(void)argc;
+	(void)argv;
+	t_data		*data;
+
+	g_signal = 0;
+	disable_echoctl();
+	data = init_data(envp);
+	struct sigaction sa_quit;
+	sa_quit.sa_handler = SIG_IGN;
+	sigemptyset(&sa_quit.sa_mask);
+	sa_quit.sa_flags = 0;
+	sigaction(SIGQUIT, &sa_quit, NULL);
+	init_history(data);
+	main_loop(data);
 	free_history(data);
 	return (0);
 }
