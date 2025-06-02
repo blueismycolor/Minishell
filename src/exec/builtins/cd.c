@@ -3,82 +3,83 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:34:20 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/05/30 13:39:49 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/01 17:48:01 by maximegdfr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/*
-** Change le repertoire de travail actuel via un chemin relatif ou absolu.
-** Si pas d'operande ET HOME non defini : comportement a definir.
-** Si pas d'operande ET HOME defini : HOME devient l'operande.
-** Si operande ./.. : verification du chemin -> valide = maj repertoire || invalide = msg erreur.
-** Si operande .. : maj vers "PATH= un repertoire en moins".
-** Si operande - : maj vers OLDPWD
-*/
+void	update_old_pwd(t_data *data)
+{
+	char	*tmp;
+	char	*old_pwd_var;
+	int		old_pwd_index;
+
+	old_pwd_index = var_index_cd(data, "OLDPWD");
+	if (data->pwd)
+	{
+		tmp = ft_strdup(data->pwd);
+		if (!tmp)
+			return ;
+	}
+	else
+		tmp = NULL;
+	free(data->old_pwd);
+	data->old_pwd = tmp;
+	old_pwd_var = ft_strjoin("OLDPWD=", data->old_pwd);
+	if (!old_pwd_var)
+		return ;
+	replace_var_in_cd(data, old_pwd_var, old_pwd_index);
+	free(old_pwd_var);
+}
 
 void	update_pwd(t_data *data)
 {
-	char	*tmp;
 	char	buffer[4096];
+	char	*pwd_var;
+	int		pwd_index;
 
-//	printf("Before update: pwd=%p | \"%s\"\nold_pwd=%p | \"%s\"\n\n", data->pwd, data->old_pwd, data->pwd, data->old_pwd);
-	if (data->pwd)
-		tmp = ft_strdup(data->pwd);
-	else
-		tmp = NULL;
-	if (data->old_pwd)
-	{
-//		printf("Freeing old_pwd at %p | \"%s\"\n\n", data->old_pwd, data->old_pwd);
-		free(data->old_pwd);
-		data->old_pwd = NULL;
-	}
-	data->old_pwd = tmp;
-	if (getcwd(buffer, sizeof(buffer)) != NULL)
-	{
-		if (data->pwd)
-		{
-//			printf("Freeing pwd at %p | \"%s\"\n\n", data->pwd, data->pwd);
-			free(data->pwd);
-			data->pwd = NULL;
-		}
-		data->pwd = ft_strdup(buffer);
-	}
-	else
-		perror("getcwd");
-//	printf("After update: pwd=%p | \"%s\"\nold_pwd=%p | \"%s\"\n", data->pwd, data->old_pwd, data->pwd, data->old_pwd);
-	}
+	pwd_index = var_index_cd(data, "PWD");
+	if (!getcwd(buffer, sizeof(buffer)))
+		return (perror("getcwd"));
+	free(data->pwd);
+	data->pwd = ft_strdup(buffer);
+	if (!data->pwd)
+		return ;
+	pwd_var = ft_strjoin("PWD=", data->pwd);
+	if (!pwd_var)
+		return ;
+	replace_var_in_cd(data, pwd_var, pwd_index);
+	free(pwd_var);
+}
 
 void	handle_cd(t_data *data)
 {
-//	printf("ENTRY HANDLE_CD\n");
 	char	*target;
-	int		redir_value;
+	int		result;
 
-	data->return_value = 0;
 	target = NULL;
-	if (data->cmd->nb_params > 1)
-		error(data, "cd: too many arguments.\n", 1);
+	if (data->cmd->nb_params > 2)
+		return (msg_error("cd: too many arguments.\n"));
 	if (!data->cmd->args[1] || ft_strcmp(data->cmd->args[1], "~") == 0)
-		target = getenv("HOME");
+		target = get_env_value_cd(data, "HOME");
 	else if (ft_strcmp(data->cmd->args[1], "-") == 0)
 	{
 		if (!data->old_pwd)
-			error(data, "cd: OLDPWD not set.\n", 1);
+			return (msg_error("cd: OLDPWD not set.\n"));
 		target = data->old_pwd;
 		printf("%s\n", target);
 	}
 	else
 		target = data->cmd->args[1];
 	if (!target)
-		error(data, "cd: HOME not set.\n", 1);
-	redir_value = chdir(target);
-	if (redir_value != 0)
-		error(data, "cd: no such file or directory.\n", 1);
+		return (msg_error("cd: HOME not set.\n"));
+	result = chdir(target);
+	if (result != 0)
+		return (msg_error("cd: no such file or directory.\n"));
+	update_old_pwd(data);
 	update_pwd(data);
 }
-

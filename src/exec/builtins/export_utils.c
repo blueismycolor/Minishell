@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 18:24:50 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/05/30 14:29:48 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/01 16:21:32 by maximegdfr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,34 @@ void	print_export(char **env)
 
 char	*get_var_name(char *arg)
 {
-	int	i;
+	int		i;
+	char	*name;
 
 	i = 0;
+	name = NULL;
 	while (arg[i] && arg[i] != '=')
 		i++;
-	return (ft_substr(arg, 0, i));
+	name = ft_substr(arg, 0, i);
+	if (is_valid_var_name(name))
+		return (name);
+	else
+		return (NULL);
+}
+
+bool	is_valid_var_name(char *arg)
+{
+	int	i;
+
+	i = 1;
+	if (!arg || !arg[0])
+		return (false);
+	if (!(isalpha(arg[0]) || arg[0] == '_'))
+		return (false);
+	while (arg[i])
+	{
+		if (!(isalnum(arg[i]) || arg[i] == '_'))
+			return (false);
+		i++;
+	}
+	return (true);
 }

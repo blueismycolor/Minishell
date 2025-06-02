@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/06/01 16:03:24 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/02 18:02:23 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 # define ECHOCTL 0001000
 #endif
 
+# define MAX_CMDS INT_MAX
 # define SIZE_MAX 20
 # define SPACE ' '
 
@@ -62,6 +63,7 @@
 # define ERR_VA_ENV			"Error: unboud variable.\n"			// Erreur avec variable non initialisee (set -u)
 # define ERR_SYN			"Error: syntax error in expression.\n"	// Manque un i++ ou qqch dans le genre
 # define ERR_FD				"Error: bad file descriptor.\n"		// Fermeture accidentelle dun fd
+# define ERR_HEREDOC		"warning: here-document delimited by end-of-file.\n"
 # define SUCCESS			0
 # define ERROR				-1
 # define FAIL 				1
@@ -139,7 +141,7 @@ extern int	g_signal;		// 127 = command not found || 126 = permission failed || 1
 /*********************/
 
 //create_list_tcmd0.c
-	t_cmd	*tcmd_init(char *input, t_data *data);
+t_cmd	*tcmd_init(char *input, t_data *data);
 t_cmd	*init_cmd_node(t_cmd **cmd_list, t_cmd **current);
 char	**realloc_args(char **args, int size);
 void	add_arg(t_cmd *cmd, char *str);
@@ -241,10 +243,17 @@ void	sigint_handler(int sig);
 void	execute_command(t_data *data);
 void	process(t_data *data, char	**environ);
 void	exit_process(t_data *data, pid_t pid, int status);
+void	exit_with_code(t_data *data, int exit_code);
 
 /* cd.c */
 void		update_pwd(t_data *data);
 void		handle_cd(t_data *data);
+
+/* cd_utils.c */
+void	replace_var_in_cd(t_data *data, char *new_var, int var_index);
+char	**copy_env_cd(t_data *data, char **new_env, char *new_var, int i);
+int	var_index_cd(t_data *data, char *var_name);
+char	*get_env_value_cd(t_data *data, char *key);
 
 /* echo.c */
 int			is_n_option(char *arg);
@@ -259,8 +268,8 @@ int			handle_exit(t_data *data, char *input);
 /* export_utils.c */
 int			get_env_len(t_data *data);
 void		print_export(char **env);
-void		free_tab(char **tab);
 char		*get_var_name(char *arg);
+bool		is_valid_var_name(char *arg);
 
 /* export.c */
 int			var_index(t_data *data, char *var_name);
@@ -288,22 +297,30 @@ void		error(t_data *data, char *msg, int error_code);
 void		msg_error(char *msg);
 char		*find_command_path(const char *cmd);
 char		**create_arguments(t_cmd *token);
+void		execute_command(t_data *data);
 void		select_builtin(t_data *data);
 
 /* Redirection handling */
-void		handle_redir(t_cmd *cmd);
+void		handle_redir(t_data *data, t_cmd *cmd);
 void		handle_input(t_cmd *cmd);
 void		handle_trunc(t_cmd *cmd);
 void		handle_append(t_cmd *cmd);
-void		handle_pipe(t_cmd *cmd);
-int			create_heredoc(char *del);
-int			is_delimiter(char *line, char *del);
 void		reset_fd(t_data *data);
+
+/* heredoc.c */
+int			handle_heredoc(t_data *data, char *del);
+int			is_delimiter(char *line, char *del);
+
+/* Minishell_process */
+void		handle_pipes(t_data *data);
+int			create_pipe(int pipefd[2]);
+pid_t		fork_process(void);
+void		execute_child(t_cmd *cmd, t_data *data, int in_fd, int pipefd[2]);
+void		update_parent_fds(int *in_fd, int pipefd[2], int has_next);
 
 /*******************/
 /* Utils & history */
 /*******************/
-void		exit_with_code(t_data *data, int exit_code);
 void		free_tokens(t_data *data);
 void		ft_free_array(char **array);
 void		print_data(t_data *data);

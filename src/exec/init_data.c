@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:26:16 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/05/28 15:43:41 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/01 17:29:12 by maximegdfr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,7 @@ t_data	*init_data(char **environ)
 	data->pwd = ft_strdup(getenv("PWD"));
 	if (!data->pwd)
 		msg_error(ERR_MALLOC);
-	data->old_pwd = ft_strdup(data->pwd);
-	if (!data->old_pwd)
-		msg_error(ERR_MALLOC);
+	data->old_pwd = NULL;
 	data->return_value = 0;
 	data->saved_stdin = 0;
 	data->saved_stdout = 0;

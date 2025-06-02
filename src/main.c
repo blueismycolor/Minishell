@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:31:27 by egatien           #+#    #+#             */
-/*   Updated: 2025/06/01 16:29:20 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/02 17:59:02 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,73 +23,6 @@ void	disable_echoctl(void)
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 
-// t_token	*get_token(char *str)
-// {
-// 	t_token	*head; // tete de la liste au'on va renvoyer
-// 	t_token	*node; // t_token temporaire qui sert a initialiser les noeuds de la liste
-// 	char	**cut_str; // tableau de chaine de caracteres qui sert a recuperer les tokens dans str
-// 	int		i; // variable pour defiler dans cut_str
-
-// 	i = 0;
-// 	head = NULL;
-// 	cut_str = put_token_in_tabstr(str); // on recupere les tokens et on les place dans le tableau
-// 	head = create_token(&head, cut_str[i], get_token_type(cut_str[i]), get_quote_type(cut_str[i])); // on cree le premier noeud de la liste
-// 	head->has_expansion = check_for_expansion(head->str); // on regarde si le token contient une expansion
-// 	node = head->next;
-// 	free(cut_str[i]);
-// 	i++;
-// 	while (cut_str[i]) //boucle qui va creer la liste chainee
-// 	{
-// 		node = create_token(&head, cut_str[i], get_token_type(cut_str[i]), get_quote_type(cut_str[i]));
-// 		node->has_expansion = check_for_expansion(node->str);
-// 		node = node->next;
-// 		free(cut_str[i]);
-// 		i++;
-// 	}
-// 	free(cut_str);
-// 	return (head);
-// }
-
-// void	print_tab(char	**tab)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (tab[i])
-// 	{
-// 		printf("tab :%s\n", tab[i]);
-// 		i++;
-// 	}
-// }
-/*
-static void print_redirections(t_redir *redir)
-{
-	while (redir)
-	{
-		printf(" | name of file : [%s], redirection type : %d", redir->filename, redir->type);
-		redir = redir->next;
-	}
-}
-
-static void print_tokens(t_cmd *input)
-{
-	int i;
-	while (input)
-	{
-		i = 0;
-		printf("Token: ");
-		while (input->args && input->args[i])
-		{
-			printf("\033[32m[\033[0m%s\033[32m]\033[0m", input->args[i]);
-			i++;
-		}
-		if (input->has_redir)
-			print_redirections(input->redir);
-		printf("\n");
-		input = input->next;
-	}
-}
-*/
 void	print_prompt_header(void)
 {
 	char	*cwd;
@@ -107,7 +40,7 @@ void	print_prompt_header(void)
 		else
 			relative = NULL;
 	}
-	printf("\033[1;92m╭─[\033[1;35m");
+	printf("\033[1;92m[\033[1;35m");
 	if (cwd && home && relative)
 		printf("~%s", relative);
 	else if (cwd)
@@ -172,24 +105,6 @@ void	execute_command(t_data *data)
 		exit_process(data, pid, status);
 }
 
-void	select_builtin(t_data *data)
-{
-	if (!data->cmd || !data->cmd->cmd)
-		msg_error("Invalid command.\n");
-	if (ft_strncmp(data->cmd->cmd, "cd", 2) == 0)
-		handle_cd(data);
-	if (ft_strncmp(data->cmd->cmd, "echo", 4) == 0)
-		handle_echo(data);
-	if (ft_strncmp(data->cmd->cmd, "env", 3) == 0)
-		handle_env(data);
-	if (ft_strncmp(data->cmd->cmd, "export", 6) == 0)
-		handle_export_var(data);
-	if (ft_strncmp(data->cmd->cmd, "pwd", 3) == 0)
-		handle_pwd(data);
-	if (ft_strncmp(data->cmd->cmd, "unset", 5) == 0)
-		handle_unset(data);
-}
-
 static void	main_loop(t_data *data)
 {
 	char		*input;
@@ -201,28 +116,13 @@ static void	main_loop(t_data *data)
 		if (!g_signal)
 		{
 			print_prompt_header();
-			input = readline("\033[1;92m╰─➤ \033[0m");
+			input = readline("\001\033[1;92m\002minishell> \001\033[0m\002");
 		}
 		data->saved_stdin = dup(STDIN_FILENO);
 		data->saved_stdout = dup(STDOUT_FILENO);
 		g_signal = 0;
 		handle_exit(data, input);
-		if (ft_strcmp(input, "test") == 0)
-		{
-			// Exemple : cat << EOF
-			data->cmd = init_cmd(data->cmd, "echo coucou");
-			data->cmd->has_redir = true;
-			data->cmd->redir = malloc(sizeof(t_redir));
-			data->cmd->redir->filename = ft_strdup("outfile.txt"); // Le délimiteur
-			data->cmd->redir->type = APPEND;
-			data->cmd->redir->next = NULL;
-			handle_redir(data->cmd);
-		}
-		else
-		{
-			data->cmd = tcmd_init(input, data);
-		}
-		// print_data(data);
+		data->cmd = tcmd_init(input, data);
 		if (data->cmd == NULL && !data->is_exit)
 		{
 			free(input);
@@ -230,18 +130,20 @@ static void	main_loop(t_data *data)
 		}
 		if (!data->is_exit)
 		{
-			// printf("Signal avant: %d\n", g_signal);
-			handle_redir(data->cmd);
-			// printf("Signal apres: %d\n", g_signal);
-			if (data->cmd->is_builtin)
-				select_builtin(data);
+			if (data->cmd->next)
+				handle_pipes(data);
 			else
-				execute_command(data);
+			{
+				handle_redir(data, data->cmd);
+				if (data->cmd->is_builtin)
+					select_builtin(data);
+				else
+					execute_command(data);
+			}
 		}
 		reset_fd(data);
 		if (ft_strlen(input) > 0 && !data->is_exit)
 			add_to_history(data, input);
-		// print_data(data);
 		free_tcmd(data->cmd);
 		free(input);
 		if (data->is_exit)
