@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/06/02 18:02:23 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/03 18:04:48 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -301,10 +301,10 @@ void		execute_command(t_data *data);
 void		select_builtin(t_data *data);
 
 /* Redirection handling */
-void		handle_redir(t_data *data, t_cmd *cmd);
-void		handle_input(t_cmd *cmd);
-void		handle_trunc(t_cmd *cmd);
-void		handle_append(t_cmd *cmd);
+void		handle_redir(t_data *data);
+void		handle_input(t_data *data);
+void		handle_trunc(t_data *data);
+void		handle_append(t_data *data);
 void		reset_fd(t_data *data);
 
 /* heredoc.c */

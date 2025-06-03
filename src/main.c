@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:31:27 by egatien           #+#    #+#             */
-/*   Updated: 2025/06/02 17:59:02 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/03 18:04:56 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ static void	main_loop(t_data *data)
 				handle_pipes(data);
 			else
 			{
-				handle_redir(data, data->cmd);
+				handle_redir(data);
 				if (data->cmd->is_builtin)
 					select_builtin(data);
 				else
