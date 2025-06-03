@@ -6,44 +6,11 @@
 /*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 17:30:11 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/30 11:07:59 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/03 13:46:00 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-bool	check_quotes_state(char c, bool singlequote)
-{
-	static bool	doublequotes;
-
-	if (c == '"')
-	{
-		if (doublequotes == false)
-			doublequotes = true;
-		else
-			doublequotes = false;
-	}
-	if (c == '\'' && !doublequotes)
-	{
-		if (singlequote == false)
-			singlequote = true;
-		else
-			singlequote = false;
-	}
-	return (singlequote);
-}
-
-int	pass_single_quotes(char *str, int i)
-{
-	if (str[i] == '\'')
-	{
-		i++;
-		while (str[i] != '\'')
-			i++;
-		return (i);
-	}
-	return (i);
-}
 
 static t_quote	quotes_state_to_remove(char c, t_quote in_quotes)
 {
@@ -64,29 +31,36 @@ static t_quote	quotes_state_to_remove(char c, t_quote in_quotes)
 	return (in_quotes);
 }
 
+void	str_without_quotes_init(int *index_str, int *index_result, t_quote *in_quotes)
+{
+	*index_str = 0;
+	*index_result = 0;
+	*in_quotes = NONE;
+}
+
 static char	*str_without_quotes(char *str, int count)
 {
 	char	*result;
 	int		index_str;
 	int		index_result;
 	t_quote	in_quotes;
-
-	index_str = 0;
-	index_result = 0;
-	in_quotes = NONE;
+	
+	str_without_quotes_init(&index_str, &index_result, &in_quotes);
 	result = malloc(sizeof(char) * (count + 1));
+	if (!result)
+		return NULL;
 	while (str[index_str] != '\0')
 	{
 		in_quotes = quotes_state_to_remove(str[index_str], in_quotes);
-		if (str[index_str] == '"' && in_quotes != SINGLE)
-			index_str ++;
-		if (str[index_str] == '\'' && in_quotes != DOUBLE)
+		if ((str[index_str] == '"' && in_quotes != SINGLE) ||
+			(str[index_str] == '\'' && in_quotes != DOUBLE))
+		{
 			index_str++;
-		if (str[index_str] == '\0')
-			break ;
+			continue;
+		}
 		result[index_result] = str[index_str];
 		index_str++;
-		index_result ++;
+		index_result++;
 	}
 	result[index_result] = '\0';
 	free(str);
