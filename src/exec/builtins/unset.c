@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:57:05 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/05/30 14:31:18 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/04 16:05:17 by maximegdfr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-/*
-** Verifier et ajouter la mise à jour du code d'erreur à renvoyer
-** lors de l'execution de cette fonction.
-*/
 
 /* Cherche l'index en comparant le nom de celle
 recherchée avec celles dans env. */

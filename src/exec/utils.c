@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:45:43 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/02 15:13:21 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/04 16:06:52 by maximegdfr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ void print_data(t_data *data)
 {
 	if (!data)
 		return ;
-    printf("\033[40m\n\t* DATA *\033[0m\n");
-    printf("\tENV : %p\n", (void *)data->env);
-    printf("\tPWD : %s\n", data->pwd ? data->pwd : "(null)");
-    printf("\tOLD_PWD : %s\n", data->old_pwd ? data->old_pwd : "(null)");
-    printf("\tRETURN_VALUE : %d\n", data->return_value);
+	printf("\033[40m\n\t* DATA *\033[0m\n");
+	printf("\tENV : %p\n", (void *)data->env);
+	printf("\tPWD : %s\n", data->pwd ? data->pwd : "(null)");
+	printf("\tOLD_PWD : %s\n", data->old_pwd ? data->old_pwd : "(null)");
+	printf("\tRETURN_VALUE : %d\n", data->return_value);
 	printf("\tSAVED_STDIN : %d\n", data->saved_stdin);
 	printf("\tSAVED_STDOUT : %d\n", data->saved_stdout);
 	t_cmd *cmd = data->cmd;

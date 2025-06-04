@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:10:35 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/05/30 14:29:12 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/04 16:04:50 by maximegdfr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,6 @@ void	handle_echo(t_data *data)
 
 	i = 1;
 	has_n = 0;
-	// if (data->cmd->args[1] && ft_strcmp(data->cmd->args[1], "$?") == 0 
-	// 	&& !data->cmd->args[2]) //Temp support for echo $? to print the exit code
-	// {
-	// 	printf("%d\n", data->return_value);
-	// 	data->return_value = 0;
-	// 	return;
-	// }
 	data->return_value = 0;
 	while (data->cmd->args[i] && is_n_option(data->cmd->args[i]))
 	{

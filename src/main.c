@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:31:27 by egatien           #+#    #+#             */
-/*   Updated: 2025/06/03 18:04:56 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/04 16:10:36 by maximegdfr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	sigint_handler(int sig)
 }
 
 char	**create_arguments(t_cmd *token)
-{ //FONCTION TEMPORAIRE (SERA REMPLACEE PAR LA PARTIE PARSING)
+{
 	char	**args;
 	char	*temp;
 	char	*token_str;
@@ -88,11 +88,10 @@ char	**create_arguments(t_cmd *token)
 	args[count] = NULL;
 	free(temp);
 	return (args);
-} //FONCTION TEMPORAIRE (SERA REMPLACEE PAR LA PARTIE PARSING)
+}
 
 void	execute_command(t_data *data)
 {
-//	printf("ENTRY EXECUTE_COMMAND\n");
 	pid_t		pid;
 	extern char	**environ;
 	int			status;
@@ -123,6 +122,7 @@ static void	main_loop(t_data *data)
 		g_signal = 0;
 		handle_exit(data, input);
 		data->cmd = tcmd_init(input, data);
+		print_data(data);
 		if (data->cmd == NULL && !data->is_exit)
 		{
 			free(input);
