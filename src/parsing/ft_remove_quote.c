@@ -6,13 +6,13 @@
 /*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 17:30:11 by egatien           #+#    #+#             */
-/*   Updated: 2025/06/03 13:46:00 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/04 13:52:02 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static t_quote	quotes_state_to_remove(char c, t_quote in_quotes)
+t_quote	quotes_state_to_remove(char c, t_quote in_quotes)
 {
 	if (c == '"')
 	{

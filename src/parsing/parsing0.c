@@ -6,7 +6,7 @@
 /*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:56:31 by aeudes            #+#    #+#             */
-/*   Updated: 2025/05/30 11:08:34 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/04 14:01:54 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 
 int	process_input(char *input)
 {
+	int	i;
+
+	i = 0;
+	while (input[i] == SPACE)
+		i++;
+	if (input[i] == '\0')
+		return (ERROR);
 	if (!validate_input(input))
 		return (ERROR);
 	return (SUCCESS);

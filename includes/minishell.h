@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/06/03 18:04:48 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/04 13:52:19 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,7 @@ void	free_tcmd(t_cmd *list);
 bool	check_quotes_state(char c, bool singlequote);
 int		pass_single_quotes(char *str, int i);
 char	*ft_remove_quotes(char *str);
+t_quote	quotes_state_to_remove(char c, t_quote in_quotes);
 
 //get_args.c
 int		count_args(char *str);
