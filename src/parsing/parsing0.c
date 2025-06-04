@@ -74,7 +74,7 @@ int	check_quote_syntax(char *input, int i)
 			while (input[i] && input[i] != '\'')
 				i++;
 			if (!input[i])
-				return (ft_putstr_fd(OPEN_SNG_QUOTE, STDERR_FILENO), ERROR);
+				return (msg_error(OPEN_SNG_QUOTE), ERROR);
 		}
 		else if (input[i] == '\"')
 		{
@@ -82,7 +82,7 @@ int	check_quote_syntax(char *input, int i)
 			while (input[i] && input[i] != '\"')
 				i++;
 			if (!input[i])
-				return (ft_putstr_fd(OPEN_DBL_QUOTE, STDERR_FILENO), ERROR);
+				return (msg_error(OPEN_DBL_QUOTE), ERROR);
 		}
 		i++;
 	}

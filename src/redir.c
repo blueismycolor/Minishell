@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-void	handle_redir(t_data *data)
+bool handle_redir(t_data *data)
 {
 	while (data->cmd->redir)
 	{
@@ -26,13 +26,20 @@ void	handle_redir(t_data *data)
 		{
 			data->cmd->fd = handle_heredoc(data, data->cmd->redir->filename);
 			if (data->cmd->fd == -1)
-				return ;
+				return (false);
 			if (dup2(data->cmd->fd, STDIN_FILENO) == -1)
+			{
 				error(data, "dup2", 1);
+				close(data->cmd->fd);
+				return (false);
+			}
 			close(data->cmd->fd);
 		}
+		if (data->cmd->fd == -1)
+			return (false);
 		data->cmd->redir = data->cmd->redir->next;
 	}
+	return (true);
 }
 
 void	handle_input(t_data *data)

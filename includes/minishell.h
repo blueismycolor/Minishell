@@ -46,24 +46,24 @@
 /*********************/
 /* Messages d'erreur */
 /*********************/
-# define ERR_PIPE			"Error: failed to create pipe.\n"
-# define ERR_REDIR			"Error: invalid redirection.\n"
-# define ERR_MALLOC			"Error: memory allocation failed,\n"
-# define ERR_QUOTE			"Error: unmatched or invalid quote.\n"
-# define OPEN_SNG_QUOTE		"Error: unclosed single quote.\n"
-# define OPEN_DBL_QUOTE		"Error: unclosed double quote.\n"
-# define ERR_CMD			"Error: command execution failed.\n"
-# define ERR_QUOTE_OPEN		"Error: unclosed quote.\n"
-# define ERR_EXECVE			"Error: execve system call failed.\n"
-# define ERR_FORK			"Error: fork failed.\n"
-# define ERR_DUP			"Error: dup failed.\n"
-# define NO_PATH			"Error: no such file or directory.\n"
-# define ERR_EOF			"Error: unexpected EOF.\n"
-# define TOO_LONG			"Error: argument list too long.\n"
-# define ERR_VA_ENV			"Error: unboud variable.\n"			// Erreur avec variable non initialisee (set -u)
-# define ERR_SYN			"Error: syntax error in expression.\n"	// Manque un i++ ou qqch dans le genre
-# define ERR_FD				"Error: bad file descriptor.\n"		// Fermeture accidentelle dun fd
-# define ERR_HEREDOC		"warning: here-document delimited by end-of-file.\n"
+# define ERR_PIPE			"failed to create pipe."
+# define ERR_REDIR			"invalid redirection."
+# define ERR_MALLOC			"memory allocation failed,"
+# define ERR_QUOTE			"unmatched or invalid quote."
+# define OPEN_SNG_QUOTE		"unclosed single quote."
+# define OPEN_DBL_QUOTE		"unclosed double quote."
+# define ERR_CMD			"command execution failed."
+# define ERR_QUOTE_OPEN		"unclosed quote."
+# define ERR_EXECVE			"execve system call failed."
+# define ERR_FORK			"fork failed."
+# define ERR_DUP			"dup failed."
+# define NO_PATH			"no such file or directory."
+# define ERR_EOF			"unexpected EOF."
+# define TOO_LONG			"argument list too long."
+# define ERR_VA_ENV			"unboud variable."			// Erreur avec variable non initialisee (set -u)
+# define ERR_SYN			"syntax error in expression."	// Manque un i++ ou qqch dans le genre
+# define ERR_FD				"bad file descriptor."		// Fermeture accidentelle dun fd
+# define ERR_HEREDOC		"warning: here-document delimited by end-of-file."
 # define SUCCESS			0
 # define ERROR				-1
 # define FAIL 				1
@@ -302,7 +302,7 @@ void		execute_command(t_data *data);
 void		select_builtin(t_data *data);
 
 /* Redirection handling */
-void		handle_redir(t_data *data);
+bool		handle_redir(t_data *data);
 void		handle_input(t_data *data);
 void		handle_trunc(t_data *data);
 void		handle_append(t_data *data);

@@ -122,7 +122,7 @@ static void	main_loop(t_data *data)
 		g_signal = 0;
 		handle_exit(data, input);
 		data->cmd = tcmd_init(input, data);
-		print_data(data);
+		// print_data(data);
 		if (data->cmd == NULL && !data->is_exit)
 		{
 			free(input);
@@ -132,9 +132,8 @@ static void	main_loop(t_data *data)
 		{
 			if (data->cmd->next)
 				handle_pipes(data);
-			else
+			else if (handle_redir(data))
 			{
-				handle_redir(data);
 				if (data->cmd->is_builtin)
 					select_builtin(data);
 				else
