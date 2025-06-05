@@ -81,6 +81,7 @@ void print_data(t_data *data)
 			{
 				printf("\n\033[40m\t\t\t* REDIR *\033[0m\n");
 				printf("\t\t\tFILENAME : %s\n", redir->filename ? redir->filename : "(null)");
+				printf("\t\t\tDEL : %s\n", redir->del ? redir->del : "(null)");
 				printf("\t\t\tTYPE : %d\n", redir->type);
 				printf("\t\t\tNEXT : %p\n", (void *)redir->next);
 				redir = redir->next;

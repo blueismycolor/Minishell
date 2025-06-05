@@ -24,7 +24,8 @@ bool handle_redir(t_data *data)
 			handle_append(data);
 		else if (data->cmd->redir->type == HEREDOC)
 		{
-			data->cmd->fd = handle_heredoc(data, data->cmd->redir->filename);
+			data->cmd->fd = handle_heredoc(data, data->cmd->redir->filename,
+					data->cmd->redir->del);
 			if (data->cmd->fd == -1)
 				return (false);
 			if (dup2(data->cmd->fd, STDIN_FILENO) == -1)

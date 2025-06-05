@@ -100,6 +100,7 @@ typedef struct s_token
 typedef struct s_redir
 {
 	char			*filename;
+	char			*del;
 	t_type			type;
 	struct s_redir	*next;
 }	t_redir;
@@ -145,7 +146,7 @@ t_cmd	*tcmd_init(char *input, t_data *data);
 t_cmd	*init_cmd_node(t_cmd **cmd_list, t_cmd **current);
 char	**realloc_args(char **args, int size);
 void	add_arg(t_cmd *cmd, char *str);
-void	add_redir(t_cmd *cmd, char *filename, t_type type);
+void	add_redir(t_cmd *cmd, char *del, t_type type);
 
 //create_list_tcmd1.c
 char	**remove_filename(char **args);
@@ -309,7 +310,8 @@ void		handle_append(t_data *data);
 void		reset_fd(t_data *data);
 
 /* heredoc.c */
-int			handle_heredoc(t_data *data, char *del);
+int			handle_heredoc(t_data *data, char *filename, char *del);
+char		*generate_heredoc_filename(void);
 int			is_delimiter(char *line, char *del);
 
 /* Minishell_process */

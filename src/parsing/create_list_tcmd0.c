@@ -91,7 +91,7 @@ void	add_arg(t_cmd *cmd, char *str)
 		cmd->cmd = cmd->args[0];
 }
 
-void	add_redir(t_cmd *cmd, char *filename, t_type type)
+void	add_redir(t_cmd *cmd, char *del, t_type type)
 {
 	t_redir	*new;
 	t_redir	*tmp;
@@ -99,7 +99,11 @@ void	add_redir(t_cmd *cmd, char *filename, t_type type)
 	new = malloc(sizeof(t_redir));
 	if (!new)
 		return ;
-	new->filename = ft_strdup(filename);
+	if (type == HEREDOC)
+		new->filename = generate_heredoc_filename();
+	else
+		new->filename = NULL;
+	new->del = ft_strdup(del);
 	new->type = type;
 	new->next = NULL;
 	if (!cmd->redir)

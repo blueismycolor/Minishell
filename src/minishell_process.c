@@ -12,6 +12,18 @@
 
 #include "../includes/minishell.h"
 
+static void	open_all_heredocs(t_data *data)
+{
+	t_redir	*redir = data->cmd->redir;
+
+	while (redir)
+	{
+		if (redir->type == HEREDOC)
+			handle_heredoc(data, redir->filename, redir->del);
+		redir = redir->next;
+	}
+}
+
 void handle_pipes(t_data *data)
 {
 	int pipefd[2];
@@ -21,6 +33,7 @@ void handle_pipes(t_data *data)
 
 	while (data->cmd->next)
 	{
+		open_all_heredocs(data);
 		pipe(pipefd);
 		pid_t pid = fork();
 		if (pid == 0)
