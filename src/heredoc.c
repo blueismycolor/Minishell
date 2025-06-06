@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 15:23:51 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/06/02 16:02:28 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/06 18:16:37 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static char	*ft_strcat(char *dest, const char *src)
 	dest[i + j] = '\0';
 	return (dest);
 }
-
 
 static char	*ft_strcpy(char *dest, char *src)
 {
@@ -80,51 +79,32 @@ static void	sigint_handler_heredoc(int sig)
 	rl_redisplay();
 }
 
-static bool	read_in_stdin(int fd, char *del)
+int	read_heredoc_content(int fd, char *del)
 {
-	char	*buffer;
+	char	*line;
 
 	signal(SIGINT, sigint_handler_heredoc);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-		buffer = NULL;
-		if (g_signal)
-			break ;
-		buffer = readline("> ");
-		if (!buffer)
+		line = readline("> ");
+		if (!line)
 		{
-			msg_error(ERR_HEREDOC);
+			ft_putstr_fd("warning: here-document delimited by end-of-file", 2);
+			ft_putstr_fd(" (wanted `", 2);
+			ft_putstr_fd(del, 2);
+			ft_putstr_fd("')\n", 2);
 			break ;
 		}
-		if (!ft_strncmp(del, buffer, INT_MAX))
+		if (ft_strcmp(line, del) == 0)
+		{
+			free(line);
 			break ;
-		write(fd, buffer, ft_strlen(buffer));
-		write(fd, "\n", sizeof(char));
-		free(buffer);
+		}
+		ft_putendl_fd(line, fd);
+		free(line);
 	}
-	free(buffer);
-	close(fd);
-	g_signal = 0;
-	return (true);
-}
-
-int	handle_heredoc(t_data *data, char *filename, char *del)
-{
-	int		fd;
-
-	data->return_value = 0;
-	fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0644);
-	if (fd < 0)
-		return (-1);
-	if (!read_in_stdin(fd, del))
-	{
-		unlink(filename);
-		return (-1);
-	}
-	fd = open(filename, O_RDONLY);
-	if (fd > 0)
-		unlink(filename);
-	return (fd);
+	return (1);
 }
 
 int	is_delimiter(char *line, char *del)

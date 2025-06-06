@@ -6,92 +6,76 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 17:30:05 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/06/03 18:05:13 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/06 18:08:37 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	open_all_heredocs(t_data *data)
+void	handle_pipes(t_data *data)
 {
-	t_redir	*redir = data->cmd->redir;
+	int		pipefd[2];
+	pid_t	last_pid;
+	int		status;
+	int		in_fd;
+	t_cmd	*cmd;
+	pid_t	pid;
 
-	while (redir)
+	in_fd = STDIN_FILENO;
+	cmd = data->cmd;
+	while (cmd->next)
 	{
-		if (redir->type == HEREDOC)
-			handle_heredoc(data, redir->filename, redir->del);
-		redir = redir->next;
-	}
-}
-
-void handle_pipes(t_data *data)
-{
-	int pipefd[2];
-	pid_t last_pid;
-	int status;
-	int in_fd = STDIN_FILENO;
-
-	while (data->cmd->next)
-	{
-		open_all_heredocs(data);
-		pipe(pipefd);
-		pid_t pid = fork();
+		if (pipe(pipefd) == -1)
+		{
+			msg_error(ERR_PIPE);
+			return ;
+		}
+		pid = fork();
 		if (pid == 0)
 		{
 			dup2(in_fd, STDIN_FILENO);
 			dup2(pipefd[1], STDOUT_FILENO);
 			close(pipefd[0]);
-			handle_redir(data);
-			execute_command(data);
+			close(pipefd[1]);
+			if (in_fd != STDIN_FILENO)
+				close(in_fd);
+			data->cmd = cmd;
+			handle_redir(data, cmd);
+			execute_command(data, cmd);
 			exit(data->return_value);
 		}
 		else
 		{
-			last_pid = pid; 
+			last_pid = pid;
 			close(pipefd[1]);
-			if (in_fd != STDIN_FILENO) close(in_fd);
+			if (in_fd != STDIN_FILENO)
+				close(in_fd);
 			in_fd = pipefd[0];
-			data->cmd = data->cmd->next;
+			cmd = cmd->next;
 		}
 	}
-    pid_t pid = fork();
-    if (pid == 0)
-    {
-        dup2(in_fd, STDIN_FILENO);
-        handle_redir(data);
-        execute_command(data);
-        exit(data->return_value);
-    }
-    else
-    {
-        last_pid = pid;
-        close(in_fd);
-    }
-    waitpid(last_pid, &status, 0);
-    if (WIFEXITED(status))
-        data->return_value = WEXITSTATUS(status);
-    else if (WIFSIGNALED(status))
-        data->return_value = 128 + WTERMSIG(status);
-}
-
-int	create_pipe(int pipefd[2])
-{
-	if (pipe(pipefd) == -1)
-	{
-		msg_error(ERR_PIPE);
-		return (-1);
-	}
-	return (0);
-}
-
-pid_t	fork_process(void)
-{
-	pid_t	pid;
-
 	pid = fork();
-	if (pid == -1)
-		msg_error(ERR_FORK);
-	return (pid);
+	if (pid == 0)
+	{
+		dup2(in_fd, STDIN_FILENO);
+		if (in_fd != STDIN_FILENO)
+			close(in_fd);
+		data->cmd = cmd;
+		handle_redir(data, cmd);
+		execute_command(data, cmd);
+		exit(data->return_value);
+	}
+	else
+	{
+		last_pid = pid;
+		if (in_fd != STDIN_FILENO)
+			close(in_fd);
+	}
+	waitpid(last_pid, &status, 0);
+	if (WIFEXITED(status))
+		data->return_value = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		data->return_value = 128 + WTERMSIG(status);
 }
 
 void	select_builtin(t_data *data)

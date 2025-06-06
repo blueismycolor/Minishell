@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:06:01 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/02 15:12:09 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/06 17:43:31 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,23 +56,23 @@ char	*find_command_path(const char *cmd)
 	return (NULL);
 }
 
-void	process(t_data *data, char	**environ)
+void	process(t_data *data, t_cmd *cmd, char	**environ)
 {
 	char		*cmd_path;
 
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-	if (!data->cmd->args || !data->cmd->args[0])
+	if (!cmd->args || !cmd->args[0])
 		exit_with_code(data, 1);
-	cmd_path = find_command_path(data->cmd->args[0]);
+	cmd_path = find_command_path(cmd->args[0]);
 	if (!cmd_path)
 	{
 		msg_error("\033[1;31mcommand not found: \033[0m");
-		ft_putendl_fd(data->cmd->args[0], 2);
-		ft_free_array(data->cmd->args);
+		ft_putendl_fd(cmd->args[0], 2);
+		ft_free_array(cmd->args);
 		exit_with_code(data, 127);
 	}
-	execve(cmd_path, data->cmd->args, environ);
+	execve(cmd_path, cmd->args, environ);
 	free(cmd_path);
 	if (errno == EACCES)
 		data->return_value = 126;
@@ -81,7 +81,7 @@ void	process(t_data *data, char	**environ)
 	else
 		data->return_value = 1;
 	perror("\033[1;31mError\033[0m");
-	ft_free_array(data->cmd->args);
+	ft_free_array(cmd->args);
 	exit_with_code(data, 1);
 }
 

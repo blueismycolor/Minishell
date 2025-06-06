@@ -6,39 +6,43 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 16:21:36 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/06/03 18:22:32 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/06 18:10:47 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-bool handle_redir(t_data *data)
+bool handle_redir(t_data *data, t_cmd *cmd)
 {
-	while (data->cmd->redir)
+	t_redir	*redir;
+
+	redir = cmd->redir;
+	while (redir)
 	{
-		if (data->cmd->redir->type == INPUT)
+		if (redir->type == INPUT)
 			handle_input(data);
-		else if (data->cmd->redir->type == TRUNC)
+		else if (redir->type == TRUNC)
 			handle_trunc(data);
-		else if (data->cmd->redir->type == APPEND)
+		else if (redir->type == APPEND)
 			handle_append(data);
-		else if (data->cmd->redir->type == HEREDOC)
+		else if (redir->type == HEREDOC)
 		{
-			data->cmd->fd = handle_heredoc(data, data->cmd->redir->filename,
-					data->cmd->redir->del);
-			if (data->cmd->fd == -1)
+			cmd->fd = open(redir->filename, O_RDONLY);
+			if (cmd->fd == -1)
 				return (false);
-			if (dup2(data->cmd->fd, STDIN_FILENO) == -1)
+			if (dup2(cmd->fd, STDIN_FILENO) == -1)
 			{
-				error(data, "dup2", 1);
-				close(data->cmd->fd);
+				close(cmd->fd);
 				return (false);
 			}
-			close(data->cmd->fd);
+			close(cmd->fd);
+			unlink(redir->filename);
+			free(redir->filename);
+			redir->filename = NULL;
 		}
-		if (data->cmd->fd == -1)
+		if (cmd->fd == -1)
 			return (false);
-		data->cmd->redir = data->cmd->redir->next;
+		redir = redir->next;
 	}
 	return (true);
 }

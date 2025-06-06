@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:31:27 by egatien           #+#    #+#             */
-/*   Updated: 2025/06/04 16:10:36 by maximegdfr       ###   ########.fr       */
+/*   Updated: 2025/06/06 17:44:58 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	**create_arguments(t_cmd *token)
 	return (args);
 }
 
-void	execute_command(t_data *data)
+void	execute_command(t_data *data, t_cmd *cmd)
 {
 	pid_t		pid;
 	extern char	**environ;
@@ -99,7 +99,7 @@ void	execute_command(t_data *data)
 	status = 0;
 	pid = fork();
 	if (pid == 0)
-		process(data, environ);
+		process(data, cmd, environ);
 	else if (pid > 0)
 		exit_process(data, pid, status);
 }
@@ -130,14 +130,19 @@ static void	main_loop(t_data *data)
 		}
 		if (!data->is_exit)
 		{
+			if (!preprocess_heredocs(data->cmd))
+			{
+				free(input);
+				continue ;
+			}
 			if (data->cmd->next)
 				handle_pipes(data);
-			else if (handle_redir(data))
+			else if (handle_redir(data, data->cmd))
 			{
 				if (data->cmd->is_builtin)
 					select_builtin(data);
 				else
-					execute_command(data);
+					execute_command(data, data->cmd);
 			}
 		}
 		reset_fd(data);

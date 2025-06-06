@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/06/04 13:52:19 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/06 18:14:33 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,19 +242,24 @@ void	print_tokens(t_cmd *input);
 /***********************/
 
 void	sigint_handler(int sig);
-void	execute_command(t_data *data);
-void	process(t_data *data, char	**environ);
+void	execute_command(t_data *data, t_cmd *cmd);
+void	process(t_data *data, t_cmd *cmd, char	**environ);
 void	exit_process(t_data *data, pid_t pid, int status);
 void	exit_with_code(t_data *data, int exit_code);
 
+void	error(t_data *data, char *msg, int error_code);
+void	msg_error(char *msg);
+char	*find_command_path(const char *cmd);
+char	**create_arguments(t_cmd *token);
+
 /* cd.c */
-void		update_pwd(t_data *data);
-void		handle_cd(t_data *data);
+void	update_pwd(t_data *data);
+void	handle_cd(t_data *data);
 
 /* cd_utils.c */
 void	replace_var_in_cd(t_data *data, char *new_var, int var_index);
 char	**copy_env_cd(t_data *data, char **new_env, char *new_var, int i);
-int	var_index_cd(t_data *data, char *var_name);
+int		var_index_cd(t_data *data, char *var_name);
 char	*get_env_value_cd(t_data *data, char *key);
 
 /* echo.c */
@@ -295,31 +300,22 @@ t_cmd		*init_cmd(t_cmd *cmd, char *input);
 t_redir		*init_redir(t_redir *redir);
 
 
-void		error(t_data *data, char *msg, int error_code);
-void		msg_error(char *msg);
-char		*find_command_path(const char *cmd);
-char		**create_arguments(t_cmd *token);
-void		execute_command(t_data *data);
-void		select_builtin(t_data *data);
-
 /* Redirection handling */
-bool		handle_redir(t_data *data);
+bool		handle_redir(t_data *data, t_cmd *cmd);
 void		handle_input(t_data *data);
 void		handle_trunc(t_data *data);
 void		handle_append(t_data *data);
 void		reset_fd(t_data *data);
 
 /* heredoc.c */
-int			handle_heredoc(t_data *data, char *filename, char *del);
+int			preprocess_heredocs(t_cmd *cmds);
+int			read_heredoc_content(int fd, char *del);
 char		*generate_heredoc_filename(void);
 int			is_delimiter(char *line, char *del);
 
 /* Minishell_process */
 void		handle_pipes(t_data *data);
-int			create_pipe(int pipefd[2]);
-pid_t		fork_process(void);
-void		execute_child(t_cmd *cmd, t_data *data, int in_fd, int pipefd[2]);
-void		update_parent_fds(int *in_fd, int pipefd[2], int has_next);
+void		select_builtin(t_data *data);
 
 /*******************/
 /* Utils & history */
