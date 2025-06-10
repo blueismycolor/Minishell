@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 17:03:26 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/06/06 16:40:59 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/10 16:46:07 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,5 @@ void	msg_error(char *msg)
 		}
 	}
 	else
-		ft_putstr_fd("\033[1;31mUnknown error (ಥ﹏ಥ)\033[0m", 2);
+		ft_putstr_fd("\033[1;31mUnknown error (ಥ﹏ಥ)\033[0m\n", 2);
 }
