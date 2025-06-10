@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:57:05 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/06/04 16:05:17 by maximegdfr       ###   ########.fr       */
+/*   Updated: 2025/06/10 16:12:08 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	handle_unset(t_data *data)
 	if (!data->cmd->args[1])
 		return ;
 	if (data->cmd->args[2])
-		error(data, "unset: too many arguments.\n", 1);
+		error(data, "unset: too many arguments.", 1);
 	index = get_index(data->cmd->args[1], data->env);
 	if (index != -1)
 		remove_var(index, data->env);

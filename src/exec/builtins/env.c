@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 14:44:54 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/05/30 14:29:31 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/10 16:11:38 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	handle_env(t_data *data)
 	data->return_value = 0;
 	if (data->cmd->args[1] != NULL)
 	{
-		error(data, "env: too many arguments.\n", 1);
+		error(data, "env: too many arguments.", 1);
 		return ;
 	}
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:34:20 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/06/01 17:48:01 by maximegdfr       ###   ########.fr       */
+/*   Updated: 2025/06/10 16:11:26 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,23 +63,23 @@ void	handle_cd(t_data *data)
 
 	target = NULL;
 	if (data->cmd->nb_params > 2)
-		return (msg_error("cd: too many arguments.\n"));
+		return (msg_error("cd: too many arguments."));
 	if (!data->cmd->args[1] || ft_strcmp(data->cmd->args[1], "~") == 0)
 		target = get_env_value_cd(data, "HOME");
 	else if (ft_strcmp(data->cmd->args[1], "-") == 0)
 	{
 		if (!data->old_pwd)
-			return (msg_error("cd: OLDPWD not set.\n"));
+			return (msg_error("cd: OLDPWD not set."));
 		target = data->old_pwd;
 		printf("%s\n", target);
 	}
 	else
 		target = data->cmd->args[1];
 	if (!target)
-		return (msg_error("cd: HOME not set.\n"));
+		return (msg_error("cd: HOME not set."));
 	result = chdir(target);
 	if (result != 0)
-		return (msg_error("cd: no such file or directory.\n"));
+		return (msg_error("cd: no such file or directory."));
 	update_old_pwd(data);
 	update_pwd(data);
 }

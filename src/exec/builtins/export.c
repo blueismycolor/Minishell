@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:38:12 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/06/10 15:42:02 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/10 16:11:51 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void	handle_export_var(t_data *data)
 	var_name = get_var_name(data->cmd->args[1]);
 	if (!var_name)
 	{
-		error(data, "export: invalid variable name.\n", 1);
+		error(data, "export: invalid variable name.", 1);
 		return ;
 	}
 	i = var_index(data, var_name);

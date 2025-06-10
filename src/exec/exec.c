@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:06:01 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/10 15:37:50 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/10 16:15:22 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	process(t_data *data, t_cmd *cmd, char	**environ)
 	cmd_path = find_command_path(cmd->args[0]);
 	if (!cmd_path)
 	{
-		msg_error("\033[1;31mcommand not found: \033[0m");
+		ft_putstr_fd("\033[1;31mminishell: command not found: \033[0m", 2);
 		ft_putendl_fd(cmd->args[0], 2);
 		ft_free_array(cmd->args);
 		exit_with_code(data, 127);

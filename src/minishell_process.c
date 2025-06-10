@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 17:30:05 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/06/10 15:45:46 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/10 16:08:26 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ bool	process_input(t_data *data, char *input)
 void	select_builtin(t_data *data)
 {
 	if (!data->cmd || !data->cmd->cmd)
-		msg_error("Invalid command.\n");
+		msg_error("Invalid command.");
 	if (ft_strncmp(data->cmd->cmd, "cd", 2) == 0)
 		handle_cd(data);
 	if (ft_strncmp(data->cmd->cmd, "echo", 4) == 0)
