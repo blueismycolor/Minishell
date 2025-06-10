@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 16:21:36 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/06/10 15:53:25 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/10 16:57:19 by maximegdfr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ bool	handle_redir(t_data *data, t_cmd *cmd)
 
 void	handle_input(t_data *data)
 {
-	data->cmd->fd = open(data->cmd->redir->filename, O_RDONLY);
+	data->cmd->fd = open(data->cmd->redir->del, O_RDONLY);
 	if (data->cmd->fd == -1)
 	{
 		error(data, data->cmd->redir->filename, 1);
@@ -73,7 +73,7 @@ void	handle_input(t_data *data)
 
 void	handle_trunc(t_data *data)
 {
-	data->cmd->fd = open(data->cmd->redir->filename,
+	data->cmd->fd = open(data->cmd->redir->del,
 			O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (data->cmd->fd == -1)
 	{
@@ -91,7 +91,7 @@ void	handle_trunc(t_data *data)
 
 void	handle_append(t_data *data)
 {
-	data->cmd->fd = open(data->cmd->redir->filename,
+	data->cmd->fd = open(data->cmd->redir->del,
 			O_WRONLY | O_APPEND | O_CREAT, 0644);
 	if (data->cmd->fd == -1)
 	{

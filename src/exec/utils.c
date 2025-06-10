@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:45:43 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/10 15:52:46 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/10 16:51:55 by maximegdfr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	reset_fd(t_data *data)
 }
 
 // Debug function
-/*
+
 void	print_data(t_data *data)
 {
 	if (!data)
@@ -104,4 +104,3 @@ void	print_data(t_data *data)
 		cmd = cmd->next;
 	}
 }
-*/

@@ -6,7 +6,7 @@
 /*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/06/10 16:28:01 by maximegdfr       ###   ########.fr       */
+/*   Updated: 2025/06/10 16:52:12 by maximegdfr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -297,7 +297,7 @@ void	exit_with_code(t_data *data, int exit_code);
 void	free_tokens(t_data *data);
 void	ft_free_array(char **array);
 void	reset_fd(t_data *data);
-// void	print_data(t_data *data);
+void	print_data(t_data *data);
 
 /* exit.c */
 void	error(t_data *data, char *msg, int error_code);
