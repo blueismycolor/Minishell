@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:38:12 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/06/01 16:42:31 by maximegdfr       ###   ########.fr       */
+/*   Updated: 2025/06/10 15:42:02 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,6 @@ int	var_index(t_data *data, char *var_name)
 			return (i);
 		i++;
 	}
-	
-	for (int k = 0; data->env[k]; k++)
-    	printf("env[%d] = '%s'\n", k, data->env[k]);
-	printf("var_index: '%s' not found\n", var_name);
-
 	return (-1);
 }
 

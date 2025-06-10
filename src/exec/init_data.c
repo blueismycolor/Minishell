@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:26:16 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/06/04 16:09:29 by maximegdfr       ###   ########.fr       */
+/*   Updated: 2025/06/10 15:11:39 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ t_data	*init_data(char **environ)
 // 	if (!cmd)
 // 		msg_error(ERR_MALLOC);
 // 	cmd->cmd = ft_strdup(input);
-// 	cmd->args = create_arguments(cmd);
 // 	cmd->is_builtin = false;
 // 	cmd->has_redir = false;
 // 	cmd->redir = malloc(sizeof(t_redir));

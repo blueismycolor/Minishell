@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_remove_quote.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 17:30:11 by egatien           #+#    #+#             */
-/*   Updated: 2025/06/04 13:52:02 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/10 15:09:10 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ t_quote	quotes_state_to_remove(char c, t_quote in_quotes)
 	return (in_quotes);
 }
 
-void	str_without_quotes_init(int *index_str, int *index_result, t_quote *in_quotes)
+void	str_without_quotes_init(int *index_str, int *index_result,
+	t_quote *in_quotes)
 {
 	*index_str = 0;
 	*index_result = 0;
@@ -44,19 +45,19 @@ static char	*str_without_quotes(char *str, int count)
 	int		index_str;
 	int		index_result;
 	t_quote	in_quotes;
-	
+
 	str_without_quotes_init(&index_str, &index_result, &in_quotes);
 	result = malloc(sizeof(char) * (count + 1));
 	if (!result)
-		return NULL;
+		return (NULL);
 	while (str[index_str] != '\0')
 	{
 		in_quotes = quotes_state_to_remove(str[index_str], in_quotes);
-		if ((str[index_str] == '"' && in_quotes != SINGLE) ||
-			(str[index_str] == '\'' && in_quotes != DOUBLE))
+		if ((str[index_str] == '"' && in_quotes != SINGLE)
+			|| (str[index_str] == '\'' && in_quotes != DOUBLE))
 		{
 			index_str++;
-			continue;
+			continue ;
 		}
 		result[index_result] = str[index_str];
 		index_str++;

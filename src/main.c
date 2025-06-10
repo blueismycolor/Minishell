@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:31:27 by egatien           #+#    #+#             */
-/*   Updated: 2025/06/06 17:44:58 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/10 15:44:24 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,110 +61,16 @@ void	sigint_handler(int sig)
 	rl_redisplay();
 }
 
-char	**create_arguments(t_cmd *token)
-{
-	char	**args;
-	char	*temp;
-	char	*token_str;
-	int		count;
-
-	temp = ft_strdup(token->cmd);
-	count = 0;
-	token_str = ft_strtok(temp, " ");
-	while (token_str && ++count)
-		token_str = ft_strtok(NULL, " ");
-	free(temp);
-	args = malloc(sizeof(char *) * (count + 1));
-	if (!args)
-		return (NULL);
-	temp = ft_strdup(token->cmd);
-	token_str = ft_strtok(temp, " ");
-	count = 0;
-	while (token_str)
-	{
-		args[count++] = ft_strdup(token_str);
-		token_str = ft_strtok(NULL, " ");
-	}
-	args[count] = NULL;
-	free(temp);
-	return (args);
-}
-
-void	execute_command(t_data *data, t_cmd *cmd)
-{
-	pid_t		pid;
-	extern char	**environ;
-	int			status;
-
-	status = 0;
-	pid = fork();
-	if (pid == 0)
-		process(data, cmd, environ);
-	else if (pid > 0)
-		exit_process(data, pid, status);
-}
-
-static void	main_loop(t_data *data)
-{
-	char		*input;
-
-	while (1)
-	{
-		signal(SIGINT, sigint_handler);
-		input = NULL;
-		if (!g_signal)
-		{
-			print_prompt_header();
-			input = readline("\001\033[1;92m\002minishell> \001\033[0m\002");
-		}
-		data->saved_stdin = dup(STDIN_FILENO);
-		data->saved_stdout = dup(STDOUT_FILENO);
-		g_signal = 0;
-		handle_exit(data, input);
-		data->cmd = tcmd_init(input, data);
-		// print_data(data);
-		if (data->cmd == NULL && !data->is_exit)
-		{
-			free(input);
-			continue ;
-		}
-		if (!data->is_exit)
-		{
-			if (!preprocess_heredocs(data->cmd))
-			{
-				free(input);
-				continue ;
-			}
-			if (data->cmd->next)
-				handle_pipes(data);
-			else if (handle_redir(data, data->cmd))
-			{
-				if (data->cmd->is_builtin)
-					select_builtin(data);
-				else
-					execute_command(data, data->cmd);
-			}
-		}
-		reset_fd(data);
-		if (ft_strlen(input) > 0 && !data->is_exit)
-			add_to_history(data, input);
-		free_tcmd(data->cmd);
-		free(input);
-		if (data->is_exit)
-			break ;
-	}
-}
-
 int	main(int argc, char **argv, char **envp)
 {
+	t_data				*data;
+	struct sigaction	sa_quit;
+
 	(void)argc;
 	(void)argv;
-	t_data		*data;
-
 	g_signal = 0;
 	disable_echoctl();
 	data = init_data(envp);
-	struct sigaction sa_quit;
 	sa_quit.sa_handler = SIG_IGN;
 	sigemptyset(&sa_quit.sa_mask);
 	sa_quit.sa_flags = 0;

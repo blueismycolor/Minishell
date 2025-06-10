@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 15:23:51 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/06/06 18:16:37 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/10 15:03:53 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,8 @@ char	*generate_heredoc_filename(void)
 	count_str = ft_itoa(heredoc_count++);
 	if (!count_str)
 		return (NULL);
-
-	// ".heredoc_" + chiffre + ".tmp" + '\0'
-	len = strlen(".heredoc_") + strlen(count_str) + strlen(".tmp") + 1;
+	len = ft_strlen(".heredoc_") + ft_strlen(count_str)
+		+ ft_strlen(".tmp") + 1;
 	filename = malloc(len);
 	if (!filename)
 	{
@@ -105,12 +104,4 @@ int	read_heredoc_content(int fd, char *del)
 		free(line);
 	}
 	return (1);
-}
-
-int	is_delimiter(char *line, char *del)
-{
-	size_t	len;
-
-	len = ft_strlen(del);
-	return (ft_strncmp(line, del, len) == 0 && line[len] == '\n');
 }

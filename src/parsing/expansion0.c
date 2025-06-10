@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion0.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 13:12:17 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/30 11:07:41 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/10 15:06:01 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,9 @@ char	*ft_tabstrnstr(const char *str, const char *to_find)
 	return (NULL);
 }
 
-/* 
-	fonction ou le but est de recuperer la valeur de sortie de la
-	derniere commande (utile pour $?)
-	en gros a chaque appel on peut recuperer la valeur de sortie de la commande
-*/
+// fonction ou le but est de recuperer la valeur de sortie de la
+// derniere commande (utile pour $?)
+// en gros a chaque appel on peut recuperer la valeur de sortie de la commande
 int	last_exit_status(int exit_status)
 {
 	static int	status_to_return;

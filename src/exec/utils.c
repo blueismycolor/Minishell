@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:45:43 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/04 16:06:52 by maximegdfr       ###   ########.fr       */
+/*   Updated: 2025/06/10 15:52:46 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,20 @@ void	ft_free_array(char **array)
 	free(array);
 }
 
-void print_data(t_data *data)
+void	reset_fd(t_data *data)
+{
+	if (!data->is_exit)
+	{
+		dup2(data->saved_stdin, STDIN_FILENO);
+		dup2(data->saved_stdout, STDOUT_FILENO);
+		close(data->saved_stdin);
+		close(data->saved_stdout);
+	}
+}
+
+// Debug function
+/*
+void	print_data(t_data *data)
 {
 	if (!data)
 		return ;
@@ -80,7 +93,8 @@ void print_data(t_data *data)
 			while (redir)
 			{
 				printf("\n\033[40m\t\t\t* REDIR *\033[0m\n");
-				printf("\t\t\tFILENAME : %s\n", redir->filename ? redir->filename : "(null)");
+				printf("\t\t\tFILENAME : %s\n",
+					redir->filename ? redir->filename : "(null)");
 				printf("\t\t\tDEL : %s\n", redir->del ? redir->del : "(null)");
 				printf("\t\t\tTYPE : %d\n", redir->type);
 				printf("\t\t\tNEXT : %p\n", (void *)redir->next);
@@ -90,3 +104,4 @@ void print_data(t_data *data)
 		cmd = cmd->next;
 	}
 }
+*/

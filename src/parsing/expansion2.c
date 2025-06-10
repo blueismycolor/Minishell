@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:18:57 by aeudes            #+#    #+#             */
-/*   Updated: 2025/06/04 13:59:12 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/10 15:07:19 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ char	*set_env(char *str, char **envp)
 	i = 0;
 	quotes = NONE;
 	result = ft_strdup(str);
-	// free(str);
 	while (result[i] != '\0' && result[i] != '$')
 	{
 		quotes = quotes_state_to_remove(result[i], quotes);
@@ -107,6 +106,6 @@ char	*set_env(char *str, char **envp)
 			i++;
 	}
 	if (result[i] == '\0')
-	return (result);
+		return (result);
 	return (put_env(result, envp));
 }

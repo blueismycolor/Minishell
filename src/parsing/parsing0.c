@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parsing0.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:56:31 by aeudes            #+#    #+#             */
-/*   Updated: 2025/06/04 14:01:54 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/10 15:17:34 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	process_input(char *input)
+int	parsing_input(char *input)
 {
 	int	i;
 

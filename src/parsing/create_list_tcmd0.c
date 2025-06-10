@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_list_tcmd0.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:08:52 by aeudes            #+#    #+#             */
-/*   Updated: 2025/06/04 14:00:14 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/10 15:17:43 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_cmd	*tcmd_init(char *input, t_data *data)
 	t_cmd	*result;
 
 	last_exit_status(data->return_value);
-	if (!input || process_input(input) == -1)
+	if (!input || parsing_input(input) == -1)
 		return (NULL);
 	input = set_env(input, data->env);
 	if (!input || !input[0])

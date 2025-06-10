@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:06:01 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/06 17:43:31 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/10 15:37:50 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,16 +85,24 @@ void	process(t_data *data, t_cmd *cmd, char	**environ)
 	exit_with_code(data, 1);
 }
 
-void	exit_process(t_data *data, pid_t pid, int status)
+void	exit_proc_sig_init(pid_t pid, int status)
 {
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	waitpid(pid, &status, 0);
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
+}
+
+void	exit_process(t_data *data, pid_t pid, int status)
+{
+	int	sig;
+
+	sig = 0;
+	exit_proc_sig_init(pid, status);
 	if (WIFSIGNALED(status))
 	{
-		int sig = WTERMSIG(status);
+		sig = WTERMSIG(status);
 		if (sig == SIGINT)
 		{
 			write(1, "\n", 1);
