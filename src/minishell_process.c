@@ -15,13 +15,12 @@
 void	execute_command(t_data *data, t_cmd *cmd)
 {
 	pid_t		pid;
-	extern char	**environ;
 	int			status;
 
 	status = 0;
 	pid = fork();
 	if (pid == 0)
-		process(data, cmd, environ);
+		process(data, cmd, data->env);
 	else if (pid > 0)
 		exit_process(data, pid, status);
 }
