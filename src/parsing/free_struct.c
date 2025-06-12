@@ -6,7 +6,7 @@
 /*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:21:09 by aeudes            #+#    #+#             */
-/*   Updated: 2025/05/30 11:07:54 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/12 08:05:04 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	free_redir(t_redir *redirection)
 	{
 		temp = redirection;
 		redirection = redirection->next;
+		free(temp->del);
 		free(temp->filename);
 		free(temp);
 	}
