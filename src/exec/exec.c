@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:06:01 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/10 16:15:22 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/12 17:42:19 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,23 +56,23 @@ char	*find_command_path(const char *cmd)
 	return (NULL);
 }
 
-void	process(t_data *data, t_cmd *cmd, char	**environ)
+void	process(t_data *data, t_cmd *cmd)
 {
 	char		*cmd_path;
 
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	if (!cmd->args || !cmd->args[0])
-		exit_with_code(data, 1);
+		exit(update_return_value(data, 0));
 	cmd_path = find_command_path(cmd->args[0]);
 	if (!cmd_path)
 	{
-		ft_putstr_fd("\033[1;31mminishell: command not found: \033[0m", 2);
+		error(data, ERR_CMD_NOT_FOUND, 127);
 		ft_putendl_fd(cmd->args[0], 2);
 		ft_free_array(cmd->args);
-		exit_with_code(data, 127);
+		exit(127);
 	}
-	execve(cmd_path, cmd->args, environ);
+	execve(cmd_path, cmd->args, data->env);
 	free(cmd_path);
 	if (errno == EACCES)
 		data->return_value = 126;
@@ -82,7 +82,7 @@ void	process(t_data *data, t_cmd *cmd, char	**environ)
 		data->return_value = 1;
 	perror("\033[1;31mError\033[0m");
 	ft_free_array(cmd->args);
-	exit_with_code(data, 1);
+	exit(data->return_value);
 }
 
 void	exit_proc_sig_init(pid_t pid, int status)

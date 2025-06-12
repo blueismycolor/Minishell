@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_process.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 17:30:05 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/06/12 07:56:20 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/12 17:41:40 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	execute_command(t_data *data, t_cmd *cmd)
 	status = 0;
 	pid = fork();
 	if (pid == 0)
-		process(data, cmd, data->env);
+		process(data, cmd);
 	else if (pid > 0)
 		exit_process(data, pid, status);
 }

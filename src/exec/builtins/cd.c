@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:34:20 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/06/10 16:11:26 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/12 16:42:25 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,23 +63,23 @@ void	handle_cd(t_data *data)
 
 	target = NULL;
 	if (data->cmd->nb_params > 2)
-		return (msg_error("cd: too many arguments."));
+		return (error(data, "cd: too many arguments.", 1));
 	if (!data->cmd->args[1] || ft_strcmp(data->cmd->args[1], "~") == 0)
 		target = get_env_value_cd(data, "HOME");
 	else if (ft_strcmp(data->cmd->args[1], "-") == 0)
 	{
 		if (!data->old_pwd)
-			return (msg_error("cd: OLDPWD not set."));
+			return (error(data, "cd: OLDPWD not set.", 1));
 		target = data->old_pwd;
 		printf("%s\n", target);
 	}
 	else
 		target = data->cmd->args[1];
 	if (!target)
-		return (msg_error("cd: HOME not set."));
+		return (error(data, "cd: HOME not set.", 1));
 	result = chdir(target);
 	if (result != 0)
-		return (msg_error("cd: no such file or directory."));
+		return (error(data, "cd: no such file or directory.", 1));
 	update_old_pwd(data);
 	update_pwd(data);
 }

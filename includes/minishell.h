@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/06/10 16:52:12 by maximegdfr       ###   ########.fr       */
+/*   Updated: 2025/06/12 17:16:35 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@
 # define OPEN_SNG_QUOTE		"unclosed single quote."
 # define OPEN_DBL_QUOTE		"unclosed double quote."
 # define ERR_CMD			"command execution failed."
+# define ERR_CMD_NOT_FOUND	"minishell: command not found: "
 # define ERR_QUOTE_OPEN		"unclosed quote."
 # define ERR_EXECVE			"execve system call failed."
 # define ERR_FORK			"fork failed."
@@ -283,7 +284,7 @@ void	handle_unset(t_data *data);
 /***********************/
 /* exec.c */
 char	*find_command_path(const char *cmd);
-void	process(t_data *data, t_cmd *cmd, char	**environ);
+void	process(t_data *data, t_cmd *cmd);
 void	exit_proc_sig_init(pid_t pid, int status);
 void	exit_process(t_data *data, pid_t pid, int status);
 
@@ -293,7 +294,7 @@ t_data	*init_data(char **environ);
 t_redir	*init_redir(t_redir *redir);
 
 /* utils.c */
-void	exit_with_code(t_data *data, int exit_code);
+int		update_return_value(t_data *data, int value);
 void	free_tokens(t_data *data);
 void	ft_free_array(char **array);
 void	reset_fd(t_data *data);
