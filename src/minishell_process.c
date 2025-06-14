@@ -6,7 +6,7 @@
 /*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 17:30:05 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/06/14 17:14:57 by maximegdfr       ###   ########.fr       */
+/*   Updated: 2025/06/14 18:18:30 by maximegdfr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	execute_commands(t_data *data)
 	t_cmd	*cmd;
 
 	cmd = data->cmd;
+	data->nb_cmds = 0;
 	while (cmd)
 	{
 		data->nb_cmds++;

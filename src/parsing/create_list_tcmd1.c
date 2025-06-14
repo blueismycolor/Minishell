@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_list_tcmd1.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:07:19 by aeudes            #+#    #+#             */
-/*   Updated: 2025/05/30 14:02:22 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/14 18:20:38 by maximegdfr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,14 @@ t_cmd	*give_isbuiltin(t_cmd *cmd)
 	current = cmd;
 	while (current)
 	{
-		if ((ft_strcmp(current->args[0], "cd") == 0)
-			|| (ft_strcmp(current->args[0], "echo") == 0)
-			|| (ft_strcmp(current->args[0], "env") == 0)
-			|| (ft_strcmp(current->args[0], "export") == 0)
-			|| (ft_strcmp(current->args[0], "pwd") == 0)
-			|| (ft_strcmp(current->args[0], "unset") == 0)
-			|| (ft_strcmp(current->args[0], "exit") == 0))
+		if (current->args && current->args[0]
+			&& ((ft_strcmp(current->args[0], "cd") == 0)
+				|| (ft_strcmp(current->args[0], "echo") == 0)
+				|| (ft_strcmp(current->args[0], "env") == 0)
+				|| (ft_strcmp(current->args[0], "export") == 0)
+				|| (ft_strcmp(current->args[0], "pwd") == 0)
+				|| (ft_strcmp(current->args[0], "unset") == 0)
+				|| (ft_strcmp(current->args[0], "exit") == 0)))
 			current->is_builtin = true;
 		else
 			current->is_builtin = false;

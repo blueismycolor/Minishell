@@ -6,7 +6,7 @@
 /*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:23:37 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/10 16:34:37 by maximegdfr       ###   ########.fr       */
+/*   Updated: 2025/06/14 18:22:05 by maximegdfr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	main_loop(t_data *data)
 			free(input);
 			continue ;
 		}
+		// print_data(data);
 		if (!data->is_exit)
 			execute_commands(data);
 		cleanup_main_loop(data, input);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:21:09 by aeudes            #+#    #+#             */
-/*   Updated: 2025/06/12 08:05:04 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/14 18:23:29 by maximegdfr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ void	free_tcmd(t_cmd *list)
 	{
 		temp = list;
 		list = list->next;
-		free_tab(temp->args);
+		if (temp->args)
+			free_tab(temp->args);
 		if (temp->has_redir == true)
 			free_redir(temp->redir);
 		free(temp);
