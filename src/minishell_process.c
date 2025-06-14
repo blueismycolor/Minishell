@@ -6,7 +6,7 @@
 /*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 17:30:05 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/06/14 18:18:30 by maximegdfr       ###   ########.fr       */
+/*   Updated: 2025/06/14 19:24:05 by maximegdfr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	execute_commands(t_data *data)
 		data->nb_cmds++;
 		cmd = cmd->next;
 	}
-	if (data->nb_cmds > 0)
+	if (data->nb_cmds > 1)
 		handle_pipes(data);
 	else if (handle_redir(data, data->cmd))
 	{
