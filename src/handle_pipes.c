@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_pipes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:46:04 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/10 15:50:07 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/14 17:29:40 by maximegdfr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,42 +46,56 @@ static void	parent_pipe(pid_t pid, int *last_pid, int *in_fd, int *pipefd)
 	*in_fd = pipefd[0];
 }
 
-static void	wait_last(pid_t last_pid, t_data *data)
+static void	wait_all(pid_t *pids, t_data *data)
 {
 	int	status;
+	int	i;
 
-	waitpid(last_pid, &status, 0);
-	if (WIFEXITED(status))
-		data->return_value = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-		data->return_value = 128 + WTERMSIG(status);
+	i = 0;
+	while (i < data->nb_cmds)
+	{
+		waitpid(pids[i], &status, 0);
+		if (i == data->nb_cmds - 1)
+		{
+			if (WIFEXITED(status))
+				data->return_value = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+				data->return_value = 128 + WTERMSIG(status);
+		}
+		i++;
+	}
 }
 
 void	handle_pipes(t_data *data)
 {
 	int		pipefd[2];
-	pid_t	last_pid;
+	int		i;
 	int		in_fd;
 	t_cmd	*cmd;
-	pid_t	pid;
+	pid_t	*pids;
 
 	in_fd = STDIN_FILENO;
 	cmd = data->cmd;
+	pids = malloc(sizeof(pid_t) * data->nb_cmds);
+	if (!pids)
+		return (msg_error(ERR_MALLOC));
+	i = 0;
 	while (cmd->next)
 	{
 		if (pipe(pipefd) == -1)
 			return (msg_error(ERR_PIPE));
-		pid = fork();
-		if (pid == 0)
+		pids[i] = fork();
+		if (pids[i] == 0)
 			child_pipe(data, cmd, in_fd, pipefd);
-		parent_pipe(pid, &last_pid, &in_fd, pipefd);
+		parent_pipe(pids[i], &pids[data->nb_cmds], &in_fd, pipefd);
 		cmd = cmd->next;
+		i++;
 	}
-	pid = fork();
-	if (pid == 0)
+	pids[i] = fork();
+	if (pids[i] == 0)
 		child_last(data, cmd, in_fd);
-	last_pid = pid;
 	if (in_fd != STDIN_FILENO)
 		close(in_fd);
-	wait_last(last_pid, data);
+	wait_all(pids, data);
+	free(pids);
 }

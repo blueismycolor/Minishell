@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:26:16 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/06/10 15:11:39 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/14 17:06:46 by maximegdfr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ t_data	*init_data(char **environ)
 	data->return_value = 0;
 	data->saved_stdin = 0;
 	data->saved_stdout = 0;
+	data->nb_cmds = 0;
 	data->is_exit = false;
 	return (data);
 }
