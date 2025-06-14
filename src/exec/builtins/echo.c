@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 13:10:35 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/06/11 15:12:17 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/14 16:59:30 by maximegdfr       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ void	handle_echo(t_data *data)
 	first = 1;
 	while (data->cmd->args[i])
 	{
-		if (ft_strncmp(data->cmd->args[i], "-", 1) == 0)
-			i++;
 		if (!first)
 			printf(" ");
 		printf("%s", data->cmd->args[i]);
