@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/06/14 17:06:27 by maximegdfr       ###   ########.fr       */
+/*   Updated: 2025/06/16 17:57:09 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,7 +309,7 @@ void	msg_error(char *msg);
 void	handle_pipes(t_data *data);
 
 /* heredoc_preprocess.c */
-int		preprocess_heredocs(t_cmd *cmds);
+int		preprocess_heredocs(t_data *data);
 
 /* heredoc.c */
 char	*generate_heredoc_filename(void);
