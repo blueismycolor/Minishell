@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_process.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 17:30:05 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/06/14 19:24:05 by maximegdfr       ###   ########.fr       */
+/*   Updated: 2025/06/16 17:44:23 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ bool	process_input(t_data *data, char *input)
 		data->return_value = 2;
 		return (false);
 	}
-	if (!preprocess_heredocs(data->cmd))
+	if (!preprocess_heredocs(data))
 		return (false);
 	return (true);
 }

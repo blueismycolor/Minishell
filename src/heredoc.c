@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 15:23:51 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/06/10 15:03:53 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/16 17:10:17 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,21 +69,10 @@ char	*generate_heredoc_filename(void)
 	return (filename);
 }
 
-static void	sigint_handler_heredoc(int sig)
-{
-	g_signal = sig;
-	rl_replace_line("", 0);
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_redisplay();
-}
-
 int	read_heredoc_content(int fd, char *del)
 {
 	char	*line;
 
-	signal(SIGINT, sigint_handler_heredoc);
-	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		line = readline("> ");

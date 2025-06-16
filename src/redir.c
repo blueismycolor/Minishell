@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 16:21:36 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/06/16 15:09:09 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/16 17:42:29 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static bool	handle_heredoc_redir(t_cmd *cmd, t_redir *redir)
 		return (false);
 	}
 	close(cmd->fd);
-	unlink(redir->filename);
+	// unlink(redir->filename);
 	free(redir->filename);
 	redir->filename = NULL;
 	return (true);
