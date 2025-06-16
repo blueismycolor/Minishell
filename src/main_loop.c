@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:23:37 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/16 14:26:59 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/16 18:30:15 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	main_loop(t_data *data)
 	{
 		input = init_main_loop_iteration(data);
 		handle_exit(data, input);
+		// print_data(data);
 		if (!process_input(data, input))
 		{
 			add_to_history(data, input);

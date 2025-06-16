@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:04:11 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/16 17:45:56 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/16 18:40:13 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static int	fill_one_heredoc(t_data *data)
 	int		status;
 	int		pid;
 
+	printf("Delimiter: %s\n", data->cmd->redir->del);
+	printf("Filename: %s\n", data->cmd->redir->filename);
 	fd = open(data->cmd->redir->filename, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	if (fd < 0)
 		return (0);
@@ -50,7 +52,6 @@ static int	fill_one_heredoc(t_data *data)
 	return (1);
 }
 
-
 int	preprocess_heredocs(t_data *data)
 {
 	t_cmd	*cmd;
@@ -59,9 +60,11 @@ int	preprocess_heredocs(t_data *data)
 	cmd = data->cmd;
 	while (cmd)
 	{
-		redir = cmd->redir;
+		redir = data->cmd->redir;
 		while (redir)
 		{
+			printf("Type: %d, Delimiter: %s, Filename: %s\n",
+				redir->type, redir->del, redir->filename);
 			if (redir->type == HEREDOC)
 			{
 				if (!fill_one_heredoc(data))

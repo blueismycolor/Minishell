@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:45:43 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/10 16:51:55 by maximegdfr       ###   ########.fr       */
+/*   Updated: 2025/06/16 18:28:16 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	reset_fd(t_data *data)
 
 void	print_data(t_data *data)
 {
+	t_cmd *cmd;
+
 	if (!data)
 		return ;
 	printf("\033[40m\n\t* DATA *\033[0m\n");
@@ -74,33 +76,39 @@ void	print_data(t_data *data)
 	printf("\tRETURN_VALUE : %d\n", data->return_value);
 	printf("\tSAVED_STDIN : %d\n", data->saved_stdin);
 	printf("\tSAVED_STDOUT : %d\n", data->saved_stdout);
-	t_cmd *cmd = data->cmd;
-	while (cmd)
+	if (data->cmd)
 	{
-		printf("\n\033[40m\t\t* CMD *\033[0m\n");
-		printf("\t\tCMD : %s\n", cmd->cmd ? cmd->cmd : "(null)");
-		printf("\t\tBUILT IN : %s\n", cmd->is_builtin ? "true" : "false");
-		for (int i = 0; cmd->args && cmd->args[i]; i++) {
-			printf("\t\tARGS[%d] : %s\n", i, cmd->args[i]);
-		}
-		printf("\t\tNB PARAMS : %d\n", cmd->nb_params);
-		// printf("\t\tTYPE : %d\n", cmd->type);
-		printf("\t\tFD : %d\n", cmd->fd);
-		printf("\t\tREDIR : %s\n", cmd->has_redir ? "true" : "false");
-		if (cmd->has_redir && cmd->redir)
+		cmd = data->cmd;
+		while (cmd)
 		{
-			t_redir *redir = cmd->redir;
-			while (redir)
-			{
-				printf("\n\033[40m\t\t\t* REDIR *\033[0m\n");
-				printf("\t\t\tFILENAME : %s\n",
-					redir->filename ? redir->filename : "(null)");
-				printf("\t\t\tDEL : %s\n", redir->del ? redir->del : "(null)");
-				printf("\t\t\tTYPE : %d\n", redir->type);
-				printf("\t\t\tNEXT : %p\n", (void *)redir->next);
-				redir = redir->next;
+			printf("\n\033[40m\t\t* CMD *\033[0m\n");
+			// if (cmd->cmd)
+			// 	printf("\t\tCMD : %s\n", cmd->cmd);
+			// else
+			// 	printf("\t\tCMD : (null)\n");
+			printf("\t\tBUILT IN : %s\n", cmd->is_builtin ? "true" : "false");
+			for (int i = 0; cmd->args && cmd->args[i]; i++) {
+				printf("\t\tARGS[%d] : %s\n", i, cmd->args[i]);
 			}
+			printf("\t\tNB PARAMS : %d\n", cmd->nb_params);
+			// printf("\t\tTYPE : %d\n", cmd->type);
+			printf("\t\tFD : %d\n", cmd->fd);
+			printf("\t\tREDIR : %s\n", cmd->has_redir ? "true" : "false");
+			if (cmd->has_redir && cmd->redir)
+			{
+				t_redir *redir = cmd->redir;
+				while (redir)
+				{
+					printf("\n\033[40m\t\t\t* REDIR *\033[0m\n");
+					printf("\t\t\tFILENAME : %s\n",
+						redir->filename ? redir->filename : "(null)");
+					printf("\t\t\tDEL : %s\n", redir->del ? redir->del : "(null)");
+					printf("\t\t\tTYPE : %d\n", redir->type);
+					printf("\t\t\tNEXT : %p\n", (void *)redir->next);
+					redir = redir->next;
+				}
+			}
+			cmd = cmd->next;
 		}
-		cmd = cmd->next;
 	}
 }
