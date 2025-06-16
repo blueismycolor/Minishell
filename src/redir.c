@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 16:21:36 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/06/14 19:13:08 by maximegdfr       ###   ########.fr       */
+/*   Updated: 2025/06/16 15:09:09 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,16 @@ void	handle_input(t_data *data)
 
 void	handle_trunc(t_data *data)
 {
-	data->cmd->fd = open(data->cmd->redir->del,
+	t_redir	*temp;
+
+	temp = data->cmd->redir;
+	while (temp->next)
+		temp = temp->next;
+	data->cmd->fd = open(temp->del,
 			O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (data->cmd->fd == -1)
 	{
-		error(data, data->cmd->redir->filename, 1);
+		error(data, temp->filename, 1);
 		return ;
 	}
 	if (dup2(data->cmd->fd, STDOUT_FILENO) == -1)
@@ -91,11 +96,17 @@ void	handle_trunc(t_data *data)
 
 void	handle_append(t_data *data)
 {
-	data->cmd->fd = open(data->cmd->redir->del,
+	t_redir	*temp;
+
+	temp = data->cmd->redir;
+	while (temp->next)
+		temp = temp->next;
+
+	data->cmd->fd = open(temp->del,
 			O_WRONLY | O_APPEND | O_CREAT, 0644);
 	if (data->cmd->fd == -1)
 	{
-		error(data, data->cmd->redir->filename, 1);
+		error(data, temp->filename, 1);
 		return ;
 	}
 	if (dup2(data->cmd->fd, STDOUT_FILENO) == -1)

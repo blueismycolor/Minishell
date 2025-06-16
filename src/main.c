@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:31:27 by egatien           #+#    #+#             */
-/*   Updated: 2025/06/10 15:44:24 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/16 13:44:36 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,13 @@ void	print_prompt_header(void)
 	free(cwd);
 }
 
+void	free_data(t_data *data)
+{
+	free(data->pwd);
+	free_tab(data->env);
+	free(data);
+}
+
 void	sigint_handler(int sig)
 {
 	g_signal = sig;
@@ -78,5 +85,6 @@ int	main(int argc, char **argv, char **envp)
 	init_history(data);
 	main_loop(data);
 	free_history(data);
+	free_data(data);
 	return (0);
 }

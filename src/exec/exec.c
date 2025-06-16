@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maximegdfr <maximegdfr@student.42.fr>      +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:06:01 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/14 19:13:30 by maximegdfr       ###   ########.fr       */
+/*   Updated: 2025/06/16 14:25:50 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void	process(t_data *data, t_cmd *cmd)
 {
 	char		*cmd_path;
 
+	close(data->saved_stdin);
+	close(data->saved_stdout);
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	if (!cmd->args || !cmd->args[0])
@@ -111,9 +113,9 @@ void	exit_process(t_data *data, pid_t pid, int status)
 		else if (sig == SIGQUIT)
 		{
 			if (WCOREDUMP(status))
-				write(1, "Quit (core dumped)\n", 19);
+			write(1, "Quit (core dumped)\n", 19);
 			else
-				write(1, "Quit\n", 5);
+			write(1, "Quit\n", 5);
 			data->return_value = 131;
 		}
 	}
