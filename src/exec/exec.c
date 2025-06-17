@@ -6,7 +6,7 @@
 /*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:06:01 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/17 16:38:50 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/17 16:41:47 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,6 @@ void	process(t_data *data, t_cmd *cmd)
 		ft_free_array(cmd->args);
 		exit(127);
 	}
-	// for (int i = 0; data->env[i]; i++)
-	// 	printf("%s\n", data->env[i]);
 	execve(cmd_path, cmd->args, data->env);
 	free(cmd_path);
 	if (errno == EACCES)

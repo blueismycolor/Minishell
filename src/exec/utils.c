@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:45:43 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/16 18:28:16 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/17 17:07:53 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,10 @@ void	ft_free_array(char **array)
 
 void	reset_fd(t_data *data)
 {
-	if (!data->is_exit)
-	{
-		dup2(data->saved_stdin, STDIN_FILENO);
-		dup2(data->saved_stdout, STDOUT_FILENO);
-		close(data->saved_stdin);
-		close(data->saved_stdout);
-	}
+	dup2(data->saved_stdin, STDIN_FILENO);
+	dup2(data->saved_stdout, STDOUT_FILENO);
+	close(data->saved_stdin);
+	close(data->saved_stdout);
 }
 
 // Debug function
