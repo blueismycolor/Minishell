@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 15:23:51 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/06/16 17:10:17 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/17 16:00:10 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	read_heredoc_content(int fd, char *del)
 		if (ft_strcmp(line, del) == 0)
 		{
 			free(line);
-			break ;
+			return (-1);
 		}
 		ft_putendl_fd(line, fd);
 		free(line);

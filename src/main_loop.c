@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:23:37 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/16 18:30:15 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/17 16:04:12 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	main_loop(t_data *data)
 			free(input);
 			continue ;
 		}
-		// print_data(data);
+		print_data(data);
 		if (!data->is_exit)
 			execute_commands(data);
 		cleanup_main_loop(data, input);

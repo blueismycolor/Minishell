@@ -3,24 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_preprocess.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:04:11 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/16 18:40:13 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/17 16:00:04 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	fill_one_heredoc(t_data *data)
+static int	fill_one_heredoc(t_data *data, t_redir *redir)
 {
 	int		fd;
 	int		status;
 	int		pid;
 
-	printf("Delimiter: %s\n", data->cmd->redir->del);
-	printf("Filename: %s\n", data->cmd->redir->filename);
-	fd = open(data->cmd->redir->filename, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+	fd = open(redir->filename, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	if (fd < 0)
 		return (0);
 	pid = fork();
@@ -33,7 +31,7 @@ static int	fill_one_heredoc(t_data *data)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		read_heredoc_content(fd, data->cmd->redir->del);
+		read_heredoc_content(fd, redir->del);
 		close(fd);
 		exit(0);
 	}
@@ -46,7 +44,7 @@ static int	fill_one_heredoc(t_data *data)
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 	{
 		data->return_value = 130;
-		unlink(data->cmd->redir->filename);
+		unlink(redir->filename);
 		return (0);
 	}
 	return (1);
@@ -60,14 +58,12 @@ int	preprocess_heredocs(t_data *data)
 	cmd = data->cmd;
 	while (cmd)
 	{
-		redir = data->cmd->redir;
+		redir = cmd->redir;
 		while (redir)
 		{
-			printf("Type: %d, Delimiter: %s, Filename: %s\n",
-				redir->type, redir->del, redir->filename);
 			if (redir->type == HEREDOC)
 			{
-				if (!fill_one_heredoc(data))
+				if (!fill_one_heredoc(data, redir))
 					return (0);
 			}
 			redir = redir->next;
