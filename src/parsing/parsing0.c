@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parsing0.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:56:31 by aeudes            #+#    #+#             */
-/*   Updated: 2025/06/10 15:17:34 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/17 17:24:47 by aeudes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	parsing_input(char *input)
+int	parsing_input(char *input, t_data *data)
 {
 	int	i;
 
@@ -21,23 +21,23 @@ int	parsing_input(char *input)
 		i++;
 	if (input[i] == '\0')
 		return (ERROR);
-	if (!validate_input(input))
+	if (!validate_input(input, data))
 		return (ERROR);
 	return (SUCCESS);
 }
 
-bool	validate_input(char *input)
+bool	validate_input(char *input, t_data *data)
 {
-	if (!check_pipe_syntax(input, 0))
+	if (!check_pipe_syntax(input, data, 0))
 		return (false);
-	if (check_quote_syntax(input, 0) == ERROR)
+	if (check_quote_syntax(input, data, 0) == ERROR)
 		return (false);
-	if (!check_redirection_syntax(input, 0, 0))
+	if (!check_redirection_syntax(input, data, 0, 0))
 		return (false);
 	return (true);
 }
 
-bool	check_pipe_syntax(char *input, int i)
+bool	check_pipe_syntax(char *input, t_data *data, int i)
 {
 	int		j;
 	char	quote;
@@ -45,7 +45,7 @@ bool	check_pipe_syntax(char *input, int i)
 	quote = 0;
 	i = skip_space(input, 0);
 	if (input[i] == '|')
-		return (ft_putstr_fd(ERR_SYN, STDERR_FILENO), false);
+		return (error(data, ERR_SYN, 2), false);
 	while (input[i])
 	{
 		if ((input[i] == '\'' || input[i] == '\"') && quote == 0)
@@ -57,14 +57,14 @@ bool	check_pipe_syntax(char *input, int i)
 			j = i + 1;
 			j = skip_space(input, j);
 			while (input[j] == '|' || input[j] == '\0')
-				return (ft_putstr_fd(ERR_SYN, STDERR_FILENO), false);
+				return (error(data, ERR_SYN, 2), false);
 		}
 		i++;
 	}
 	return (true);
 }
 
-int	check_quote_syntax(char *input, int i)
+int	check_quote_syntax(char *input, t_data *data,  int i)
 {
 	while (input[i] && input[i] != '|' && input[i] != '>' && input[i] != '<')
 	{
@@ -74,7 +74,7 @@ int	check_quote_syntax(char *input, int i)
 			while (input[i] && input[i] != '\'')
 				i++;
 			if (!input[i])
-				return (msg_error(OPEN_SNG_QUOTE), ERROR);
+				return (error(data, OPEN_SNG_QUOTE, 2), ERROR);
 		}
 		else if (input[i] == '\"')
 		{
@@ -82,14 +82,14 @@ int	check_quote_syntax(char *input, int i)
 			while (input[i] && input[i] != '\"')
 				i++;
 			if (!input[i])
-				return (msg_error(OPEN_DBL_QUOTE), ERROR);
+				return (error(data, OPEN_DBL_QUOTE, 2), ERROR);
 		}
 		i++;
 	}
 	return (i);
 }
 
-bool	check_redirection_syntax(char *input, int i, int j)
+bool	check_redirection_syntax(char *input, t_data *data, int i, int j)
 {
 	while (input[i])
 	{
@@ -102,7 +102,7 @@ bool	check_redirection_syntax(char *input, int i, int j)
 					&& (input[i + 2] == '<' || input[i + 2] == '>'))
 				|| (input[i] == '>' && input[i + 1] == '>'
 					&& (input[i + 2] == '<' || input[i + 2] == '>')))
-				return (ft_putstr_fd(ERR_SYN, STDERR_FILENO), false);
+				return (error(data, ERR_SYN, 2), false);
 			if (input[i + 1] == '<' || input[i + 1] == '>')
 				i++;
 			j = i + 1;
@@ -110,7 +110,7 @@ bool	check_redirection_syntax(char *input, int i, int j)
 				j++;
 			if (!input[j] || input[j] == '<'
 				|| input[j] == '>' || input[j] == '|')
-				return (ft_putstr_fd(ERR_SYN, STDERR_FILENO), false);
+				return (error(data, ERR_SYN, 2), false);
 		}
 		i++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/06/17 16:36:45 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/17 17:19:47 by aeudes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,11 +223,11 @@ t_quote	get_quote_type(char *str);
 bool	check_for_expansion(char *str);
 
 /* parsing0.c */
-int		parsing_input(char *input);
-bool	validate_input(char *input);
-bool	check_pipe_syntax(char *input, int i);
-int		check_quote_syntax(char *input, int i);
-bool	check_redirection_syntax(char *input, int i, int j);
+int		parsing_input(char *input, t_data *data);
+bool	validate_input(char *input, t_data *data);
+bool	check_pipe_syntax(char *input, t_data *data, int i);
+int		check_quote_syntax(char *input, t_data *data, int i);
+bool	check_redirection_syntax(char *input, t_data *data, int i, int j);
 
 /* parsing1.c */
 bool	is_in_quotes(char *input, int i);
