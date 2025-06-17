@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/06/16 17:57:09 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/17 16:36:45 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,7 +284,7 @@ void	handle_unset(t_data *data);
 /* Fonctions executing */
 /***********************/
 /* exec.c */
-char	*find_command_path(const char *cmd);
+char	*find_command_path(t_data *data, const char *cmd);
 void	process(t_data *data, t_cmd *cmd);
 void	exit_proc_sig_init(pid_t pid, int status);
 void	exit_process(t_data *data, pid_t pid, int status);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:06:01 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/16 14:25:50 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/17 16:38:50 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,17 @@ static char	*ft_strjoin3(const char *s1, const char *s2, const char *s3)
 	return (result);
 }
 
-char	*find_command_path(const char *cmd)
+static char *ft_getenv(char **env, const char *name) {
+    size_t len = ft_strlen(name);
+    for (int i = 0; env[i] != NULL; i++) {
+        if (ft_strncmp(env[i], name, len) == 0 && env[i][len] == '=') {
+            return env[i] + len + 1; // Pointeur sur la valeur après '='
+        }
+    }
+    return NULL;
+}
+
+char	*find_command_path(t_data *data, const char *cmd)
 {
 	char	*path;
 	char	*dir;
@@ -36,7 +46,7 @@ char	*find_command_path(const char *cmd)
 
 	if (!cmd || !*cmd || ft_strchr(cmd, '/'))
 		return (ft_strdup(cmd));
-	path = getenv("PATH");
+	path = ft_getenv(data->env, "PATH");
 	if (!path)
 		return (NULL);
 	path_copy = ft_strdup(path);
@@ -66,7 +76,7 @@ void	process(t_data *data, t_cmd *cmd)
 	signal(SIGQUIT, SIG_DFL);
 	if (!cmd->args || !cmd->args[0])
 		exit(update_return_value(data, 0));
-	cmd_path = find_command_path(cmd->args[0]);
+	cmd_path = find_command_path(data, cmd->args[0]);
 	if (!cmd_path)
 	{
 		error(data, ERR_CMD_NOT_FOUND, 127);
@@ -74,6 +84,8 @@ void	process(t_data *data, t_cmd *cmd)
 		ft_free_array(cmd->args);
 		exit(127);
 	}
+	// for (int i = 0; data->env[i]; i++)
+	// 	printf("%s\n", data->env[i]);
 	execve(cmd_path, cmd->args, data->env);
 	free(cmd_path);
 	if (errno == EACCES)
