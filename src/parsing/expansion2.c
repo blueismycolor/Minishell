@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansion2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:18:57 by aeudes            #+#    #+#             */
-/*   Updated: 2025/06/10 15:07:19 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/18 14:15:55 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,29 +63,30 @@ char	*place_env_in_str(char *str, int index, char *name_of_env)
 
 char	*put_env(char *str, char **envp)
 {
-	char	*name_of_env;
 	int		i;
-	char	*result;
 	char	*tmp;
 
 	i = 0;
-	result = str;
-	while (result && result[i] != '\0')
+	while (str && str[i] != '\0')
 	{
-		if (result[i] == '$' && result[i + 1])
+		if (str[i] == '$' && str[i + 1])
 		{
-			tmp = result;
-			name_of_env = get_env_name(result, i, envp);
-			result = place_env_in_str(result, i, name_of_env);
+			if (str[i + 1] == '"' || str[i + 1] == ' ')
+			{
+				i++;
+				continue ;
+			}
+			tmp = str;
+			str = place_env_in_str(str, i, get_env_name(str, i, envp));
 			free(tmp);
-			result = put_env(result, envp);
+			str = put_env(str, envp);
 			i = 0;
 		}
-		if (result[i] == '\0')
+		if (str[i] == '\0')
 			break ;
 		i++;
 	}
-	return (result);
+	return (str);
 }
 
 char	*set_env(char *str, char **envp)
