@@ -6,7 +6,7 @@
 /*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:46:04 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/18 14:19:01 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/18 15:13:50 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	child_pipe(t_data *data, t_cmd *cmd, int in_fd, int *pipefd)
 	if (in_fd != STDIN_FILENO)
 		close(in_fd);
 	data->cmd = cmd;
-	handle_redir(data, cmd);;
+	handle_redir(data, cmd);
 	if (cmd->is_builtin)
 		select_builtin(data);
 	else
@@ -74,6 +74,7 @@ static void	wait_all(pid_t *pids, t_data *data)
 		}
 		i++;
 	}
+	free(data->pids);
 }
 
 void	handle_pipes(t_data *data)
@@ -82,30 +83,25 @@ void	handle_pipes(t_data *data)
 	int		i;
 	int		in_fd;
 	t_cmd	*cmd;
-	pid_t	*pids;
 
 	in_fd = STDIN_FILENO;
 	cmd = data->cmd;
-	pids = malloc(sizeof(pid_t) * data->nb_cmds);
-	if (!pids)
-		return (msg_error(ERR_MALLOC));
 	i = 0;
 	while (cmd->next)
 	{
 		if (pipe(pipefd) == -1)
 			return (msg_error(ERR_PIPE));
-		pids[i] = fork();
-		if (pids[i] == 0)
+		data->pids[i] = fork();
+		if (data->pids[i] == 0)
 			child_pipe(data, cmd, in_fd, pipefd);
-		parent_pipe(pids[i], &pids[data->nb_cmds], &in_fd, pipefd);
+		parent_pipe(data->pids[i], &data->pids[data->nb_cmds], &in_fd, pipefd);
 		cmd = cmd->next;
 		i++;
 	}
-	pids[i] = fork();
-	if (pids[i] == 0)
+	data->pids[i] = fork();
+	if (data->pids[i] == 0)
 		child_last(data, cmd, in_fd);
 	if (in_fd != STDIN_FILENO)
 		close(in_fd);
-	wait_all(pids, data);
-	free(pids);
+	wait_all(data->pids, data);
 }

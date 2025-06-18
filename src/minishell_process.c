@@ -6,7 +6,7 @@
 /*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 17:30:05 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/06/18 14:19:28 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/18 15:07:09 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,12 @@ void	execute_commands(t_data *data)
 		cmd = cmd->next;
 	}
 	if (data->nb_cmds > 1)
+	{
+		data->pids = malloc(sizeof(pid_t) * data->nb_cmds);
+		if (!data->pids)
+			return (msg_error(ERR_MALLOC));
 		handle_pipes(data);
+	}
 	else if (handle_redir(data, data->cmd))
 	{
 		if (data->cmd->is_builtin)
@@ -52,7 +57,7 @@ bool	process_input(t_data *data, char *input)
 	data->cmd = tcmd_init(input, data);
 	if (!data->cmd && !data->is_exit)
 	{
-		data->return_value = 2;
+		data->return_value = 0;
 		return (false);
 	}
 	if (!preprocess_heredocs(data))

@@ -6,7 +6,7 @@
 /*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:23:37 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/18 14:22:26 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/18 14:50:49 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,13 @@ void	main_loop(t_data *data)
 	{
 		input = init_main_loop_iteration(data);
 		handle_exit_sig(data, input);
-		// print_data(data);
 		add_to_history(data, input);
 		if (!process_input(data, input))
-		{	
+		{
 			free(input);
 			reset_fd(data);
 			continue ;
 		}
-		// print_data(data);
 		if (!data->is_exit)
 			execute_commands(data);
 		reset_fd(data);

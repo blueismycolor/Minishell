@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing0.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:56:31 by aeudes            #+#    #+#             */
-/*   Updated: 2025/06/17 17:24:47 by aeudes           ###   ########.fr       */
+/*   Updated: 2025/06/18 14:29:02 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ bool	check_pipe_syntax(char *input, t_data *data, int i)
 	return (true);
 }
 
-int	check_quote_syntax(char *input, t_data *data,  int i)
+int	check_quote_syntax(char *input, t_data *data, int i)
 {
 	while (input[i] && input[i] != '|' && input[i] != '>' && input[i] != '<')
 	{

@@ -6,7 +6,7 @@
 /*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:45:43 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/17 17:07:53 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/18 14:32:33 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	reset_fd(t_data *data)
 
 // Debug function
 
-void	print_data(t_data *data)
+/*void	print_data(t_data *data)
 {
 	t_cmd *cmd;
 
@@ -99,7 +99,8 @@ void	print_data(t_data *data)
 					printf("\n\033[40m\t\t\t* REDIR *\033[0m\n");
 					printf("\t\t\tFILENAME : %s\n",
 						redir->filename ? redir->filename : "(null)");
-					printf("\t\t\tDEL : %s\n", redir->del ? redir->del : "(null)");
+					printf("\t\t\tDEL : %s\n", redir->del ?
+						redir->del : "(null)");
 					printf("\t\t\tTYPE : %d\n", redir->type);
 					printf("\t\t\tNEXT : %p\n", (void *)redir->next);
 					redir = redir->next;
@@ -108,4 +109,4 @@ void	print_data(t_data *data)
 			cmd = cmd->next;
 		}
 	}
-}
+}*/

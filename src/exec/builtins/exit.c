@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:33:56 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/06/18 12:37:53 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/18 14:32:10 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 static int	is_numeric(const char *str)
 {
-	int	i = 0;
+	int	i;
 
+	i = 0;
 	if (!str || !str[0])
 		return (0);
 	if (str[i] == '-' || str[i] == '+')

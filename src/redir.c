@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 16:21:36 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/06/16 18:08:31 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/18 14:51:07 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ void	handle_append(t_data *data)
 	temp = data->cmd->redir;
 	while (temp->next)
 		temp = temp->next;
-
 	data->cmd->fd = open(temp->del,
 			O_WRONLY | O_APPEND | O_CREAT, 0644);
 	if (data->cmd->fd == -1)

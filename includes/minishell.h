@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/06/18 12:54:19 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/18 15:05:50 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,9 +115,7 @@ typedef struct s_cmd
 	bool			has_redir;	// true si redirection
 	t_redir			*redir;		// redirection (fichier, type)
 	int				fd;			// fichier
-	t_quote			quote;		// type de quote
 	struct s_cmd	*next;
-	struct s_cmd	*prev;
 }	t_cmd;
 
 typedef struct s_data
@@ -132,6 +130,7 @@ typedef struct s_data
 	int				saved_stdout;
 	int				nb_cmds;
 	bool			is_exit;		// true si on doit quitter le shell
+	pid_t			*pids;
 }	t_data;
 
 /********************/

@@ -6,7 +6,7 @@
 /*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:04:11 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/17 17:51:18 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/18 14:49:46 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,16 @@
 static void	sigint_handler_heredoc(int sig)
 {
 	g_signal = sig;
-	// printf("g_signal: %d\n", g_signal);
 	exit(1);
+}
+
+static void	child_heredoc(int fd, t_redir *redir)
+{
+	signal(SIGINT, sigint_handler_heredoc);
+	read_heredoc_content(fd, redir->del);
+	close(fd);
+	unlink(redir->filename);
+	exit(0);
 }
 
 static int	fill_one_heredoc(t_data *data, t_redir *redir)
@@ -35,26 +43,15 @@ static int	fill_one_heredoc(t_data *data, t_redir *redir)
 		return (0);
 	}
 	if (pid == 0)
-	{
-		signal(SIGINT, sigint_handler_heredoc);
-		// signal(SIGQUIT, sigint_handler_heredoc);
-		read_heredoc_content(fd, redir->del);
-		close(fd);
-		unlink(redir->filename);
-		exit(0);
-	}
+		child_heredoc(fd, redir);
 	signal(SIGINT, SIG_IGN);
-	// signal(SIGQUIT, SIG_IGN);
 	waitpid(pid, &status, 0);
 	close(fd);
 	signal(SIGINT, sigint_handler_heredoc);
-	// signal(SIGQUIT, sigint_handler_heredoc);
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 	{
 		data->return_value = 130;
-		close(fd);
-		unlink(redir->filename);
-		return (0);
+		return (close(fd), unlink(redir->filename), 0);
 	}
 	return (1);
 }
