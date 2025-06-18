@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_pipes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:46:04 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/16 14:32:39 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/18 14:19:01 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,11 @@ static void	child_pipe(t_data *data, t_cmd *cmd, int in_fd, int *pipefd)
 	if (in_fd != STDIN_FILENO)
 		close(in_fd);
 	data->cmd = cmd;
-	handle_redir(data, cmd);
-	execute_command(data, cmd);
+	handle_redir(data, cmd);;
+	if (cmd->is_builtin)
+		select_builtin(data);
+	else
+		execute_command(data, cmd);
 	exit(data->return_value);
 }
 
@@ -37,7 +40,10 @@ static void	child_last(t_data *data, t_cmd *cmd, int in_fd)
 		close(in_fd);
 	data->cmd = cmd;
 	handle_redir(data, cmd);
-	execute_command(data, cmd);
+	if (cmd->is_builtin)
+		select_builtin(data);
+	else
+		execute_command(data, cmd);
 	exit(data->return_value);
 }
 

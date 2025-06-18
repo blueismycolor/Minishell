@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:06:01 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/18 12:53:50 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/18 14:25:36 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,20 @@ static char	*ft_strjoin3(const char *s1, const char *s2, const char *s3)
 	return (result);
 }
 
-static char *ft_getenv(char **env, const char *name) {
-    size_t len = ft_strlen(name);
-    for (int i = 0; env[i] != NULL; i++) {
-        if (ft_strncmp(env[i], name, len) == 0 && env[i][len] == '=') {
-            return env[i] + len + 1; // Pointeur sur la valeur après '='
-        }
-    }
-    return NULL;
+static char *ft_getenv(char **env, const char *name)
+{
+	size_t	len;
+	int		i;
+
+	len	= ft_strlen(name);
+	i = 0;
+	while (env[i] != NULL)
+	{
+		if (ft_strncmp(env[i], name, len) == 0 && env[i][len] == '=')
+			return (env[i] + len + 1);
+		i++;
+	}
+	return (NULL);
 }
 
 char	*find_command_path(t_data *data, const char *cmd)
@@ -78,7 +84,7 @@ void	process(t_data *data, t_cmd *cmd)
 		exit(update_return_value(data, 0));
 	cmd_path = find_command_path(data, cmd->args[0]);
 	if (!cmd_path)
-	{
+	{		
 		error(data, ERR_CMD_NOT_FOUND, 127);
 		ft_putendl_fd(cmd->args[0], 2);
 		ft_free_array(cmd->args);
@@ -86,7 +92,8 @@ void	process(t_data *data, t_cmd *cmd)
 	}
 	execve(cmd_path, cmd->args, data->env);
 	free(cmd_path);
-	if (errno == EACCES)
+	if (errno == EACCES || errno == EPERM || errno == EROFS
+			|| errno == ENOTDIR)
 		data->return_value = 126;
 	else if (errno == ENOENT)
 		data->return_value = 127;
