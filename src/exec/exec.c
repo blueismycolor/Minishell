@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:06:01 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/17 16:41:47 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/18 12:53:50 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,11 @@ void	process(t_data *data, t_cmd *cmd)
 	exit(data->return_value);
 }
 
-void	exit_proc_sig_init(pid_t pid, int status)
+void	exit_proc_sig_init(pid_t pid, int *status)
 {
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
-	waitpid(pid, &status, 0);
+	waitpid(pid, status, 0);
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
 }
@@ -111,7 +111,7 @@ void	exit_process(t_data *data, pid_t pid, int status)
 	int	sig;
 
 	sig = 0;
-	exit_proc_sig_init(pid, status);
+	exit_proc_sig_init(pid, &status);
 	if (WIFSIGNALED(status))
 	{
 		sig = WTERMSIG(status);

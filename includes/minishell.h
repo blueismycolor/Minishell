@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/06/18 11:58:39 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/18 12:54:19 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,7 +287,7 @@ void	handle_unset(t_data *data);
 /* exec.c */
 char	*find_command_path(t_data *data, const char *cmd);
 void	process(t_data *data, t_cmd *cmd);
-void	exit_proc_sig_init(pid_t pid, int status);
+void	exit_proc_sig_init(pid_t pid, int *status);
 void	exit_process(t_data *data, pid_t pid, int status);
 
 /* init_data.c */
