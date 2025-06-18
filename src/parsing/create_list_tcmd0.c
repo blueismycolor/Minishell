@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_list_tcmd0.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:08:52 by aeudes            #+#    #+#             */
-/*   Updated: 2025/06/17 17:16:48 by aeudes           ###   ########.fr       */
+/*   Updated: 2025/06/18 17:31:17 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,11 @@ t_cmd	*init_cmd_node(t_cmd **cmd_list, t_cmd **current)
 	new->nb_params = 0;
 	new->has_redir = false;
 	new->redir = NULL;
-	new->quote = NONE;
 	new->next = NULL;
-	new->prev = NULL;
 	if (!*cmd_list)
 		*cmd_list = new;
 	else
-	{
 		(*current)->next = new;
-		new->prev = *current;
-	}
 	*current = new;
 	return (new);
 }
