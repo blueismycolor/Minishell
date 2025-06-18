@@ -3,18 +3,55 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:33:56 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/06/16 13:46:14 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/18 12:37:53 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	handle_exit(t_data *data, char *input)
+static int	is_numeric(const char *str)
 {
-	if (!input || ft_strcmp(input, "exit") == 0)
+	int	i = 0;
+
+	if (!str || !str[0])
+		return (0);
+	if (str[i] == '-' || str[i] == '+')
+		i++;
+	while (str[i])
+		if (str[i] < '0' || str[i++] > '9')
+			return (0);
+	return (1);
+}
+
+int	handle_exit(t_data *data)
+{
+	if (data->cmd->args[2] && data->cmd->args[1])
+	{
+		error(data, "minishell: exit: too many arguments", 1);
+		return (1);
+	}
+	if (data->cmd->args[1])
+	{
+		if (!is_numeric(data->cmd->args[1]))
+		{
+			error(data, "minishell: exit: numeric argument required", 2);
+			return (1);
+		}
+		data->return_value = (unsigned char)ft_atoi(data->cmd->args[1]) % 256;
+	}
+	close(data->saved_stdin);
+	close(data->saved_stdout);
+	printf("exit\n\033[1;31m(╯°□°)╯︵ ┻━┻\033[0m\n");
+	data->is_exit = true;
+	return (0);
+}
+
+int	handle_exit_sig(t_data *data, char *input)
+{
+	if (!input)
 	{
 		close(data->saved_stdin);
 		close(data->saved_stdout);

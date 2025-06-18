@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:23:37 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/17 17:22:37 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/18 12:32:36 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	main_loop(t_data *data)
 	while (!data->is_exit)
 	{
 		input = init_main_loop_iteration(data);
-		handle_exit(data, input);
+		handle_exit_sig(data, input);
 		// print_data(data);
 		add_to_history(data, input);
 		if (!process_input(data, input))

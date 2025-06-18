@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/06/17 17:19:47 by aeudes           ###   ########.fr       */
+/*   Updated: 2025/06/18 11:58:39 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,7 +257,8 @@ void	handle_echo(t_data *data);
 void	handle_env(t_data *data);
 
 /* exit.c */
-int		handle_exit(t_data *data, char *input);
+int		handle_exit(t_data *data);
+int		handle_exit_sig(t_data *data, char *input);
 
 /* export_utils.c */
 int		get_env_len(t_data *data);

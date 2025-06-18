@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 17:30:05 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/06/16 17:44:23 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/18 11:58:47 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,6 @@ void	select_builtin(t_data *data)
 		handle_pwd(data);
 	if (ft_strncmp(data->cmd->cmd, "unset", 5) == 0)
 		handle_unset(data);
+	if (ft_strncmp(data->cmd->cmd, "exit", 4) == 0)
+		handle_exit(data);
 }
