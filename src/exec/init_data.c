@@ -6,7 +6,7 @@
 /*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:26:16 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/06/19 13:34:33 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/19 13:47:54 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_data	*init_data(char **environ)
 		msg_error(ERR_MALLOC);
 	data->env = copy_env(data, environ);
 	data->history = NULL;
-	data->pwd = getenv("PWD");
+	data->pwd = ft_strdup(getenv("PWD"));
 	if (!data->pwd)
 		msg_error(ERR_MALLOC);
 	data->old_pwd = NULL;
