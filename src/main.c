@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:31:27 by egatien           #+#    #+#             */
-/*   Updated: 2025/06/18 12:35:58 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/19 12:38:35 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data				*data;
 	struct sigaction	sa_quit;
+	int					return_value;
 
 	(void)argc;
 	(void)argv;
@@ -85,7 +86,8 @@ int	main(int argc, char **argv, char **envp)
 	init_history(data);
 	main_loop(data);
 	free_history(data);
+	return_value = data->return_value;
 	free_data(data);
-	exit(data->return_value);
+	exit(return_value);
 	return (0);
 }
