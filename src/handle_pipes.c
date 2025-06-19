@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_pipes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:46:04 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/18 15:13:50 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/19 13:30:48 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	handle_pipes(t_data *data)
 		data->pids[i] = fork();
 		if (data->pids[i] == 0)
 			child_pipe(data, cmd, in_fd, pipefd);
-		parent_pipe(data->pids[i], &data->pids[data->nb_cmds], &in_fd, pipefd);
+		parent_pipe(data->pids[i], &data->pids[data->nb_cmds - 1], &in_fd, pipefd);
 		cmd = cmd->next;
 		i++;
 	}

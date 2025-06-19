@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/06/18 15:05:50 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/19 13:27:53 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ typedef struct s_cmd
 	bool			has_redir;	// true si redirection
 	t_redir			*redir;		// redirection (fichier, type)
 	int				fd;			// fichier
+	struct s_cmd	*prev;
 	struct s_cmd	*next;
 }	t_cmd;
 

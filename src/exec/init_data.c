@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:26:16 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/06/18 15:07:24 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/19 13:34:33 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_data	*init_data(char **environ)
 		msg_error(ERR_MALLOC);
 	data->env = copy_env(data, environ);
 	data->history = NULL;
-	data->pwd = ft_strdup(getenv("PWD"));
+	data->pwd = getenv("PWD");
 	if (!data->pwd)
 		msg_error(ERR_MALLOC);
 	data->old_pwd = NULL;
