@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:34:20 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/06/18 14:40:48 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/19 17:21:56 by aeudes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	handle_cd(t_data *data)
 	int		result;
 
 	target = NULL;
-	if (data->cmd->args[2] && data->cmd->args[1])
+	if (data->cmd->args[1] && data->cmd->args[2])
 		return (error(data, "cd: too many arguments.", 1));
 	if (!data->cmd->args[1] || ft_strcmp(data->cmd->args[1], "~") == 0)
 		target = get_env_value_cd(data, "HOME");
