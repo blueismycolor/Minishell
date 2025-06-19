@@ -6,7 +6,7 @@
 /*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:31:27 by egatien           #+#    #+#             */
-/*   Updated: 2025/06/19 13:39:39 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/19 14:24:47 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void	print_prompt_header(void)
 
 void	free_data(t_data *data)
 {
+	if (data->old_pwd)
+		free(data->old_pwd);
 	free(data->pwd);
 	free_tab(data->env);
 	free(data);
