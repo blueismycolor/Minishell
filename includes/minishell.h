@@ -6,7 +6,7 @@
 /*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/06/19 13:27:53 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/20 10:59:06 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ void	fill_cmd_from_tokens(t_cmd *cmd, t_token **token);
 t_cmd	*fill_special_cmd(t_token **tokens, t_cmd **head, t_cmd **last,
 			t_cmd **new_cmd);
 t_cmd	*create_list_tcmd(t_token *token);
+void	add_cmd_to_result(t_cmd *result);
 
 /* expansion0.c */
 char	*ft_tabstrnstr(const char *str, const char *to_find);
