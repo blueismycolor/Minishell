@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:23:37 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/23 17:02:03 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/23 17:45:24 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	main_loop(t_data *data)
 	{
 		input = init_main_loop_iteration(data);
 		handle_exit_sig(data, input);
-		add_to_history(data, input);
 		if (!process_input(data, input))
 		{
 			free(input);
