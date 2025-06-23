@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:04:11 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/23 17:01:38 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/23 17:11:10 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,12 @@ int	preprocess_heredocs(t_data *data)
 void	cleanup_heredocs(t_data *data)
 {
 	t_cmd *cmd;
+	t_redir *redir;
 
 	cmd = data->cmd;
 	while (cmd)
 	{
-		t_redir *redir = cmd->redir;
+		redir = cmd->redir;
 		while (redir)
 		{
 			if (redir->type == HEREDOC && redir->filename)
