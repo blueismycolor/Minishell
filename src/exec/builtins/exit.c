@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:33:56 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/06/18 14:32:10 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/23 11:04:09 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	is_numeric(const char *str)
 
 int	handle_exit(t_data *data)
 {
-	if (data->cmd->args[2] && data->cmd->args[1])
+	if (data->cmd->args[1] && data->cmd->args[2])
 	{
 		error(data, "minishell: exit: too many arguments", 1);
 		return (1);
