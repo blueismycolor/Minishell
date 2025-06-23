@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:23:37 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/23 17:45:24 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/23 17:56:05 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 void	cleanup_main_loop(t_data *data, char *input)
 {
+	cleanup_heredocs(data);
 	reset_fd(data);
-	if (ft_strlen(input) > 0 && !data->is_exit)
-		add_to_history(data, input);
 	free_tcmd(data->cmd);
 	free(input);
 }
@@ -46,6 +45,7 @@ void	main_loop(t_data *data)
 	{
 		input = init_main_loop_iteration(data);
 		handle_exit_sig(data, input);
+		add_to_history(data, input);
 		if (!process_input(data, input))
 		{
 			free(input);
@@ -54,8 +54,6 @@ void	main_loop(t_data *data)
 		}
 		if (!data->is_exit)
 			execute_commands(data);
-		cleanup_heredocs(data);
-		reset_fd(data);
 		cleanup_main_loop(data, input);
 	}
 }
