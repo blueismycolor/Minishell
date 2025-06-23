@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_preprocess.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:04:11 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/18 14:49:46 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/23 17:01:38 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	sigint_handler_heredoc(int sig)
 {
 	g_signal = sig;
-	exit(1);
+	exit(130);
 }
 
 static void	child_heredoc(int fd, t_redir *redir)
@@ -23,7 +23,7 @@ static void	child_heredoc(int fd, t_redir *redir)
 	signal(SIGINT, sigint_handler_heredoc);
 	read_heredoc_content(fd, redir->del);
 	close(fd);
-	unlink(redir->filename);
+	// unlink(redir->filename);
 	exit(0);
 }
 
@@ -77,4 +77,26 @@ int	preprocess_heredocs(t_data *data)
 		cmd = cmd->next;
 	}
 	return (1);
+}
+
+void	cleanup_heredocs(t_data *data)
+{
+	t_cmd *cmd;
+
+	cmd = data->cmd;
+	while (cmd)
+	{
+		t_redir *redir = cmd->redir;
+		while (redir)
+		{
+			if (redir->type == HEREDOC && redir->filename)
+			{
+				unlink(redir->filename);
+				free(redir->filename);
+				redir->filename = NULL;
+			}
+			redir = redir->next;
+		}
+		cmd = cmd->next;
+	}
 }

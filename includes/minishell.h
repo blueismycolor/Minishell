@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/06/20 10:59:06 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/23 17:01:28 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -312,6 +312,7 @@ void	handle_pipes(t_data *data);
 
 /* heredoc_preprocess.c */
 int		preprocess_heredocs(t_data *data);
+void	cleanup_heredocs(t_data *data);
 
 /* heredoc.c */
 char	*generate_heredoc_filename(void);

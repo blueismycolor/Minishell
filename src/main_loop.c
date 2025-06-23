@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:23:37 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/19 13:29:51 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/23 17:02:03 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	main_loop(t_data *data)
 		}
 		if (!data->is_exit)
 			execute_commands(data);
+		cleanup_heredocs(data);
 		reset_fd(data);
 		cleanup_main_loop(data, input);
 	}
