@@ -37,11 +37,9 @@ int	handle_exit(t_data *data)
 	if (data->cmd->args[1])
 	{
 		if (!is_numeric(data->cmd->args[1]))
-		{
 			error(data, "minishell: exit: numeric argument required", 2);
-			return (1);
-		}
-		data->return_value = (unsigned char)ft_atoi(data->cmd->args[1]) % 256;
+		else
+			data->return_value = (unsigned char)ft_atoi(data->cmd->args[1]) % 256;
 	}
 	close(data->saved_stdin);
 	close(data->saved_stdout);
