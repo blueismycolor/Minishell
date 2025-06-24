@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_process.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 17:30:05 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/06/18 15:07:09 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/24 16:44:17 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ bool	process_input(t_data *data, char *input)
 	data->cmd = tcmd_init(input, data);
 	if (!data->cmd && !data->is_exit)
 	{
-		data->return_value = 0;
+		data->return_value = 2;
 		return (false);
 	}
 	if (!preprocess_heredocs(data))
