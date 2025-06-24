@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_list_tcmd0.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:08:52 by aeudes            #+#    #+#             */
-/*   Updated: 2025/06/19 13:29:37 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/24 14:18:08 by aeudes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_cmd	*tcmd_init(char *input, t_data *data)
 		return (NULL);
 	result = create_list_tcmd(arg_tokens);
 	result = give_isbuiltin(result);
+	add_cmd_to_result(result);
 	free_list(arg_tokens);
 	free(input);
 	return (result);
