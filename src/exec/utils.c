@@ -6,7 +6,7 @@
 /*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:45:43 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/18 14:32:33 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/24 14:46:23 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ void	reset_fd(t_data *data)
 	close(data->saved_stdin);
 	close(data->saved_stdout);
 }
-
-// Debug function
 
 /*void	print_data(t_data *data)
 {

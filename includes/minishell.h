@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/06/23 17:01:28 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/24 14:46:06 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,9 @@
 # define ERROR				-1
 # define FAIL 				1
 
-/*type token*/
+/*********************/
+/*    Structures     */
+/*********************/
 typedef enum s_type
 {
 	INPUT = 1,	// "<"  : redirection de l'entrée
@@ -80,7 +82,6 @@ typedef enum s_type
 	CMD,		// commande principale et argument(ex: ls -al, cat)
 }	t_type;
 
-/*type quote*/
 typedef enum s_quote
 {
 	NONE,
@@ -88,7 +89,6 @@ typedef enum s_quote
 	DOUBLE
 }	t_quote;
 
-/*structure token*/
 typedef struct s_token
 {
 	char			*str;
