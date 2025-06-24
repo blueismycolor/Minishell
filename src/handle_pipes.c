@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_pipes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:46:04 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/19 13:30:48 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/24 14:42:47 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,29 +79,29 @@ static void	wait_all(pid_t *pids, t_data *data)
 
 void	handle_pipes(t_data *data)
 {
-	int		pipefd[2];
+	int		p_fd[2];
 	int		i;
-	int		in_fd;
+	int		in;
 	t_cmd	*cmd;
 
-	in_fd = STDIN_FILENO;
+	in = STDIN_FILENO;
 	cmd = data->cmd;
 	i = 0;
 	while (cmd->next)
 	{
-		if (pipe(pipefd) == -1)
+		if (pipe(p_fd) == -1)
 			return (msg_error(ERR_PIPE));
 		data->pids[i] = fork();
 		if (data->pids[i] == 0)
-			child_pipe(data, cmd, in_fd, pipefd);
-		parent_pipe(data->pids[i], &data->pids[data->nb_cmds - 1], &in_fd, pipefd);
+			child_pipe(data, cmd, in, p_fd);
+		parent_pipe(data->pids[i], &data->pids[data->nb_cmds - 1], &in, p_fd);
 		cmd = cmd->next;
 		i++;
 	}
 	data->pids[i] = fork();
 	if (data->pids[i] == 0)
-		child_last(data, cmd, in_fd);
-	if (in_fd != STDIN_FILENO)
-		close(in_fd);
+		child_last(data, cmd, in);
+	if (in != STDIN_FILENO)
+		close(in);
 	wait_all(data->pids, data);
 }

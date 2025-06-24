@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_preprocess.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:04:11 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/23 17:11:10 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/24 14:43:19 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static void	child_heredoc(int fd, t_redir *redir)
 	signal(SIGINT, sigint_handler_heredoc);
 	read_heredoc_content(fd, redir->del);
 	close(fd);
-	// unlink(redir->filename);
 	exit(0);
 }
 
@@ -81,8 +80,8 @@ int	preprocess_heredocs(t_data *data)
 
 void	cleanup_heredocs(t_data *data)
 {
-	t_cmd *cmd;
-	t_redir *redir;
+	t_cmd	*cmd;
+	t_redir	*redir;
 
 	cmd = data->cmd;
 	while (cmd)

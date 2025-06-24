@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_list_tcmd1.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:07:19 by aeudes            #+#    #+#             */
-/*   Updated: 2025/06/18 17:41:59 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/24 14:44:05 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ t_cmd	*create_list_tcmd(t_token *tokens)
 	while (tokens)
 	{
 		while (tokens && (tokens->type == INPUT || tokens->type == HEREDOC
-			|| tokens->type == TRUNC || tokens->type == APPEND))
+				|| tokens->type == TRUNC || tokens->type == APPEND))
 		{
 			fill_special_cmd(&tokens, &head, &last, &new_cmd);
 			new_cmd = new_cmd->next;
