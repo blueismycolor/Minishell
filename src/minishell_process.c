@@ -6,7 +6,7 @@
 /*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 17:30:05 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/06/24 16:44:17 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/24 16:46:58 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,7 @@ bool	process_input(t_data *data, char *input)
 {
 	data->cmd = tcmd_init(input, data);
 	if (!data->cmd && !data->is_exit)
-	{
-		data->return_value = 2;
 		return (false);
-	}
 	if (!preprocess_heredocs(data))
 		return (false);
 	return (true);
