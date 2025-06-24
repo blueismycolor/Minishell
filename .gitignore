@@ -2,6 +2,7 @@
 *.a
 *.out
 *.txt
+*.sh
 *test*
 *infile*
 *outfile*
