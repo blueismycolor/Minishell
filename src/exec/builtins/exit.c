@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:33:56 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/06/23 11:04:09 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/24 16:53:20 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int	handle_exit(t_data *data)
 		if (!is_numeric(data->cmd->args[1]))
 			error(data, "minishell: exit: numeric argument required", 2);
 		else
-			data->return_value = (unsigned char)ft_atoi(data->cmd->args[1]) % 256;
+			data->return_value = (unsigned char)ft_atoi(data->cmd->args[1])
+				% 256;
 	}
 	close(data->saved_stdin);
 	close(data->saved_stdout);
