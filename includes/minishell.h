@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/06/24 14:46:06 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/24 16:01:32 by aeudes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,7 @@
 # define ERROR				-1
 # define FAIL 				1
 
-/*********************/
-/*    Structures     */
-/*********************/
+/*type token*/
 typedef enum s_type
 {
 	INPUT = 1,	// "<"  : redirection de l'entrée
@@ -82,6 +80,7 @@ typedef enum s_type
 	CMD,		// commande principale et argument(ex: ls -al, cat)
 }	t_type;
 
+/*type quote*/
 typedef enum s_quote
 {
 	NONE,
@@ -89,6 +88,7 @@ typedef enum s_quote
 	DOUBLE
 }	t_quote;
 
+/*structure token*/
 typedef struct s_token
 {
 	char			*str;
@@ -148,6 +148,10 @@ t_cmd	*init_cmd_node(t_cmd **cmd_list, t_cmd **current);
 char	**realloc_args(char **args, int size);
 void	add_arg(t_cmd *cmd, char *str);
 void	add_redir(t_cmd *cmd, char *del, t_type type);
+void	check_for_args_in_redirection(t_cmd *result);
+void	add_args_in_redir(t_cmd *result);
+int		tab_size(char **tab);
+
 
 /* create_list_tcmd1.c */
 t_cmd	*give_isbuiltin(t_cmd	*result);

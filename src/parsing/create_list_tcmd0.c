@@ -6,7 +6,7 @@
 /*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:08:52 by aeudes            #+#    #+#             */
-/*   Updated: 2025/06/24 14:18:08 by aeudes           ###   ########.fr       */
+/*   Updated: 2025/06/24 16:03:15 by aeudes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_cmd	*tcmd_init(char *input, t_data *data)
 	if (!arg_tokens)
 		return (NULL);
 	result = create_list_tcmd(arg_tokens);
+	check_for_args_in_redirection(result);
 	result = give_isbuiltin(result);
 	add_cmd_to_result(result);
 	free_list(arg_tokens);
