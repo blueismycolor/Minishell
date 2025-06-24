@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:38:12 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/06/10 16:11:51 by tlair            ###   ########.fr       */
+/*   Updated: 2025/06/24 15:59:22 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,25 +102,28 @@ char	**add_var_env(t_data *data, char *new_var)
 void	handle_export_var(t_data *data)
 {
 	int		i;
+	int		j;
 	char	*var_name;
 
 	data->return_value = 0;
 	i = 0;
+	j = 1;
 	if (!data->cmd->args[1])
+		return (export_sorted_var(data));
+	while (data->cmd->args[j])
 	{
-		export_sorted_var(data);
-		return ;
+		var_name = get_var_name(data->cmd->args[j]);
+		if (!var_name)
+		{
+			error(data, "export: invalid variable name.", 1);
+			return ;
+		}
+		i = var_index(data, var_name);
+		if (i != -1)
+			replace_var(data, data->cmd->args[j], i);
+		else
+			data->env = add_var_env(data, data->cmd->args[j]);
+		free(var_name);
+		j++;
 	}
-	var_name = get_var_name(data->cmd->args[1]);
-	if (!var_name)
-	{
-		error(data, "export: invalid variable name.", 1);
-		return ;
-	}
-	i = var_index(data, var_name);
-	if (i != -1)
-		replace_var(data, data->cmd->args[1], i);
-	else
-		data->env = add_var_env(data, data->cmd->args[1]);
-	free(var_name);
 }
