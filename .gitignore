@@ -7,3 +7,5 @@
 *outfile*
 .vscode
 minishell
+valgrind.log
+*.log
