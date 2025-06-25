@@ -6,7 +6,7 @@
 /*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 16:21:36 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/06/18 14:51:07 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/25 17:08:37 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ bool	handle_redir(t_data *data, t_cmd *cmd)
 	while (redir)
 	{
 		if (redir->type == INPUT)
-			handle_input(data);
+			handle_input(data, redir);
 		else if (redir->type == TRUNC)
 			handle_trunc(data);
 		else if (redir->type == APPEND)
@@ -54,14 +54,11 @@ bool	handle_redir(t_data *data, t_cmd *cmd)
 	return (true);
 }
 
-void	handle_input(t_data *data)
+void handle_input(t_data *data, t_redir *redir)
 {
-	data->cmd->fd = open(data->cmd->redir->del, O_RDONLY);
+	data->cmd->fd = open(redir->del, O_RDONLY);
 	if (data->cmd->fd == -1)
-	{
-		error(data, data->cmd->redir->filename, 1);
-		return ;
-	}
+		return (error(data, NO_PATH, 1));
 	if (dup2(data->cmd->fd, STDIN_FILENO) == -1)
 	{
 		error(data, "dup2", 1);
@@ -70,6 +67,7 @@ void	handle_input(t_data *data)
 	}
 	close(data->cmd->fd);
 }
+
 
 void	handle_trunc(t_data *data)
 {

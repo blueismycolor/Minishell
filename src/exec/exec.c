@@ -6,7 +6,7 @@
 /*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:06:01 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/18 14:42:37 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/25 15:56:00 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*find_command_path(t_data *data, const char *cmd)
 	char	*path_copy;
 
 	if (!cmd || !*cmd || ft_strchr(cmd, '/'))
-		return (ft_strdup(cmd));
+		return (NULL);
 	path = ft_getenv(data->env, "PATH");
 	if (!path)
 		return (NULL);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/06/25 14:25:28 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/25 16:45:29 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -344,7 +344,7 @@ void	select_builtin(t_data *data);
 
 /* redir.c */
 bool	handle_redir(t_data *data, t_cmd *cmd);
-void	handle_input(t_data *data);
+void	handle_input(t_data *data, t_redir *redir);
 void	handle_trunc(t_data *data);
 void	handle_append(t_data *data);
 

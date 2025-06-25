@@ -6,7 +6,7 @@
 /*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:46:04 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/24 14:42:47 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/25 17:10:16 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,13 @@ static void	child_pipe(t_data *data, t_cmd *cmd, int in_fd, int *pipefd)
 	if (in_fd != STDIN_FILENO)
 		close(in_fd);
 	data->cmd = cmd;
-	handle_redir(data, cmd);
-	if (cmd->is_builtin)
-		select_builtin(data);
-	else
-		execute_command(data, cmd);
+	if (handle_redir(data, cmd))
+	{
+		if (cmd->is_builtin)
+			select_builtin(data);
+		else
+			execute_command(data, cmd);
+	}
 	exit(data->return_value);
 }
 
@@ -39,11 +41,13 @@ static void	child_last(t_data *data, t_cmd *cmd, int in_fd)
 	if (in_fd != STDIN_FILENO)
 		close(in_fd);
 	data->cmd = cmd;
-	handle_redir(data, cmd);
-	if (cmd->is_builtin)
-		select_builtin(data);
-	else
-		execute_command(data, cmd);
+	if (handle_redir(data, cmd))
+	{
+		if (cmd->is_builtin)
+			select_builtin(data);
+		else
+			execute_command(data, cmd);
+	}
 	exit(data->return_value);
 }
 
