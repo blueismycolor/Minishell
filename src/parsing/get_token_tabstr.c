@@ -6,7 +6,7 @@
 /*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 17:35:29 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/30 11:08:10 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/25 13:49:47 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	**put_token_in_tabstr(char *str)
 		return (NULL);
 	while (str[i] != '\0')
 	{
-		while (str[i] == SPACE)
+		while (ft_isspace(str[i]))
 			i++;
 		end = get_end_of_token(i, str, &command);
 		if (command == true)

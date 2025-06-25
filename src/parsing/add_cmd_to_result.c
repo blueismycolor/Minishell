@@ -6,7 +6,7 @@
 /*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 10:56:00 by egatien           #+#    #+#             */
-/*   Updated: 2025/06/20 11:12:01 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/25 14:20:27 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,11 @@ void	add_cmd_to_result(t_cmd *result)
 		result->cmd = result->args[0];
 		result = result->next;
 	}
+}
+
+int	ft_isspace(int character)
+{
+	if (character == '\t' || character == ' ' || character == '\n')
+		return (1);
+	return (0);
 }

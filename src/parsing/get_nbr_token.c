@@ -6,7 +6,7 @@
 /*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 17:32:44 by egatien           #+#    #+#             */
-/*   Updated: 2025/05/30 11:08:06 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/25 13:45:36 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ int	get_nbr_tokens(char *out)
 	i = 0;
 	while (out[i] != '\0')
 	{
-		while (out[i] == ' ' && out[i] != '\0')
+		while (ft_isspace(out[i]) && out[i] != '\0')
 			i++;
 		if (out[i] != '|' && out[i] != '>'
-			&& out[i] != '<' && out[i] != ' ' && out[i] != '\0')
+			&& out[i] != '<' && !ft_isspace(out[i]) && out[i] != '\0')
 			count ++;
 		i = check_for_quotes(out, i);
 		if (i == -1)

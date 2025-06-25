@@ -6,7 +6,7 @@
 /*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 16:43:27 by aeudes            #+#    #+#             */
-/*   Updated: 2025/05/30 11:08:40 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/25 13:48:55 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	is_space(char c)
 
 int	skip_space(char *input, int i)
 {
-	while (input[i] && is_space(input[i]))
+	while (input[i] && ft_isspace(input[i]))
 		i++;
 	return (i);
 }

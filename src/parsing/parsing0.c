@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing0.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:56:31 by aeudes            #+#    #+#             */
-/*   Updated: 2025/06/18 14:29:02 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/25 13:50:32 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	parsing_input(char *input, t_data *data)
 	int	i;
 
 	i = 0;
-	while (input[i] == SPACE)
+	while (ft_isspace(input[i]))
 		i++;
 	if (input[i] == '\0')
 		return (ERROR);
@@ -106,7 +106,7 @@ bool	check_redirection_syntax(char *input, t_data *data, int i, int j)
 			if (input[i + 1] == '<' || input[i + 1] == '>')
 				i++;
 			j = i + 1;
-			while (input[j] && input[j] == ' ')
+			while (input[j] && ft_isspace(input[j]))
 				j++;
 			if (!input[j] || input[j] == '<'
 				|| input[j] == '>' || input[j] == '|')

@@ -6,7 +6,7 @@
 /*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:18:57 by aeudes            #+#    #+#             */
-/*   Updated: 2025/06/25 13:18:18 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/25 14:21:23 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ char	*put_env(char *str, char **envp)
 	{
 		if (str[i] == '$' && str[i + 1])
 		{
-			if (!ft_isalpha(str[i + 1]) && str[i + 1] != '_' && str[i + 1] != '?')
+			if (!ft_isalpha(str[i + 1])
+				&& str[i + 1] != '_' && str[i + 1] != '?')
 			{
 				i++;
 				continue ;

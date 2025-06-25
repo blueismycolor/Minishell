@@ -6,7 +6,7 @@
 /*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:24:27 by aeudes            #+#    #+#             */
-/*   Updated: 2025/06/04 10:36:44 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/25 14:20:52 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ int	count_args(char *str)
 
 	i = 0;
 	count = 0;
-	while (str[i] != ' ' && str[i] != '\0')
+	while (!ft_isspace(str[i]) && str[i] != '\0')
 		i++;
 	while (str[i] != '\0')
 	{
-		if (str[i] == ' ')
+		if (ft_isspace(str[i]))
 		{
 			count++;
-			while (str[i] == ' ')
+			while (ft_isspace(str[i]))
 				i++;
 		}
 		i = pass_quotes(i, str);
@@ -64,14 +64,14 @@ char	**ft_getargs(char *str, char **result)
 	end = 0;
 	i = 0;
 	j = 0;
-	while (str[i] == ' ')
+	while (ft_isspace(str[i]))
 		i++;
 	while (str[i] != '\0')
 	{
-		while (str[end] == ' ')
+		while (ft_isspace(str[end]))
 			end++;
 		i = end;
-		while (str[end] != ' ' && str[end] != '\0')
+		while (!ft_isspace(str[end]) && str[end] != '\0')
 		{
 			end = pass_quotes(end, str);
 			end++;

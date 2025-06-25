@@ -6,7 +6,7 @@
 /*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:24:59 by aeudes            #+#    #+#             */
-/*   Updated: 2025/05/30 11:08:14 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/25 13:46:45 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	get_end_of_token(int i, char *str, bool *command)
 		&& str[i] != '>' && str[i] != '<')
 	{
 		i = pass_quotes(i, str);
-		if (str[i] != ' ')
+		if (!ft_isspace(str[i]))
 		{
 			check = true;
 			*command = true;
@@ -62,7 +62,7 @@ char	*get_str_token(char *str, int i, int end)
 	index = 0;
 	result = malloc(sizeof(char) * (end - i + 1));
 	end--;
-	while (str[end] == ' ')
+	while (ft_isspace(str[end]))
 		end--;
 	while (i <= end)
 	{
