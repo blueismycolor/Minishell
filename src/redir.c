@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 16:21:36 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/06/25 17:08:37 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/26 16:22:26 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ bool	handle_redir(t_data *data, t_cmd *cmd)
 	return (true);
 }
 
-void handle_input(t_data *data, t_redir *redir)
+void	handle_input(t_data *data, t_redir *redir)
 {
 	data->cmd->fd = open(redir->del, O_RDONLY);
 	if (data->cmd->fd == -1)
@@ -67,7 +67,6 @@ void handle_input(t_data *data, t_redir *redir)
 	}
 	close(data->cmd->fd);
 }
-
 
 void	handle_trunc(t_data *data)
 {
