@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:33:56 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/06/24 16:53:20 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/26 16:13:28 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,12 @@ int	handle_exit(t_data *data)
 
 int	handle_exit_sig(t_data *data, char *input)
 {
-	if (!input)
+	if (g_signal == SIGINT)
+    {
+        data->return_value = 130;  // Met à jour le code d'erreur
+        g_signal = 0;              // Réinitialise le signal
+    }
+    else if (!input)
 	{
 		close(data->saved_stdin);
 		close(data->saved_stdout);
