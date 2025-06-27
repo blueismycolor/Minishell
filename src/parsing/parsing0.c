@@ -6,7 +6,7 @@
 /*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:56:31 by aeudes            #+#    #+#             */
-/*   Updated: 2025/06/25 13:50:32 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/27 12:42:29 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ bool	check_pipe_syntax(char *input, t_data *data, int i)
 
 int	check_quote_syntax(char *input, t_data *data, int i)
 {
-	while (input[i] && input[i] != '|' && input[i] != '>' && input[i] != '<')
+	while (input[i] != '\0')
 	{
 		if (input[i] == '\'')
 		{

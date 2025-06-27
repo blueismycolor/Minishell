@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_list_tcmd0.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:08:52 by aeudes            #+#    #+#             */
-/*   Updated: 2025/06/24 16:03:15 by aeudes           ###   ########.fr       */
+/*   Updated: 2025/06/27 12:43:09 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,17 +96,15 @@ void	add_redir(t_cmd *cmd, char *del, t_type type)
 {
 	t_redir	*new;
 	t_redir	*tmp;
-	char	*temp;
 
-	temp = ft_remove_quotes(ft_strdup(del));
 	new = malloc(sizeof(t_redir));
-	if (!new || !temp)
+	if (!new)
 		return ;
 	if (type == HEREDOC)
 		new->filename = generate_heredoc_filename();
 	else
 		new->filename = NULL;
-	new->del = temp;
+	new->del = ft_strdup(del);
 	new->type = type;
 	new->next = NULL;
 	if (!cmd->redir)

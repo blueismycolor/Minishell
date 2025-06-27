@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_for_args.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 13:56:02 by aeudes            #+#    #+#             */
-/*   Updated: 2025/06/24 16:00:11 by aeudes           ###   ########.fr       */
+/*   Updated: 2025/06/27 12:43:24 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	add_args_in_redir(t_cmd *result)
 	redir = result->redir;
 	while (redir)
 	{
-		tab_redir = ft_split(redir->del, ' ');
+		tab_redir = set_args(redir->del);
 		if (!tab_redir)
 			continue ;
 		if (tab_size(tab_redir) == 1)
