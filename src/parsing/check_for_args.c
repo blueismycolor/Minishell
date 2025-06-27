@@ -6,7 +6,7 @@
 /*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 13:56:02 by aeudes            #+#    #+#             */
-/*   Updated: 2025/06/27 12:43:24 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/27 13:38:00 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void	add_args_in_redir(t_cmd *result)
 			continue ;
 		if (tab_size(tab_redir) == 1)
 		{
+			free(redir->del);
+			redir->del = ft_strdup(tab_redir[0]);
 			free_tab(tab_redir);
 			redir = redir->next;
 			continue ;
