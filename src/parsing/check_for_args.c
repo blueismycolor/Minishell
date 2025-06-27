@@ -6,7 +6,7 @@
 /*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 13:56:02 by aeudes            #+#    #+#             */
-/*   Updated: 2025/06/27 13:38:00 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/27 14:29:32 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	change_args_and_filename(t_cmd *result,
 
 	i = 0;
 	j = 1;
-	free(redir->del);
 	redir->del = ft_strdup(tab_redir[0]);
 	args_cmd = malloc(sizeof(char *)
 			* (tab_size(tab_redir) + tab_size(result->args) + 1));
@@ -30,6 +29,8 @@ void	change_args_and_filename(t_cmd *result,
 		args_cmd[i] = ft_strdup(result->args[i]);
 		i++;
 	}
+	if (!tab_redir[0])
+		j--;
 	while (tab_redir[j])
 	{
 		args_cmd[i] = ft_strdup(tab_redir[j]);
@@ -80,6 +81,7 @@ void	add_args_in_redir(t_cmd *result)
 			redir = redir->next;
 			continue ;
 		}
+		free(redir->del);
 		change_args_and_filename(result, redir, tab_redir);
 		redir = redir->next;
 		free_tab(tab_redir);
