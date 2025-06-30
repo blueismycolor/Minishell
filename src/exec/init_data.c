@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:26:16 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/06/19 13:47:54 by egatien          ###   ########.fr       */
+/*   Updated: 2025/06/30 15:22:18 by aeudes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ char	**copy_env(t_data *data, char **environ)
 	while (environ[count])
 		count++;
 	data->env = malloc((count + 1) * sizeof(char *));
+	if (!data->env)
+		return (NULL);
 	i = 0;
 	while (i < count)
 	{

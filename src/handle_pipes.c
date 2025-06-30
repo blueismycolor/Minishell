@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_pipes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:46:04 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/25 17:10:16 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/30 18:16:00 by aeudes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	child_pipe(t_data *data, t_cmd *cmd, int in_fd, int *pipefd)
 		if (cmd->is_builtin)
 			select_builtin(data);
 		else
-			execute_command(data, cmd);
+			process(data, cmd); // process a la place de execute_command
 	}
 	exit(data->return_value);
 }
@@ -46,7 +46,7 @@ static void	child_last(t_data *data, t_cmd *cmd, int in_fd)
 		if (cmd->is_builtin)
 			select_builtin(data);
 		else
-			execute_command(data, cmd);
+			process(data, cmd); // process a la place de execute_command
 	}
 	exit(data->return_value);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 11:45:43 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/25 15:35:48 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/30 17:52:14 by aeudes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	free_tokens(t_data *data)
 	}
 }
 
-void	ft_free_array(char **array)
+void	ft_free_array(char **array) // pareille que free_tab
 {
 	int	i;
 

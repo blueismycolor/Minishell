@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 14:42:08 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/06/18 14:43:03 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/30 17:46:22 by aeudes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	exit_proc_sig_init(pid_t pid, int *status)
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	waitpid(pid, status, 0);
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
+	// signal(SIGINT, sigint_handler);
+	// signal(SIGQUIT, SIG_IGN);
 }
 
 void	exit_process(t_data *data, pid_t pid, int status)

@@ -10,3 +10,5 @@
 minishell
 valgrind.log
 *.log
+.valgrindrc
+std.supp

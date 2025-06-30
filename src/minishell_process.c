@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_process.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 17:30:05 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/06/25 15:11:24 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:11:20 by aeudes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ void	execute_command(t_data *data, t_cmd *cmd)
 	if (pid == 0)
 		process(data, cmd);
 	else if (pid > 0)
+	{
 		exit_process(data, pid, status);
+	}
 }
 
 void	execute_commands(t_data *data)
