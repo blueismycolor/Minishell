@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 14:42:08 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/06/30 17:46:22 by aeudes           ###   ########.fr       */
+/*   Updated: 2025/07/01 17:41:21 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void	exit_process(t_data *data, pid_t pid, int status)
 		else if (sig == SIGQUIT)
 		{
 			if (WCOREDUMP(status))
-				write(1, "Quit (core dumped)\n", 19);
+				write(2, "Quit (core dumped)\n", 19);
 			else
-				write(1, "Quit\n", 5);
+				write(2, "Quit\n", 5);
 			data->return_value = 131;
 		}
 	}

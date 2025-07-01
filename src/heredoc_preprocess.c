@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_preprocess.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:04:11 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/30 18:34:14 by aeudes           ###   ########.fr       */
+/*   Updated: 2025/07/01 17:11:05 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 static void	sigint_handler_heredoc(int sig)
 {
 	g_signal = sig;
-	exit(130);
+	if (sig == SIGINT)
+		exit(130);
 }
 
 static void	child_heredoc(int fd, t_redir *redir)

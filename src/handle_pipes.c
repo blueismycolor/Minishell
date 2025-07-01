@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_pipes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:46:04 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/30 18:16:00 by aeudes           ###   ########.fr       */
+/*   Updated: 2025/07/01 17:54:02 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,24 +60,43 @@ static void	parent_pipe(pid_t pid, int *last_pid, int *in_fd, int *pipefd)
 	*in_fd = pipefd[0];
 }
 
-static void	wait_all(pid_t *pids, t_data *data)
+static void wait_all(pid_t *pids, t_data *data)
 {
 	int	status;
 	int	i;
+	int	last_status;
+	int	sig;
 
 	i = 0;
+	sig = 0;
 	while (i < data->nb_cmds)
 	{
 		waitpid(pids[i], &status, 0);
 		if (i == data->nb_cmds - 1)
-		{
-			if (WIFEXITED(status))
-				data->return_value = WEXITSTATUS(status);
-			else if (WIFSIGNALED(status))
-				data->return_value = 128 + WTERMSIG(status);
-		}
+			last_status = status;
 		i++;
 	}
+	if (WIFSIGNALED(status))
+	{
+		sig = WTERMSIG(status);
+		if (sig == SIGINT)
+		{
+			write(1, "\n", 1);
+			data->return_value = 130;
+		}
+		else if (sig == SIGQUIT)
+		{
+			if (WCOREDUMP(status))
+				write(2, "Quit (core dumped)\n", 19);
+			else
+				write(2, "Quit\n", 5);
+			data->return_value = 131;
+		}
+	}
+	if (WIFEXITED(last_status))
+		data->return_value = WEXITSTATUS(last_status);
+	else if (WIFSIGNALED(last_status))
+		data->return_value = 128 + WTERMSIG(last_status);
 	free(data->pids);
 }
 
