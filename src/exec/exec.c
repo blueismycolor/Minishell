@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:06:01 by tlair             #+#    #+#             */
-/*   Updated: 2025/07/02 14:44:17 by tlair            ###   ########.fr       */
+/*   Updated: 2025/07/02 15:42:46 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,7 @@ static void	handle_no_path(t_data *data, t_cmd *cmd)
 {
 	error(data, ERR_CMD_NOT_FOUND, 127);
 	ft_putendl_fd(cmd->args[0], 2);
-	free_tcmd(cmd);
-	free_history(data);
+	free_tcmd(cmd); // ajoute apres
 	free_data(data);
 	exit(127);
 }
@@ -85,26 +84,31 @@ static void	handle_no_path(t_data *data, t_cmd *cmd)
 void	process(t_data *data, t_cmd *cmd)
 {
 	char		*cmd_path;
+	int			temp_return_value;
 
 	close(data->saved_stdin);
 	close(data->saved_stdout);
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	if (!cmd->args || !cmd->args[0])
+	{
+		free_for_exit(data);
 		exit(update_return_value(data, 0));
-	cmd_path = find_command_path(data, cmd->args[0]);
+	}
+		cmd_path = find_command_path(data, cmd->args[0]);
 	if (!cmd_path)
 		handle_no_path(data, cmd);
 	execve(cmd_path, cmd->args, data->env);
 	free(cmd_path);
+	temp_return_value = data->return_value;
+	free_for_exit(data);
 	if (errno == EACCES || errno == EPERM || errno == EROFS
 		|| errno == ENOTDIR)
-		data->return_value = 126;
+		temp_return_value = 126;
 	else if (errno == ENOENT)
-		data->return_value = 127;
+		temp_return_value = 127;
 	else
-		data->return_value = 1;
+		temp_return_value = 1;
 	perror("\033[1;31mError\033[0m");
-	ft_free_array(cmd->args);
-	exit(data->return_value);
+	exit(temp_return_value);
 }

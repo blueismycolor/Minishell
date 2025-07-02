@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 16:31:27 by egatien           #+#    #+#             */
-/*   Updated: 2025/07/02 14:43:22 by tlair            ###   ########.fr       */
+/*   Updated: 2025/07/02 15:43:28 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	free_data(t_data *data)
 	if (data->old_pwd)
 		free(data->old_pwd);
 	free(data->pwd);
+	free_history(data);
 	free_tab(data->env);
 	free(data);
 }
@@ -80,7 +81,6 @@ int	main(int argc, char **argv, char **envp)
 	sigaction(SIGQUIT, &sa_quit, NULL);
 	init_history(data);
 	main_loop(data);
-	free_history(data);
 	return_value = data->return_value;
 	free_data(data);
 	exit(return_value);

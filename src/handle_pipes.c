@@ -3,17 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   handle_pipes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:46:04 by tlair             #+#    #+#             */
-/*   Updated: 2025/07/02 14:50:38 by tlair            ###   ########.fr       */
+/*   Updated: 2025/07/02 15:43:09 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+void	free_tcmd_until_last(t_cmd *list, t_cmd *cmd)
+{
+	t_cmd	*temp;
+
+	while (list != cmd)
+	{
+		temp = list;
+		list = list->next;
+		if (temp->args)
+			free_tab(temp->args);
+		if (temp->has_redir == true)
+			free_redir(temp->redir);
+		free(temp);
+	}
+}
+
 static void	child_pipe(t_data *data, t_cmd *cmd, int in_fd, int *pipefd)
 {
+	int	temp_return_value;
+
 	close(data->saved_stdin);
 	close(data->saved_stdout);
 	dup2(in_fd, STDIN_FILENO);
@@ -22,33 +40,48 @@ static void	child_pipe(t_data *data, t_cmd *cmd, int in_fd, int *pipefd)
 	close(pipefd[1]);
 	if (in_fd != STDIN_FILENO)
 		close(in_fd);
+	free_tcmd_until_last(data->cmd, cmd);
 	data->cmd = cmd;
 	if (handle_redir(data, cmd))
 	{
 		if (cmd->is_builtin)
-			select_builtin(data);
+		select_builtin(data);
 		else
-			process(data, cmd);
+		{
+			free(data->pids);
+			process(data, cmd); // process a la place de execute_command
+		}
 	}
-	exit(data->return_value);
-}
-
+	temp_return_value = data->return_value;
+	free_for_exit(data);
+	exit(temp_return_value);
+	}
+	
+	
 static void	child_last(t_data *data, t_cmd *cmd, int in_fd)
 {
+	int	temp_return_value;
+
 	close(data->saved_stdin);
 	close(data->saved_stdout);
 	dup2(in_fd, STDIN_FILENO);
 	if (in_fd != STDIN_FILENO)
 		close(in_fd);
+	free_tcmd_until_last(data->cmd, cmd); 
 	data->cmd = cmd;
 	if (handle_redir(data, cmd))
 	{
 		if (cmd->is_builtin)
 			select_builtin(data);
 		else
-			process(data, cmd);
+		{
+			free(data->pids);
+			process(data, cmd); // process a la place de execute_command
+		}
 	}
-	exit(data->return_value);
+	temp_return_value = data->return_value;
+	free_for_exit(data);
+	exit(temp_return_value);
 }
 
 static void	parent_pipe(pid_t pid, int *last_pid, int *in_fd, int *pipefd)

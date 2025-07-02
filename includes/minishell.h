@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/07/02 14:51:32 by tlair            ###   ########.fr       */
+/*   Updated: 2025/07/02 15:44:58 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,7 @@ void	check_for_args_in_redirection(t_cmd *result);
 void	add_args_in_redir(t_cmd *result);
 int		tab_size(char **tab);
 int		ft_isspace(int character);
+void	free_for_exit(t_data *data);
 
 /* create_list_tcmd1.c */
 t_cmd	*give_isbuiltin(t_cmd	*result);

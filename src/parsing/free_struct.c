@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:21:09 by aeudes            #+#    #+#             */
-/*   Updated: 2025/07/02 14:52:22 by tlair            ###   ########.fr       */
+/*   Updated: 2025/07/02 15:44:04 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,11 @@ void	free_tcmd(t_cmd *list)
 			free_redir(temp->redir);
 		free(temp);
 	}
+}
+
+void	free_for_exit(t_data *data)
+{
+	free_tcmd(data->cmd);
+	free(data->pids);
+	free_data(data);
 }
