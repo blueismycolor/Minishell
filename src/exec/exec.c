@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:06:01 by tlair             #+#    #+#             */
-/*   Updated: 2025/06/30 18:27:03 by aeudes           ###   ########.fr       */
+/*   Updated: 2025/07/02 10:55:28 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,8 @@ static void	handle_no_path(t_data *data, t_cmd *cmd)
 	error(data, ERR_CMD_NOT_FOUND, 127);
 	ft_putendl_fd(cmd->args[0], 2);
 	free_tcmd(cmd); // ajoute apres
-	ft_free_array(data->env); // dans l'ancien cmd->args
-	free(data->pwd);// ajoute apres
-	free(data);// ajoute apres
+	free_history(data);
+	free_data(data);
 	exit(127);
 }
 

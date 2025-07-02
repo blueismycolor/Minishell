@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/06/25 16:45:29 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/07/02 10:54:32 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ t_cmd	*fill_special_cmd(t_token **tokens, t_cmd **head, t_cmd **last,
 			t_cmd **new_cmd);
 t_cmd	*create_list_tcmd(t_token *token);
 void	add_cmd_to_result(t_cmd *result);
+void	free_data(t_data *data);
 
 /* expansion0.c */
 char	*ft_tabstrnstr(const char *str, const char *to_find);
