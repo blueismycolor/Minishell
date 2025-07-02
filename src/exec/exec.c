@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:06:01 by tlair             #+#    #+#             */
-/*   Updated: 2025/07/02 16:21:00 by tlair            ###   ########.fr       */
+/*   Updated: 2025/07/02 16:21:37 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	process(t_data *data, t_cmd *cmd)
 	char		*cmd_path;
 	int			temp_return_value;
 
-	proc_init(data, cmd);
+	proc_init(data);
 	if (!cmd->args || !cmd->args[0])
 	{
 		free_for_exit(data);
