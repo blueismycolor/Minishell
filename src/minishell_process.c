@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_process.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 17:30:05 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/07/01 17:49:16 by tlair            ###   ########.fr       */
+/*   Updated: 2025/07/02 17:01:35 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ bool	process_input(t_data *data, char *input)
 	data->cmd = tcmd_init(input, data);
 	if (!data->cmd && !data->is_exit)
 		return (false);
-	if (!preprocess_heredocs(data))
+	if (!preprocess_heredocs(data) || preprocess_redirections(data) != 0)
 		return (false);
 	return (true);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/07/02 16:13:37 by tlair            ###   ########.fr       */
+/*   Updated: 2025/07/02 16:55:07 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -353,5 +353,6 @@ bool	handle_redir(t_data *data, t_cmd *cmd);
 void	handle_input(t_data *data, t_redir *redir);
 void	handle_trunc(t_data *data);
 void	handle_append(t_data *data);
+int		preprocess_redirections(t_data *data);
 
 #endif
