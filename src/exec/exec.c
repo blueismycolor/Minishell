@@ -6,7 +6,7 @@
 /*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:06:01 by tlair             #+#    #+#             */
-/*   Updated: 2025/07/02 15:42:46 by egatien          ###   ########.fr       */
+/*   Updated: 2025/07/02 16:02:54 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	process(t_data *data, t_cmd *cmd)
 	if (!cmd->args || !cmd->args[0])
 	{
 		free_for_exit(data);
-		exit(update_return_value(data, 0));
+		exit(0);
 	}
 		cmd_path = find_command_path(data, cmd->args[0]);
 	if (!cmd_path)
