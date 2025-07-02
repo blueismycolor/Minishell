@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:06:01 by tlair             #+#    #+#             */
-/*   Updated: 2025/07/02 16:43:44 by tlair            ###   ########.fr       */
+/*   Updated: 2025/07/02 16:56:24 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,14 +91,14 @@ void	process(t_data *data, t_cmd *cmd)
 	execve(cmd_path, cmd->args, data->env);
 	free(cmd_path);
 	temp_return_value = data->return_value;
-	free_for_exit(data);
+	free_tcmd(data->cmd);
+	free_data(data);
+	temp_return_value = 1;
 	if (errno == EACCES || errno == EPERM || errno == EROFS
 		|| errno == ENOTDIR)
 		temp_return_value = 126;
 	else if (errno == ENOENT)
 		temp_return_value = 127;
-	else
-		temp_return_value = 1;
 	perror("\033[1;31mError\033[0m");
 	exit(temp_return_value);
 }
