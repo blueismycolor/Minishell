@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:06:01 by tlair             #+#    #+#             */
-/*   Updated: 2025/07/02 16:21:37 by tlair            ###   ########.fr       */
+/*   Updated: 2025/07/02 16:43:44 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*find_command_path(t_data *data, const char *cmd)
 	char	*path_copy;
 
 	if (!cmd || !*cmd || ft_strchr(cmd, '/'))
-		return (NULL);
+		return (ft_strdup(cmd));
 	path = ft_getenv(data->env, "PATH");
 	if (!path)
 		return (NULL);
