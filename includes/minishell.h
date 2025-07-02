@@ -6,7 +6,7 @@
 /*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/07/02 16:55:07 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:22:02 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ typedef struct s_redir
 {
 	char			*filename;
 	char			*del;
+	int				fd;
 	t_type			type;
 	struct s_redir	*next;
 }	t_redir;
@@ -354,5 +355,6 @@ void	handle_input(t_data *data, t_redir *redir);
 void	handle_trunc(t_data *data);
 void	handle_append(t_data *data);
 int		preprocess_redirections(t_data *data);
+void	clean_redirections(t_data *data);
 
 #endif

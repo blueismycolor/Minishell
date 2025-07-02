@@ -6,7 +6,7 @@
 /*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 16:21:36 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/07/02 17:01:20 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:21:51 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,16 +116,14 @@ void	handle_append(t_data *data)
 
 static int	open_redirections(t_redir *redir)
 {
-	int	fd;
-
-	fd = -1;
+	redir->fd = -1;
 	if (redir->type == INPUT)
-		fd = open(redir->del, O_RDONLY);
+		redir->fd = open(redir->del, O_RDONLY);
 	if (redir->type == APPEND)
-		fd = open(redir->del, O_WRONLY | O_APPEND | O_CREAT, 0644);
+		redir->fd = open(redir->del, O_WRONLY | O_APPEND | O_CREAT, 0644);
 	if (redir->type == TRUNC)
-		fd = open(redir->del, O_WRONLY | O_TRUNC | O_CREAT, 0644);
-	return (fd);
+		redir->fd = open(redir->del, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+	return (redir->fd);
 }
 
 int	preprocess_redirections(t_data *data)
@@ -152,4 +150,23 @@ int	preprocess_redirections(t_data *data)
 		cmd = cmd->next;
 	}
 	return (0);
+}
+
+void	clean_redirections(t_data *data)
+{
+	t_cmd	*cmd;
+	t_redir	*redir;
+
+	cmd = data->cmd;
+	while (cmd)
+	{
+		redir = cmd->redir;
+		while (redir)
+		{
+			if (redir->fd)
+				close(redir->fd);
+			redir = redir->next;
+		}
+		cmd = cmd->next;
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:23:37 by tlair             #+#    #+#             */
-/*   Updated: 2025/07/02 16:15:34 by tlair            ###   ########.fr       */
+/*   Updated: 2025/07/02 17:22:56 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	cleanup_main_loop(t_data *data, char *input)
 {
 	cleanup_heredocs(data);
+	clean_redirections(data);
 	reset_fd(data);
 	free_tcmd(data->cmd);
 	free(input);
