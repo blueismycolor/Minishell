@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 14:42:08 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/07/01 17:41:21 by tlair            ###   ########.fr       */
+/*   Updated: 2025/07/02 14:44:23 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ void	exit_proc_sig_init(pid_t pid, int *status)
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	waitpid(pid, status, 0);
-	// signal(SIGINT, sigint_handler);
-	// signal(SIGQUIT, SIG_IGN);
 }
 
 void	exit_process(t_data *data, pid_t pid, int status)

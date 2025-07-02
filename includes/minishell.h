@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/07/02 10:54:32 by egatien          ###   ########.fr       */
+/*   Updated: 2025/07/02 14:51:32 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -311,6 +311,7 @@ void	print_data(t_data *data);
 /* exit.c */
 void	error(t_data *data, char *msg, int error_code);
 void	msg_error(char *msg);
+void	cat_err_handling(int status, t_data *data);
 
 /* handle_pipes.c */
 void	handle_pipes(t_data *data);

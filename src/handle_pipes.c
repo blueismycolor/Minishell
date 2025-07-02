@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:46:04 by tlair             #+#    #+#             */
-/*   Updated: 2025/07/01 17:54:02 by tlair            ###   ########.fr       */
+/*   Updated: 2025/07/02 14:50:38 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	child_pipe(t_data *data, t_cmd *cmd, int in_fd, int *pipefd)
 		if (cmd->is_builtin)
 			select_builtin(data);
 		else
-			process(data, cmd); // process a la place de execute_command
+			process(data, cmd);
 	}
 	exit(data->return_value);
 }
@@ -46,7 +46,7 @@ static void	child_last(t_data *data, t_cmd *cmd, int in_fd)
 		if (cmd->is_builtin)
 			select_builtin(data);
 		else
-			process(data, cmd); // process a la place de execute_command
+			process(data, cmd);
 	}
 	exit(data->return_value);
 }
@@ -60,15 +60,13 @@ static void	parent_pipe(pid_t pid, int *last_pid, int *in_fd, int *pipefd)
 	*in_fd = pipefd[0];
 }
 
-static void wait_all(pid_t *pids, t_data *data)
+static void	wait_all(pid_t *pids, t_data *data)
 {
 	int	status;
 	int	i;
 	int	last_status;
-	int	sig;
 
 	i = 0;
-	sig = 0;
 	while (i < data->nb_cmds)
 	{
 		waitpid(pids[i], &status, 0);
@@ -77,22 +75,7 @@ static void wait_all(pid_t *pids, t_data *data)
 		i++;
 	}
 	if (WIFSIGNALED(status))
-	{
-		sig = WTERMSIG(status);
-		if (sig == SIGINT)
-		{
-			write(1, "\n", 1);
-			data->return_value = 130;
-		}
-		else if (sig == SIGQUIT)
-		{
-			if (WCOREDUMP(status))
-				write(2, "Quit (core dumped)\n", 19);
-			else
-				write(2, "Quit\n", 5);
-			data->return_value = 131;
-		}
-	}
+		cat_err_handling(status, data);
 	if (WIFEXITED(last_status))
 		data->return_value = WEXITSTATUS(last_status);
 	else if (WIFSIGNALED(last_status))

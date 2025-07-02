@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 17:03:26 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/06/25 16:50:59 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/07/02 14:51:09 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,25 @@ void	msg_error(char *msg)
 	}
 	else
 		ft_putstr_fd("\033[1;31mUnknown error (ಥ﹏ಥ)\033[0m\n", 2);
+}
+
+void	cat_err_handling(int status, t_data *data)
+{
+	int sig;
+
+	sig = WTERMSIG(status);
+	
+	if (sig == SIGINT)
+	{
+		write(1, "\n", 1);
+		data->return_value = 130;
+	}
+	else if (sig == SIGQUIT)
+	{
+		if (WCOREDUMP(status))
+			write(2, "Quit (core dumped)\n", 19);
+		else
+			write(2, "Quit\n", 5);
+		data->return_value = 131;
+	}
 }

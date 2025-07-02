@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:21:09 by aeudes            #+#    #+#             */
-/*   Updated: 2025/06/30 14:12:06 by aeudes           ###   ########.fr       */
+/*   Updated: 2025/07/02 14:52:22 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	free_tab(char **tab)
 
 	i = 0;
 	if (!tab)
-		return;
+		return ;
 	while (tab[i])
 	{
 		free(tab[i]);
