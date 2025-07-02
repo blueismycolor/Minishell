@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_preprocess.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:04:11 by tlair             #+#    #+#             */
-/*   Updated: 2025/07/01 17:11:05 by tlair            ###   ########.fr       */
+/*   Updated: 2025/07/02 15:55:42 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,12 @@ static void	sigint_handler_heredoc(int sig)
 		exit(130);
 }
 
-static void	child_heredoc(int fd, t_redir *redir)
+static void	child_heredoc(int fd, t_redir *redir, t_data *data)
 {
 	signal(SIGINT, sigint_handler_heredoc);
 	read_heredoc_content(fd, redir->del);
 	close(fd);
+	free_for_exit(data);
 	exit(0);
 }
 
@@ -43,7 +44,7 @@ static int	fill_one_heredoc(t_data *data, t_redir *redir)
 		return (0);
 	}
 	if (pid == 0)
-		child_heredoc(fd, redir);
+		child_heredoc(fd, redir, data);
 	signal(SIGINT, SIG_IGN);
 	waitpid(pid, &status, 0);
 	close(fd);
