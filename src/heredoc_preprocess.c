@@ -6,21 +6,55 @@
 /*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:04:11 by tlair             #+#    #+#             */
-/*   Updated: 2025/07/02 16:05:23 by egatien          ###   ########.fr       */
+/*   Updated: 2025/07/02 16:35:28 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	sigint_handler_heredoc(int sig)
+int	set_for_open_fd(int fd)
 {
-	g_signal = sig;
-	if (sig == SIGINT)
-		exit(130);
+	static int	fd_temp;
+	if (fd != -1)
+		fd_temp = fd;
+	return (fd_temp);
 }
 
+t_data	*set_for_free_data(t_data *data)
+{
+	static t_data	*data_temp;
+	if (data != NULL)
+		data_temp = data;
+	return (data_temp);
+}
+
+static void	sigint_handler_heredoc(int sig)
+{
+	t_data	*data_temp;
+	int		fd_temp;
+
+	fd_temp = -1;
+	data_temp = NULL;
+	data_temp = set_for_free_data(data_temp);
+	fd_temp = set_for_open_fd(fd_temp);
+	g_signal = sig;
+	if (sig == SIGINT)
+	{
+		close(fd_temp);
+		close(data_temp->saved_stdin);
+		close(data_temp->saved_stdout);
+		if (data_temp)
+		{
+			free_tcmd(data_temp->cmd);
+			free_data(data_temp);
+		}
+		exit(130);
+	}
+}
 static void	child_heredoc(int fd, t_redir *redir, t_data *data)
 {
+	set_for_free_data(data);
+	set_for_open_fd(fd);
 	signal(SIGINT, sigint_handler_heredoc);
 	read_heredoc_content(fd, redir->del);
 	close(fd);
