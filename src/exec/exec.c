@@ -3,29 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:06:01 by tlair             #+#    #+#             */
-/*   Updated: 2025/07/02 16:02:54 by egatien          ###   ########.fr       */
+/*   Updated: 2025/07/02 16:14:44 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-static char	*ft_strjoin3(const char *s1, const char *s2, const char *s3)
-{
-	char	*tmp;
-	char	*result;
-
-	if (!s1 || !s2 || !s3)
-		return (NULL);
-	tmp = ft_strjoin(s1, s2);
-	if (!tmp)
-		return (NULL);
-	result = ft_strjoin(tmp, s3);
-	free(tmp);
-	return (result);
-}
 
 static char	*ft_getenv(char **env, const char *name)
 {
@@ -76,9 +61,17 @@ static void	handle_no_path(t_data *data, t_cmd *cmd)
 {
 	error(data, ERR_CMD_NOT_FOUND, 127);
 	ft_putendl_fd(cmd->args[0], 2);
-	free_tcmd(cmd); // ajoute apres
+	free_tcmd(cmd);
 	free_data(data);
 	exit(127);
+}
+
+static void	proc_init(t_data *data, t_cmd *cmd)
+{
+	close(data->saved_stdin);
+	close(data->saved_stdout);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 }
 
 void	process(t_data *data, t_cmd *cmd)
@@ -86,16 +79,13 @@ void	process(t_data *data, t_cmd *cmd)
 	char		*cmd_path;
 	int			temp_return_value;
 
-	close(data->saved_stdin);
-	close(data->saved_stdout);
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
+	proc_init(data, cmd);
 	if (!cmd->args || !cmd->args[0])
 	{
 		free_for_exit(data);
 		exit(0);
 	}
-		cmd_path = find_command_path(data, cmd->args[0]);
+	cmd_path = find_command_path(data, cmd->args[0]);
 	if (!cmd_path)
 		handle_no_path(data, cmd);
 	execve(cmd_path, cmd->args, data->env);

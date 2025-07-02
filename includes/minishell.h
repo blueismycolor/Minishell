@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/07/02 15:44:58 by egatien          ###   ########.fr       */
+/*   Updated: 2025/07/02 16:13:37 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -308,6 +308,9 @@ void	free_tokens(t_data *data);
 void	ft_free_array(char **array);
 void	reset_fd(t_data *data);
 void	print_data(t_data *data);
+
+char	*ft_strjoin3(const char *s1, const char *s2, const char *s3);
+void	free_tcmd_until_last(t_cmd *list, t_cmd *cmd);
 
 /* exit.c */
 void	error(t_data *data, char *msg, int error_code);
