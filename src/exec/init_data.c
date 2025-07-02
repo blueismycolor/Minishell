@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aeudes <aeudes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 14:26:16 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/06/30 15:22:18 by aeudes           ###   ########.fr       */
+/*   Updated: 2025/07/02 18:10:17 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ t_redir	*init_redir(t_redir *redir)
 		msg_error(ERR_MALLOC);
 	redir->filename = NULL;
 	redir->type = CMD;
+	redir->fd = -1;
 	redir->next = NULL;
 	return (redir);
 }

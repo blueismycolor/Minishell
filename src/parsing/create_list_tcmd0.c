@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_list_tcmd0.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:08:52 by aeudes            #+#    #+#             */
-/*   Updated: 2025/07/02 15:45:12 by egatien          ###   ########.fr       */
+/*   Updated: 2025/07/02 18:10:30 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void	add_redir(t_cmd *cmd, char *del, t_type type)
 		new->filename = NULL;
 	new->del = ft_strdup(del);
 	new->type = type;
+	new->fd = -1;
 	new->next = NULL;
 	if (!cmd->redir)
 		cmd->redir = new;

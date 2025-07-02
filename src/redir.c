@@ -6,7 +6,7 @@
 /*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 16:21:36 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/07/02 17:21:51 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/07/02 18:21:53 by mgodefro         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,11 +139,13 @@ int	preprocess_redirections(t_data *data)
 		{
 			if (redir->type == INPUT || redir->type == APPEND || redir->type == TRUNC)
 			{
-				if (!open_redirections(redir))
+				open_redirections(redir);
+				if (redir->fd)
 				{
-					error(data, ERR_REDIR, 1);
-					return (-1);
+					clean_redirections(data);
+					break ;
 				}
+				clean_redirections(data);
 			}
 			redir = redir->next;
 		}
@@ -163,7 +165,7 @@ void	clean_redirections(t_data *data)
 		redir = cmd->redir;
 		while (redir)
 		{
-			if (redir->fd)
+			if (redir->fd >= 0)
 				close(redir->fd);
 			redir = redir->next;
 		}
