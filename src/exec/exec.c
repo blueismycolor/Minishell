@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:06:01 by tlair             #+#    #+#             */
-/*   Updated: 2025/07/02 16:14:44 by tlair            ###   ########.fr       */
+/*   Updated: 2025/07/02 16:21:00 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	handle_no_path(t_data *data, t_cmd *cmd)
 	exit(127);
 }
 
-static void	proc_init(t_data *data, t_cmd *cmd)
+static void	proc_init(t_data *data)
 {
 	close(data->saved_stdin);
 	close(data->saved_stdout);
