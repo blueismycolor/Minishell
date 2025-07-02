@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 17:03:26 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/07/02 14:51:09 by tlair            ###   ########.fr       */
+/*   Updated: 2025/07/02 15:39:14 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,9 @@ void	msg_error(char *msg)
 
 void	cat_err_handling(int status, t_data *data)
 {
-	int sig;
+	int	sig;
 
 	sig = WTERMSIG(status);
-	
 	if (sig == SIGINT)
 	{
 		write(1, "\n", 1);

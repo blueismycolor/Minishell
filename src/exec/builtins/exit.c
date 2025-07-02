@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:33:56 by mgodefro          #+#    #+#             */
-/*   Updated: 2025/06/26 16:22:47 by tlair            ###   ########.fr       */
+/*   Updated: 2025/07/02 15:37:06 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ int	handle_exit_sig(t_data *data, char *input)
 {
 	if (g_signal == SIGINT)
 	{
-		data->return_value = 130;
+		if (data->nb_cmds <= 1)
+			data->return_value = 130;
 		g_signal = 0;
 	}
 	else if (!input)

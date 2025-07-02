@@ -6,7 +6,7 @@
 /*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:23:37 by tlair             #+#    #+#             */
-/*   Updated: 2025/07/02 14:42:55 by tlair            ###   ########.fr       */
+/*   Updated: 2025/07/02 15:37:28 by tlair            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ char	*init_main_loop_iteration(t_data *data)
 		print_prompt_header();
 		input = readline("\001\033[1;92m\002minishell> \001\033[0m\002");
 	}
-	else if (g_signal == SIGINT)
-		data->return_value = 130;
 	data->saved_stdin = dup(STDIN_FILENO);
 	data->saved_stdout = dup(STDOUT_FILENO);
 	return (input);
