@@ -6,7 +6,7 @@
 /*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:04:11 by tlair             #+#    #+#             */
-/*   Updated: 2025/07/02 16:01:22 by egatien          ###   ########.fr       */
+/*   Updated: 2025/07/02 16:05:23 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static void	child_heredoc(int fd, t_redir *redir, t_data *data)
 	signal(SIGINT, sigint_handler_heredoc);
 	read_heredoc_content(fd, redir->del);
 	close(fd);
+	close(data->saved_stdin);
+	close(data->saved_stdout);
 	free_for_exit(data);
 	exit(0);
 }
