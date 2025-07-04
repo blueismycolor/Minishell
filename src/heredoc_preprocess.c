@@ -6,27 +6,11 @@
 /*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:04:11 by tlair             #+#    #+#             */
-/*   Updated: 2025/07/02 16:35:28 by egatien          ###   ########.fr       */
+/*   Updated: 2025/07/04 12:01:07 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-int	set_for_open_fd(int fd)
-{
-	static int	fd_temp;
-	if (fd != -1)
-		fd_temp = fd;
-	return (fd_temp);
-}
-
-t_data	*set_for_free_data(t_data *data)
-{
-	static t_data	*data_temp;
-	if (data != NULL)
-		data_temp = data;
-	return (data_temp);
-}
 
 static void	sigint_handler_heredoc(int sig)
 {
@@ -51,6 +35,7 @@ static void	sigint_handler_heredoc(int sig)
 		exit(130);
 	}
 }
+
 static void	child_heredoc(int fd, t_redir *redir, t_data *data)
 {
 	set_for_free_data(data);

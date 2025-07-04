@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlair <tlair@student.42.fr>                +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 16:09:59 by tlair             #+#    #+#             */
-/*   Updated: 2025/07/02 16:13:31 by tlair            ###   ########.fr       */
+/*   Updated: 2025/07/04 12:02:04 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,22 @@ void	free_tcmd_until_last(t_cmd *list, t_cmd *cmd)
 			free_redir(temp->redir);
 		free(temp);
 	}
+}
+
+int	set_for_open_fd(int fd)
+{
+	static int	fd_temp;
+
+	if (fd != -1)
+		fd_temp = fd;
+	return (fd_temp);
+}
+
+t_data	*set_for_free_data(t_data *data)
+{
+	static t_data	*data_temp;
+
+	if (data != NULL)
+		data_temp = data;
+	return (data_temp);
 }

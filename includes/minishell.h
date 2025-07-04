@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 14:49:52 by egatien           #+#    #+#             */
-/*   Updated: 2025/07/02 18:01:18 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/07/04 12:10:06 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -328,6 +328,8 @@ void	cleanup_heredocs(t_data *data);
 /* heredoc.c */
 char	*generate_heredoc_filename(void);
 int		read_heredoc_content(int fd, char *del);
+int		set_for_open_fd(int fd);
+t_data	*set_for_free_data(t_data *data);
 
 /* history.c */
 void	add_to_history(t_data *data, const char *input);
@@ -356,5 +358,6 @@ void	handle_trunc(t_data *data);
 void	handle_append(t_data *data);
 int		preprocess_redirections(t_data *data);
 void	clean_redirections(t_data *data);
+int		open_redirections(t_redir *redir);
 
 #endif

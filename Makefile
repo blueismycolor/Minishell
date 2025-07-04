@@ -12,6 +12,7 @@ SRCS		= 	$(SRC_DIR)/exit.c \
 				$(SRC_DIR)/main_loop.c \
 				$(SRC_DIR)/main.c \
 				$(SRC_DIR)/minishell_process.c \
+				$(SRC_DIR)/redir_utils.c \
 				$(SRC_DIR)/redir.c \
 				$(SRC_DIR)/utils.c \
 				$(PARS_DIR)/create_list_tcmd0.c \
