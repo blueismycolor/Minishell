@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_process.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 17:30:05 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/07/02 17:01:35 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/07/04 11:21:28 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

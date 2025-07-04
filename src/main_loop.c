@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_loop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgodefro <mgodefro@student.42.fr>          +#+  +:+       +#+        */
+/*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:23:37 by tlair             #+#    #+#             */
-/*   Updated: 2025/07/02 18:13:20 by mgodefro         ###   ########.fr       */
+/*   Updated: 2025/07/04 11:27:45 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	main_loop(t_data *data)
 		add_to_history(data, input);
 		if (!process_input(data, input))
 		{
+			free_tcmd(data->cmd);
 			free(input);
 			reset_fd(data);
 			continue ;

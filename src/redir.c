@@ -6,7 +6,7 @@
 /*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 16:21:36 by maximegdfr        #+#    #+#             */
-/*   Updated: 2025/07/04 08:11:40 by egatien          ###   ########.fr       */
+/*   Updated: 2025/07/04 11:26:30 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,10 +140,11 @@ int	preprocess_redirections(t_data *data)
 			if (redir->type == INPUT || redir->type == APPEND || redir->type == TRUNC)
 			{
 				open_redirections(redir);
-				if (!redir->fd)
+				if (redir->fd == -1)
 				{
 					clean_redirections(data);
-					break ;
+					error(data, "Permission denied", 1);
+					return (1);
 				}
 				clean_redirections(data);
 			}
