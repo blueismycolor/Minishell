@@ -6,7 +6,7 @@
 /*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 16:24:59 by aeudes            #+#    #+#             */
-/*   Updated: 2025/06/25 13:46:45 by egatien          ###   ########.fr       */
+/*   Updated: 2025/07/08 12:21:46 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	pass_quotes(int i, char *str)
 	if (str[i] == '\'')
 	{
 		i++;
-		while (str[i] != '\'')
+		while (str[i] != '\'' && str[i] != '\0')
 			i++;
 		return (i);
 	}
