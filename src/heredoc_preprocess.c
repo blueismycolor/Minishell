@@ -6,7 +6,7 @@
 /*   By: egatien <egatien@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 17:04:11 by tlair             #+#    #+#             */
-/*   Updated: 2025/07/04 12:01:07 by egatien          ###   ########.fr       */
+/*   Updated: 2025/07/08 16:28:03 by egatien          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,9 @@ static int	fill_one_heredoc(t_data *data, t_redir *redir)
 	signal(SIGINT, SIG_IGN);
 	waitpid(pid, &status, 0);
 	close(fd);
-	signal(SIGINT, sigint_handler_heredoc);
-	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+	if (WEXITSTATUS(status) == 130)
 	{
-		data->return_value = 130;
+		data->return_value = WEXITSTATUS(status);
 		return (close(fd), unlink(redir->filename), 0);
 	}
 	return (1);
